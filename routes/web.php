@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\EventController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -22,6 +23,11 @@ Route::middleware('auth')->group(function () {
 Route::prefix('admin')->middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
 });
+
+Route::get('event/list', [EventController::class, 'index'])->middleware('auth')->name('event.list');
+Route::get('event/create', [EventController::class, 'create'])->middleware('auth')->name('event.create');
+
+Route::post('event/store', [EventController::class, 'store'])->middleware('auth')->name('event.store');
 
 
 
