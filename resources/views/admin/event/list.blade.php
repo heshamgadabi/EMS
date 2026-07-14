@@ -8,16 +8,18 @@
 <div class="col-md-10">
 
   @if(session('success'))
-    <div class="clearfix"></div>
     
     <div class="alert alert-success mt-2">
       {{ session('success') }}
     </div>
   @endif
 
+  
+  
+  <a href="{{ route('event.create') }}" class="btn btn-secondary mb-3 float-end" >Add Event</a>
 
-
-
+  <div class="clearfix"></div>
+   
 
 
 
