@@ -34,62 +34,39 @@
         <table class="table table-striped">
           <thead>
             <tr>
-              <th style="width: 10px">#</th>
-              <th>Task</th>
-              <th>Progress</th>
-              <th style="width: 40px">Label</th>
+              <th style="width: 10px">ID</th>
+              <th>Title</th>
+              <th>Total registered</th>
+              <th width="150">Settings</th>
             </tr>
           </thead>
           <tbody>
+            
+            @foreach($events as $event)
             <tr class="align-middle">
-              <td>1.</td>
-              <td>Update software</td>
+              <td>{{ $event->id }}.</td>
               <td>
-                <div class="progress progress-xs">
-                  <div
-                    class="progress-bar progress-bar-danger"
-                    style="width: 55%"
-                  ></div>
-                </div>
-              </td>
-              <td><span class="badge text-bg-danger">55%</span></td>
-            </tr>
-            <tr class="align-middle">
-              <td>2.</td>
-              <td>Clean database</td>
-              <td>
-                <div class="progress progress-xs">
-                  <div class="progress-bar text-bg-warning" style="width: 70%"></div>
-                </div>
+                <a href="{{ route('event.admin', $event->id) }}"  class="text-decoration-none">{{ $event->title }}</a>  
               </td>
               <td>
-                <span class="badge text-bg-warning">70%</span>
+                 
+              </td>
+              <td>
+                <a href="{{ route('event.edit', $event->id) }}" class="btn btn-sm btn-primary me-2"><i class="bi bi-pencil-square"></i></a>
+                <form action="{{ route('event.destroy', $event->id) }}" method="POST" class="d-inline">
+                  @csrf
+                  @method('DELETE')
+                  <button type="submit" class="btn btn-sm btn-danger me-2" onclick="return confirm('Are you sure?')"><i class="bi bi-trash"></i></button>
+                </form>
+
+                <a href="{{ route('event.admin', $event->id) }}"   class="text-decoration-none me-2"><i class="nav-icon bi bi-gear"></i></a>
+
               </td>
             </tr>
-            <tr class="align-middle">
-              <td>3.</td>
-              <td>Cron job running</td>
-              <td>
-                <div class="progress progress-xs progress-striped active">
-                  <div class="progress-bar text-bg-primary" style="width: 30%"></div>
-                </div>
-              </td>
-              <td>
-                <span class="badge text-bg-primary">30%</span>
-              </td>
-            </tr>
-            <tr class="align-middle">
-              <td>4.</td>
-              <td>Fix and squish bugs</td>
-              <td>
-                <div class="progress progress-xs progress-striped active">
-                  <div class="progress-bar text-bg-success" style="width: 90%"></div>
-                </div>
-              </td>
-              <td>
-                <span class="badge text-bg-success">90%</span>
-              </td>
-            </tr>
+            @endforeach
+           
+            
+            
           </tbody>
         </table>
       </div>
@@ -116,7 +93,7 @@
               </div>
               <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-end">
-                  <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Home</a></li>
+                  <li class="breadcrumb-item"><a href="{{ route('event.list') }}">Home</a></li>
                   <li class="breadcrumb-item active" aria-current="page">Events</li>
                 </ol>
               </div>

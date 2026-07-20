@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Event;
+use App\Models\Ticket;
 use Illuminate\Support\Facades\Auth;
 
 class EventController extends Controller
@@ -65,6 +66,105 @@ class EventController extends Controller
 
 
         return redirect()->route('event.list')->with('success', 'Event created successfully.');
+        
+    }
+
+    public function edit($id)
+    {
+        $event = Event::findOrFail($id);
+        $data = [
+            'event' => $event,
+            'title' => 'Edit Event',
+            'active_page' => 'edit_event',
+        ];
+        return view('admin.event.edit', $data);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $validate = $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
+            'location' => 'required|string|max:255',
+            'start_time' => 'required|date',
+            'end_time' => 'required|date|after_or_equal:start_time',
+            'status' => 'required|in:0,1',
+        ]);
+
+        $event = Event::findOrFail($id);
+        $event->title = $request->title;
+        $event->description = $request->description;
+        $event->start_time = $request->start_time;
+        $event->end_time = $request->end_time;
+        $event->location = $request->location;
+        $event->status = $request->status ?? 0; // Set to 0 if not provided
+        $event->save();
+
+        return redirect()->route('event.list')->with('success', $event->title . ' updated successfully.');
+    }   
+
+    public function destroy($id)
+    {
+        $event = Event::findOrFail($id);
+        $event->delete();
+
+        return redirect()->route('event.list')->with('success', $event->title . ' deleted successfully.');
+    }
+
+    public function admin($id)
+    {
+        $event = Event::findOrFail($id);
+        $data = [
+            'event' => $event,
+            'title' => 'Event Details',
+            'active_page' => 'event_list',
+        ];
+        return view('admin.event.admin', $data);
+    }
+
+    public function createTicket($id)
+    {
+        
+    
+        $event = Event::findOrFail($id);
+        $data = [
+            'event' => $event,
+            'title' => 'Create Ticket',
+            'active_page' => 'create_ticket',
+        ];
+        return view('admin.event.create_ticket', $data);
+    }
+
+    function storeTicket(Request $request, $id)
+    {
+       
+        $validate = $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
+            'location' => 'required|string|max:255',
+            'price' => 'required|numeric|min:0',
+            'status' => 'required|in:0,1',
+        ]);
+
+        $user = Auth::user();
+
+        $event = Event::findOrFail($id);
+
+        $ticket = new Ticket();
+        $ticket->title = $request->title;
+        $ticket->description = $request->description;
+        $ticket->location = $request->location;
+        $ticket->price = $request->price;
+        $ticket->status = $request->status ?? 0; // Set to 0 if not provided
+        $ticket->event_id = $event->id; // Associate the ticket with the event
+        $ticket->created_by = $user->id;//auth()->user()->id;
+        
+        
+        
+        $ticket->save();
+
+        return redirect()->route('event.admin', ['id' => $event->id])->with('success', 'Ticket created successfully.');
+
         
     }
 }

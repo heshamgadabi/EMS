@@ -29,6 +29,14 @@ Route::get('event/create', [EventController::class, 'create'])->middleware('auth
 
 Route::post('event/store', [EventController::class, 'store'])->middleware('auth')->name('event.store');
 
+Route::get('event/edit/{id}', [EventController::class, 'edit'])->middleware('auth')->name('event.edit');
+Route::put('event/update/{id}', [EventController::class, 'update'])->middleware('auth')->name('event.update');
+Route::delete('event/delete/{id}', [EventController::class, 'destroy'])->middleware('auth')->name('event.destroy');
+
+Route::get('event/admin/{id}', [EventController::class, 'admin'])->middleware('auth')->name('event.admin');
+
+Route::get('event/ticket/create/{id}', [EventController::class, 'createTicket'])->middleware('auth')->name('event.ticket.create');
+Route::post('event/ticket/store/{id}', [EventController::class, 'storeTicket'])->middleware('auth')->name('event.ticket.store');
 
 
 require __DIR__.'/auth.php';
