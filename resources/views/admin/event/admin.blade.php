@@ -10,92 +10,138 @@
 
 
 <!-- Tabbed content -->
-              <div class="col-md-12">
-                <div class="card">
-                  <div class="card-header p-0 border-bottom-0">
-                    <ul class="nav nav-tabs" id="profile-tabs" role="tablist">
-                      <li class="nav-item" role="presentation">
-                        <button
-                          class="nav-link active"
-                          id="tickets-tab"
-                          data-bs-toggle="tab"
-                          data-bs-target="#tickets"
-                          type="button"
-                          role="tab"
-                          aria-selected="true"
-                        >
-                          Tickets
-                        </button>
-                      </li>
-                      <li class="nav-item" role="presentation">
-                        <button
-                          class="nav-link"
-                          id="registrations-tab"
-                          data-bs-toggle="tab"
-                          data-bs-target="#registrations"
-                          type="button"
-                          role="tab"
-                          aria-selected="false"
-                        >
-                          Registrations
-                        </button>
-                      </li>
-                      <li class="nav-item" role="presentation">
-                        <button
-                          class="nav-link"
-                          id="financials-tab"
-                          data-bs-toggle="tab"
-                          data-bs-target="#financials"
-                          type="button"
-                          role="tab"
-                          aria-selected="false"
-                        >
-                          Financials
-                        </button>
-                      </li>
-                    </ul>
-                  </div>
-                  <div class="card-body">
-                    <div class="tab-content">
-                      <!-- Activity tab -->
-                      <div
-                        class="tab-pane fade show active"
-                        id="tickets"
-                        role="tabpanel"
-                        aria-labelledby="tickets-tab">
+<div class="col-md-12">
 
-                        <a href="{{ route('event.ticket.create', $event->id) }}" class="btn btn-primary mb-3">Add Ticket</a>
-                        
+  @if(session('success'))
+    
+    <div class="alert alert-success mt-2">
+      {{ session('success') }}
+    </div>
+  @endif
+  
+  <div class="card">
+    <div class="card-header p-0 border-bottom-0">
+      <ul class="nav nav-tabs" id="profile-tabs" role="tablist">
+        <li class="nav-item" role="presentation">
+          <button
+            class="nav-link active"
+            id="tickets-tab"
+            data-bs-toggle="tab"
+            data-bs-target="#tickets"
+            type="button"
+            role="tab"
+            aria-selected="true"
+          >
+            Tickets
+          </button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button
+            class="nav-link"
+            id="registrations-tab"
+            data-bs-toggle="tab"
+            data-bs-target="#registrations"
+            type="button"
+            role="tab"
+            aria-selected="false"
+          >
+            Registrations
+          </button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button
+            class="nav-link"
+            id="financials-tab"
+            data-bs-toggle="tab"
+            data-bs-target="#financials"
+            type="button"
+            role="tab"
+            aria-selected="false"
+          >
+            Financials
+          </button>
+        </li>
+      </ul>
+    </div>
+    <div class="card-body">
+      <div class="tab-content">
+        <!-- Activity tab -->
+        <div
+          class="tab-pane fade show active"
+          id="tickets"
+          role="tabpanel"
+          aria-labelledby="tickets-tab">
 
-                        tickets
-                        
-                      </div>
+          <a href="{{ route('event.ticket.create', $event->id) }}" class="btn btn-primary mb-3">Add Ticket</a>
 
-                      <!-- Timeline tab -->
-                      <div
-                        class="tab-pane fade"
-                        id="registrations"
-                        role="tabpanel"
-                        aria-labelledby="registrations-tab"
-                      >
-                        registrations
-                      </div>
-
-                      <!-- Financials tab -->
-                      <div
-                        class="tab-pane fade"
-                        id="financials"
-                        role="tabpanel"
-                        aria-labelledby="financials-tab"
-                      >
+          @if($tickets->isEmpty())
+            <p>No tickets found for this event.</p>
+          @else
+            <table class="table">
+              <thead>
+                <tr>
+                  <th width="30%">Title</th>
+                  <th>Price</th>
+                  <th>Quantity</th>
+                  <th width="20%">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                @foreach($tickets as $ticket)
+                  <tr>
+                    <td>{{ $ticket->title }}</td>
+                    <td>{{ $ticket->price }}</td>
+                    <td>{{ $ticket->quantity }}</td>
+                    <td>
+                      <a href="{{ route('event.ticket.edit', $ticket->id) }}" class="btn btn-sm btn-warning me-2">Edit</a>
+                      <form action="{{ route('event.ticket.delete', $ticket->id) }}" method="POST" style="display:inline-block;">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-sm btn-danger me-2" onclick="return confirm('Are you sure you want to delete this ticket?')">Delete</button>
+                      </form>
                       
-                      financials
+                      <a href="{{ route('event.admin', $event->id) }}"   class="text-decoration-none me-2"><i class="nav-icon bi bi-gear"></i></a>
 
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+
+                    </td>
+                  </tr>
+                @endforeach
+              </tbody>
+            </table>
+          @endif
+
+          
+          
+
+          
+          
+        </div>
+
+        <!-- Timeline tab -->
+        <div
+          class="tab-pane fade"
+          id="registrations"
+          role="tabpanel"
+          aria-labelledby="registrations-tab"
+        >
+          registrations
+        </div>
+
+        <!-- Financials tab -->
+        <div
+          class="tab-pane fade"
+          id="financials"
+          role="tabpanel"
+          aria-labelledby="financials-tab"
+        >
+        
+        financials
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 @endsection
 

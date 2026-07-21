@@ -114,9 +114,14 @@ class EventController extends Controller
     public function admin($id)
     {
         $event = Event::findOrFail($id);
+        
+        $tickets = Ticket::where('event_id', $event->id)->get();
+
+
         $data = [
             'event' => $event,
             'title' => 'Event Details',
+            'tickets' => $tickets,
             'active_page' => 'event_list',
         ];
         return view('admin.event.admin', $data);
@@ -163,8 +168,57 @@ class EventController extends Controller
         
         $ticket->save();
 
-        return redirect()->route('event.admin', ['id' => $event->id])->with('success', 'Ticket created successfully.');
+        return redirect()->route('event.admin', ['id' => $event->id])->with('success', $ticket->title . ' created successfully.');
 
         
     }
+
+
+    public function editTicket($ticket_id)
+    {
+     
+        $ticket = Ticket::findOrFail($ticket_id);
+        $data = [
+            'ticket' => $ticket,
+            'title' => 'Edit Ticket',
+            'active_page' => 'edit_ticket',
+        ];
+
+        $event = Event::findOrFail($ticket->event_id);
+        $data['event'] = $event;
+        
+
+        return view('admin.event.edit_ticket', $data);
+    }
+
+    public function updateTicket(Request $request, $ticket_id)
+    {
+        $validate = $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
+            'location' => 'required|string|max:255',
+            'price' => 'required|numeric|min:0',
+            'status' => 'required|in:0,1',
+        ]);
+
+        $ticket = Ticket::findOrFail($ticket_id);
+        $ticket->title = $request->title;
+        $ticket->description = $request->description;
+        $ticket->location = $request->location;
+        $ticket->price = $request->price;
+        $ticket->status = $request->status ?? 0; // Set to 0 if not provided
+        $ticket->save();
+
+        return redirect()->route('event.admin', ['id' => $ticket->event_id])->with('success', $ticket->title . ' updated successfully.');
+    }
+
+    public function deleteTicket($ticket_id)
+    {
+        $ticket = Ticket::findOrFail($ticket_id);
+        $event_id = $ticket->event_id; // Store the event ID before deleting the ticket
+        $ticket->delete();
+
+        return redirect()->route('event.admin', ['id' => $event_id])->with('success', $ticket->title . ' deleted successfully.');
+    }
+
 }
