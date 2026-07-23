@@ -65,7 +65,7 @@ class EventController extends Controller
         */
 
 
-        return redirect()->route('event.list')->with('success', 'Event created successfully.');
+        return redirect()->route('event.admin', ['id' => $event->id])->with('success', 'Event created successfully.');
         
     }
 
@@ -100,7 +100,7 @@ class EventController extends Controller
         $event->status = $request->status ?? 0; // Set to 0 if not provided
         $event->save();
 
-        return redirect()->route('event.list')->with('success', $event->title . ' updated successfully.');
+        return redirect()->route('event.admin', ['id' => $event->id])->with('success', $event->title . ' updated successfully.');
     }   
 
     public function destroy($id)

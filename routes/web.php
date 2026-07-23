@@ -4,7 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EventController;
-
+use App\Http\Controllers\UserController;
 Route::get('/', function () {
     return view('welcome');
 });
@@ -41,6 +41,13 @@ Route::post('event/ticket/store/{id}', [EventController::class, 'storeTicket'])-
 Route::get('event/ticket/edit/{ticket_id}', [EventController::class, 'editTicket'])->middleware('auth')->name('event.ticket.edit');
 Route::put('event/ticket/update/{ticket_id}', [EventController::class, 'updateTicket'])->middleware('auth')->name('event.ticket.update');
 Route::delete('event/ticket/delete/{ticket_id}', [EventController::class, 'deleteTicket'])->middleware('auth')->name('event.ticket.delete'); 
+
+
+Route::get('users/list', [UserController::class, 'index'])->middleware(['auth','Admin'])->name('users.list');
+Route::get('user/{id}/edit', [UserController::class, 'edit'])->middleware(['auth','Admin'])->name('admin.user.edit');
+Route::put('user/{id}/update', [UserController::class, 'update'])->middleware(['auth','Admin'])->name('user.update');
+
+
 
 
 require __DIR__.'/auth.php';

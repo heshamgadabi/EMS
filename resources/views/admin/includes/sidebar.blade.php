@@ -33,7 +33,7 @@
               data-accordion="false"
               id="navigation"
             >
-              <li class="nav-item menu-open">
+              <li class="nav-item @if(isset($active_page) && ($active_page == 'event_list' || $active_page == 'create_event')) menu-open @endif">
                 <a href="#" class="nav-link active">
                   <i class="nav-icon bi bi-speedometer"></i>
                   <p>
@@ -58,6 +58,30 @@
                 </ul>
               </li>
               
+
+              <li class="nav-item @if(isset($active_page) && $active_page == 'users_list') menu-open @endif">
+                <a href="#" class="nav-link">
+                  <i class="nav-icon bi bi-people"></i>
+                  <p>
+                    Users
+                    <i class="nav-arrow bi bi-chevron-right"></i>
+                  </p>
+                </a>
+
+
+                <ul class="nav nav-treeview">
+                  <li class="nav-item">
+                    <a href="{{ route('users.list') }}" class="nav-link @if(isset($active_page) && $active_page == 'users_list') active @endif">
+                      <i class="nav-icon bi bi-circle"></i>
+                      <p>Users List</p>
+                    </a>
+                  </li>
+                </ul>
+
+
+              </li>
+
+
               <li class="nav-header">PAGES</li>
               <li class="nav-item">
                 <a href="#" class="nav-link">
