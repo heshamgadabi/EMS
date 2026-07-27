@@ -1,7 +1,7 @@
 @extends('admin.layout.app')
 
 @section('title')
-    EMS ‘Users admin Dashboard
+    EMS Users admin Dashboard
 @endsection
 
 
@@ -17,8 +17,11 @@
 
   
   
+  <a href="{{ route('user.create') }}" class="btn btn-secondary mb-3 float-end" >Add User</a>
+
   <div class="clearfix"></div>
-   
+
+  
 
 
 
