@@ -1,0 +1,889 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>تيكت فلو | جميع الفعاليات والأنشطة الترفيهية</title>
+
+    <!-- Bootstrap 5 (RTL build) -->
+    <link rel="stylesheet" href="css/bootstrap.rtl.min.css" />
+    <!-- Bootstrap Icons: used for generic UI glyphs (chevrons, search, calendar, hamburger) that aren't brand assets -->
+    <link rel="stylesheet" href="css/bootstrap-icons.css" />
+    <!-- Tajawal: fallback only, in case the self-hosted font below fails to load.
+       Primary typeface is "Graphik Arabic" (assets/fonts/*.otf, full weight
+       range), loaded via @font-face in css/style.css. -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <!-- ============================================================
+       HEADER / NAV
+       ============================================================ -->
+    <header class="site-header border-bottom bg-white sticky-top">
+      <div class="container-xl">
+        <!-- Row 1 (mobile, <lg): logo + menu toggler only — everything else
+           (search, city, currency, account, nav links) lives in the
+           off-canvas menu below.
+           Row 1 (desktop, lg+): logo, search, city, currency/language,
+           account, in that reading order (right to left). No flex `order`
+           utilities: DOM order is the visual order, matching how dir="rtl"
+           naturally flows (first child = right edge). -->
+        <div class="d-flex align-items-center py-3 flex-wrap header-row-1">
+          <!-- Logo -->
+          <a
+            href="index.html"
+            class="site-logo d-flex align-items-center gap-2 text-decoration-none flex-shrink-0"
+          >
+            <img
+              src="assets/icons/logo-mark.svg"
+              alt="تيكت فلو"
+              width="36"
+              height="36"
+            />
+            <span class="site-logo-text">تيكت فلو</span>
+          </a>
+
+          <!-- Mobile menu toggler: opens the off-canvas menu -->
+          <button
+            type="button"
+            class="header-menu-toggle d-lg-none ms-auto"
+            data-bs-toggle="offcanvas"
+            data-bs-target="#mobileMenu"
+            aria-controls="mobileMenu"
+            aria-label="فتح القائمة"
+          >
+            <i class="bi bi-list"></i>
+          </button>
+
+          <!-- Desktop-only: search, city, currency/language, account -->
+          <div class="header-actions d-none d-lg-flex align-items-center">
+            <!-- Search: sits right next to the logo, fixed pill width -->
+            <div class="header-search-wrap flex-shrink-0">
+              <form class="header-search w-100" role="search">
+                <div class="input-group">
+                  <input
+                    type="search"
+                    class="form-control"
+                    placeholder="البحث عن الفعالية أو الفئة"
+                    aria-label="البحث عن الفعالية أو الفئة"
+                  />
+                  <span class="input-group-text">
+                    <i class="bi bi-calendar3 text-muted"></i>
+                  </span>
+                </div>
+              </form>
+            </div>
+
+            <!-- City indicator: icon first (rightmost), label after — plain text, no dropdown -->
+            <div
+              class="header-city flex-shrink-0 d-flex align-items-center gap-1"
+            >
+              <img
+                src="assets/icons/icon-geo-mark.svg"
+                alt=""
+                width="10"
+                height="14"
+              />
+              <span>جدة</span>
+            </div>
+
+            <!-- Currency / language -->
+            <div class="dropdown flex-shrink-0 ms-auto">
+              <button
+                class="btn btn-link text-body text-decoration-none px-2 d-flex align-items-center gap-1"
+                type="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                <img
+                  src="assets/icons/icon-globe.svg"
+                  alt=""
+                  width="16"
+                  height="16"
+                />
+                <span class="small text-muted">AR</span>
+                <img
+                  src="assets/icons/icon-divider.svg"
+                  alt=""
+                  width="4"
+                  height="11"
+                  class="mx-1"
+                />
+                <span class="small text-muted">USD</span>
+              </button>
+              <ul class="dropdown-menu">
+                <li>
+                  <a class="dropdown-item" href="#">USD - دولار أمريكي</a>
+                </li>
+                <li><a class="dropdown-item" href="#">SAR - ريال سعودي</a></li>
+              </ul>
+            </div>
+
+            <!-- Account menu -->
+            <div class="flex-shrink-0">
+              <button
+                type="button"
+                class="btn btn-account p-0 rounded-circle"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+                aria-label="حساب المستخدم"
+              >
+                <img
+                  src="assets/icons/avatar-default.svg"
+                  alt=""
+                  width="14"
+                  height="17"
+                />
+              </button>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">تسجيل الدخول</a></li>
+                <li><a class="dropdown-item" href="#">إنشاء حساب</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Row 2: primary navigation (desktop only, lg+) -->
+        <nav class="navbar navbar-expand-lg py-0 d-none d-lg-block">
+          <ul class="navbar-nav gap-lg-4">
+            <li class="nav-item">
+              <a
+                class="nav-link fw-semibold d-flex align-items-center gap-2"
+                href="#"
+              >
+                انضم لنا
+                <span class="badge-plus">Plus</span>
+              </a>
+            </li>
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link fw-semibold dropdown-toggle"
+                href="#"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+                >الفعاليات</a
+              >
+              <ul class="dropdown-menu">
+                <li>
+                  <a class="dropdown-item" href="events.html">جميع الفعاليات</a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="#">الفعاليات القادمة</a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link fw-semibold dropdown-toggle"
+                href="#"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+                >المغامرات والتجارب</a
+              >
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">رحلات السفاري</a></li>
+                <li>
+                  <a class="dropdown-item" href="#">أنشطة الهواء الطلق</a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link fw-semibold" href="#"
+                >كأس العالم للرياضات الإلكترونية</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link fw-semibold" href="#">موسم عسير</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link fw-semibold" href="#">العروض الكوميدية</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link fw-semibold" href="#">ما الجديد في جدة؟</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <!-- ============================================================
+       MOBILE MENU (off-canvas, <lg)
+       Slides in from the left over a dimmed overlay; holds everything
+       that's hidden from row 1 / row 2 on small screens.
+       ============================================================ -->
+    <div
+      class="offcanvas offcanvas-end mobile-menu"
+      tabindex="-1"
+      id="mobileMenu"
+      aria-labelledby="mobileMenuLabel"
+    >
+      <div class="offcanvas-header border-bottom">
+        <a
+          href="index.html"
+          class="site-logo d-flex align-items-center gap-2 text-decoration-none"
+          id="mobileMenuLabel"
+        >
+          <img
+            src="assets/icons/logo-mark.svg"
+            alt="تيكت فلو"
+            width="32"
+            height="32"
+          />
+          <span class="site-logo-text">تيكت فلو</span>
+        </a>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="offcanvas"
+          aria-label="إغلاق"
+        ></button>
+      </div>
+      <div class="offcanvas-body d-flex flex-column">
+        <form class="header-search w-100 mb-4" role="search">
+          <div class="input-group">
+            <input
+              type="search"
+              class="form-control"
+              placeholder="البحث عن الفعالية أو الفئة"
+              aria-label="البحث عن الفعالية أو الفئة"
+            />
+            <span class="input-group-text">
+              <i class="bi bi-calendar3 text-muted"></i>
+            </span>
+          </div>
+        </form>
+
+        <div class="d-flex align-items-center gap-2 mb-4 pb-4 border-bottom">
+          <div class="btn-account rounded-circle d-flex" aria-hidden="true">
+            <img
+              src="assets/icons/avatar-default.svg"
+              alt=""
+              width="14"
+              height="17"
+            />
+          </div>
+          <a href="#" class="fw-semibold text-decoration-none">تسجيل الدخول</a>
+          <span class="text-muted">/</span>
+          <a href="#" class="fw-semibold text-decoration-none">إنشاء حساب</a>
+        </div>
+
+        <div
+          class="d-flex align-items-center justify-content-between mb-4 pb-4 border-bottom"
+        >
+          <div class="header-city d-flex align-items-center gap-1">
+            <img
+              src="assets/icons/icon-geo-mark.svg"
+              alt=""
+              width="10"
+              height="14"
+            />
+            <span>جدة</span>
+          </div>
+          <div class="dropdown">
+            <button
+              class="btn btn-link text-body text-decoration-none px-2 d-flex align-items-center gap-1"
+              type="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              <img
+                src="assets/icons/icon-globe.svg"
+                alt=""
+                width="16"
+                height="16"
+              />
+              <span class="small text-muted">AR</span>
+              <img
+                src="assets/icons/icon-divider.svg"
+                alt=""
+                width="4"
+                height="11"
+                class="mx-1"
+              />
+              <span class="small text-muted">USD</span>
+            </button>
+            <ul class="dropdown-menu">
+              <li>
+                <a class="dropdown-item" href="#">USD - دولار أمريكي</a>
+              </li>
+              <li><a class="dropdown-item" href="#">SAR - ريال سعودي</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <ul class="navbar-nav gap-1">
+          <li class="nav-item">
+            <a
+              class="nav-link fw-semibold d-flex align-items-center gap-2"
+              href="#"
+            >
+              انضم لنا
+              <span class="badge-plus">Plus</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link fw-semibold d-flex align-items-center justify-content-between"
+              href="#"
+              data-bs-toggle="collapse"
+              data-bs-target="#mobileEventsSub"
+              aria-expanded="false"
+              aria-controls="mobileEventsSub"
+            >
+              الفعاليات
+              <i class="bi bi-chevron-down small"></i>
+            </a>
+            <ul class="collapse list-unstyled ps-3" id="mobileEventsSub">
+              <li><a class="nav-link" href="events.html">جميع الفعاليات</a></li>
+              <li><a class="nav-link" href="#">الفعاليات القادمة</a></li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link fw-semibold d-flex align-items-center justify-content-between"
+              href="#"
+              data-bs-toggle="collapse"
+              data-bs-target="#mobileAdventuresSub"
+              aria-expanded="false"
+              aria-controls="mobileAdventuresSub"
+            >
+              المغامرات والتجارب
+              <i class="bi bi-chevron-down small"></i>
+            </a>
+            <ul class="collapse list-unstyled ps-3" id="mobileAdventuresSub">
+              <li><a class="nav-link" href="#">رحلات السفاري</a></li>
+              <li><a class="nav-link" href="#">أنشطة الهواء الطلق</a></li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link fw-semibold" href="#"
+              >كأس العالم للرياضات الإلكترونية</a
+            >
+          </li>
+          <li class="nav-item">
+            <a class="nav-link fw-semibold" href="#">موسم عسير</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link fw-semibold" href="#">العروض الكوميدية</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link fw-semibold" href="#">ما الجديد في جدة؟</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <main>
+      <!-- ============================================================
+         EVENT LIST PAGE
+         Figma: node 12:992 "event-list-page"
+         ============================================================ -->
+      <section class="container-xl py-5">
+        <!-- Header & Breadcrumbs -->
+        <div class="d-flex flex-column align-items-start gap-3 mb-5">
+          <nav class="breadcrumbs" aria-label="breadcrumb">
+            <a href="index.html" class="breadcrumb-link">الرئيسية</a>
+            <span class="breadcrumb-sep">/</span>
+            <span class="breadcrumb-current" aria-current="page"
+              >جميع الفعاليات</span
+            >
+          </nav>
+          <div class="page-title-block">
+            <span class="page-title-bar"></span>
+            <h1 class="page-title">جميع الفعاليات والأنشطة الترفيهية</h1>
+          </div>
+        </div>
+
+        <!-- Search and Filter Control Panel -->
+        <div class="filter-panel mb-4">
+          <div class="filter-panel-row mb-3">
+            <div class="filter-search">
+              <i class="bi bi-search"></i>
+              <input
+                type="search"
+                placeholder="ابحث عن فعاليات، فنانين، مسارح..."
+                aria-label="ابحث عن فعاليات، فنانين، مسارح..."
+              />
+            </div>
+            <div class="dropdown filter-sort">
+              <button
+                class="btn d-flex align-items-center gap-2 w-100"
+                type="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                <span class="flex-grow-1 text-start"
+                  >الترتيب: الأحدث أولاً</span
+                >
+                <i class="bi bi-chevron-down small"></i>
+              </button>
+              <ul class="dropdown-menu">
+                <li>
+                  <a class="dropdown-item active" href="#">الأحدث أولاً</a>
+                </li>
+                <li><a class="dropdown-item" href="#">الأقرب تاريخًا</a></li>
+                <li>
+                  <a class="dropdown-item" href="#">السعر: من الأقل للأعلى</a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="#">السعر: من الأعلى للأقل</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="category-chips">
+            <button type="button" class="category-chip active">الكل</button>
+            <button type="button" class="category-chip">حفلات</button>
+            <button type="button" class="category-chip">مسرح</button>
+            <button type="button" class="category-chip">رياضة</button>
+            <button type="button" class="category-chip">مؤتمرات</button>
+            <button type="button" class="category-chip">معارض</button>
+            <button type="button" class="category-chip">ورش عمل</button>
+          </div>
+        </div>
+
+        <!-- Results Summary -->
+        <div class="results-summary mb-4">
+          <div class="results-count">
+            <span class="results-count-dot"></span>
+            <span>عُثر على ١٢ فعالية متميزة</span>
+          </div>
+          <a href="#" class="clear-filters-link">مسح التصفية</a>
+        </div>
+
+        <!-- Event Grid: `.event-card` is the repeatable unit (see css/style.css). -->
+        <div class="row g-4" id="eventListGrid">
+          <div class="col-6 col-lg-3">
+            <article class="event-card" data-event-id="1">
+              <a href="#" class="event-card-media">
+                <img
+                  src="assets/images/placeholder.png"
+                  alt="باتل كارت يوم النساء - جدة"
+                />
+                <button
+                  type="button"
+                  class="favorite-btn"
+                  aria-label="أضف إلى المفضلة"
+                  data-favorited="false"
+                >
+                  <img
+                    src="assets/icons/icon-heart.svg"
+                    alt=""
+                    width="20"
+                    height="18"
+                  />
+                </button>
+              </a>
+              <div class="event-card-body">
+                <a href="#" class="event-card-title text-decoration-none"
+                  >باتل كارت يوم النساء - جدة</a
+                >
+                <div class="event-card-meta">
+                  <span class="event-card-price">32.96 USD</span>
+                  <span class="event-card-price-label text-success"
+                    >نضمن أفضل الأسعار</span
+                  >
+                </div>
+              </div>
+            </article>
+          </div>
+
+          <div class="col-6 col-lg-3">
+            <article class="event-card" data-event-id="2">
+              <a href="#" class="event-card-media">
+                <img
+                  src="assets/images/placeholder.png"
+                  alt="مراسي النيل في النادي الأدبي الثقافي بجدة"
+                />
+                <button
+                  type="button"
+                  class="favorite-btn"
+                  aria-label="أضف إلى المفضلة"
+                  data-favorited="false"
+                >
+                  <img
+                    src="assets/icons/icon-heart.svg"
+                    alt=""
+                    width="20"
+                    height="18"
+                  />
+                </button>
+                <span class="badge-new">جديد</span>
+              </a>
+              <div class="event-card-body">
+                <a href="#" class="event-card-title text-decoration-none"
+                  >مراسي النيل في النادي الأدبي الثقافي بجدة</a
+                >
+                <div class="event-card-meta">
+                  <span class="event-card-price">27.19 USD</span>
+                  <span class="event-card-price-label text-brand-green"
+                    >أفضل المقاعد متاحة</span
+                  >
+                </div>
+                <div class="event-card-date">الجمعة 07 أغسطس</div>
+              </div>
+            </article>
+          </div>
+
+          <div class="col-6 col-lg-3">
+            <article class="event-card" data-event-id="3">
+              <a href="#" class="event-card-media">
+                <img
+                  src="assets/images/placeholder.png"
+                  alt="لاين اب تقدم تجارب أداء كوميدي لاب في جدة"
+                />
+                <button
+                  type="button"
+                  class="favorite-btn"
+                  aria-label="أضف إلى المفضلة"
+                  data-favorited="false"
+                >
+                  <img
+                    src="assets/icons/icon-heart.svg"
+                    alt=""
+                    width="20"
+                    height="18"
+                  />
+                </button>
+              </a>
+              <div class="event-card-body">
+                <a href="#" class="event-card-title text-decoration-none"
+                  >لاين اب تقدم تجارب أداء كوميدي لاب في جدة</a
+                >
+                <div class="event-card-meta">
+                  <span class="event-card-price-label text-success"
+                    >الدخول مجاني</span
+                  >
+                </div>
+              </div>
+            </article>
+          </div>
+
+          <div class="col-6 col-lg-3">
+            <article class="event-card" data-event-id="4">
+              <a href="#" class="event-card-media">
+                <img
+                  src="assets/images/placeholder.png"
+                  alt="بي دي هاوس في جدة | 23 يوليو"
+                />
+                <button
+                  type="button"
+                  class="favorite-btn"
+                  aria-label="أضف إلى المفضلة"
+                  data-favorited="false"
+                >
+                  <img
+                    src="assets/icons/icon-heart.svg"
+                    alt=""
+                    width="20"
+                    height="18"
+                  />
+                </button>
+                <span class="badge-new">جديد</span>
+              </a>
+              <div class="event-card-body">
+                <a href="#" class="event-card-title text-decoration-none"
+                  >بي دي هاوس في جدة | 23 يوليو</a
+                >
+                <div class="event-card-meta">
+                  <span class="event-card-price">31.59 USD</span>
+                  <span class="event-card-price-label text-brand-green"
+                    >تذاكر الحجز المسبق</span
+                  >
+                </div>
+                <div class="event-card-date">الخميس 23 يوليو</div>
+              </div>
+            </article>
+          </div>
+
+          <!-- Second row: design repeats the same 4 events again -->
+          <div class="col-6 col-lg-3">
+            <article class="event-card" data-event-id="5">
+              <a href="#" class="event-card-media">
+                <img
+                  src="assets/images/placeholder.png"
+                  alt="باتل كارت يوم النساء - جدة"
+                />
+                <button
+                  type="button"
+                  class="favorite-btn"
+                  aria-label="أضف إلى المفضلة"
+                  data-favorited="false"
+                >
+                  <img
+                    src="assets/icons/icon-heart.svg"
+                    alt=""
+                    width="20"
+                    height="18"
+                  />
+                </button>
+              </a>
+              <div class="event-card-body">
+                <a href="#" class="event-card-title text-decoration-none"
+                  >باتل كارت يوم النساء - جدة</a
+                >
+                <div class="event-card-meta">
+                  <span class="event-card-price">32.96 USD</span>
+                  <span class="event-card-price-label text-success"
+                    >نضمن أفضل الأسعار</span
+                  >
+                </div>
+              </div>
+            </article>
+          </div>
+
+          <div class="col-6 col-lg-3">
+            <article class="event-card" data-event-id="6">
+              <a href="#" class="event-card-media">
+                <img
+                  src="assets/images/placeholder.png"
+                  alt="مراسي النيل في النادي الأدبي الثقافي بجدة"
+                />
+                <button
+                  type="button"
+                  class="favorite-btn"
+                  aria-label="أضف إلى المفضلة"
+                  data-favorited="false"
+                >
+                  <img
+                    src="assets/icons/icon-heart.svg"
+                    alt=""
+                    width="20"
+                    height="18"
+                  />
+                </button>
+                <span class="badge-new">جديد</span>
+              </a>
+              <div class="event-card-body">
+                <a href="#" class="event-card-title text-decoration-none"
+                  >مراسي النيل في النادي الأدبي الثقافي بجدة</a
+                >
+                <div class="event-card-meta">
+                  <span class="event-card-price">27.19 USD</span>
+                  <span class="event-card-price-label text-brand-green"
+                    >أفضل المقاعد متاحة</span
+                  >
+                </div>
+                <div class="event-card-date">الجمعة 07 أغسطس</div>
+              </div>
+            </article>
+          </div>
+
+          <div class="col-6 col-lg-3">
+            <article class="event-card" data-event-id="7">
+              <a href="#" class="event-card-media">
+                <img
+                  src="assets/images/placeholder.png"
+                  alt="لاين اب تقدم تجارب أداء كوميدي لاب في جدة"
+                />
+                <button
+                  type="button"
+                  class="favorite-btn"
+                  aria-label="أضف إلى المفضلة"
+                  data-favorited="false"
+                >
+                  <img
+                    src="assets/icons/icon-heart.svg"
+                    alt=""
+                    width="20"
+                    height="18"
+                  />
+                </button>
+              </a>
+              <div class="event-card-body">
+                <a href="#" class="event-card-title text-decoration-none"
+                  >لاين اب تقدم تجارب أداء كوميدي لاب في جدة</a
+                >
+                <div class="event-card-meta">
+                  <span class="event-card-price-label text-success"
+                    >الدخول مجاني</span
+                  >
+                </div>
+              </div>
+            </article>
+          </div>
+
+          <div class="col-6 col-lg-3">
+            <article class="event-card" data-event-id="8">
+              <a href="#" class="event-card-media">
+                <img
+                  src="assets/images/placeholder.png"
+                  alt="بي دي هاوس في جدة | 23 يوليو"
+                />
+                <button
+                  type="button"
+                  class="favorite-btn"
+                  aria-label="أضف إلى المفضلة"
+                  data-favorited="false"
+                >
+                  <img
+                    src="assets/icons/icon-heart.svg"
+                    alt=""
+                    width="20"
+                    height="18"
+                  />
+                </button>
+                <span class="badge-new">جديد</span>
+              </a>
+              <div class="event-card-body">
+                <a href="#" class="event-card-title text-decoration-none"
+                  >بي دي هاوس في جدة | 23 يوليو</a
+                >
+                <div class="event-card-meta">
+                  <span class="event-card-price">31.59 USD</span>
+                  <span class="event-card-price-label text-brand-green"
+                    >تذاكر الحجز المسبق</span
+                  >
+                </div>
+                <div class="event-card-date">الخميس 23 يوليو</div>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <!-- Pagination -->
+        <nav class="pagination-row" aria-label="ترقيم الصفحات">
+          <a href="#" class="pagination-arrow disabled" aria-disabled="true">
+            <i class="bi bi-chevron-right small"></i>
+            السابق
+          </a>
+          <div class="pagination-pages">
+            <a href="#" class="pagination-page active" aria-current="page">1</a>
+            <a href="#" class="pagination-page">2</a>
+            <a href="#" class="pagination-page">3</a>
+          </div>
+          <a href="#" class="pagination-arrow">
+            التالي
+            <i class="bi bi-chevron-left small"></i>
+          </a>
+        </nav>
+      </section>
+    </main>
+
+    <!-- ============================================================
+       FOOTER
+       ============================================================ -->
+    <footer class="site-footer border-top">
+      <div class="container-xl py-5">
+        <div
+          class="d-flex justify-content-between align-items-start flex-wrap gap-4 pb-5 border-bottom"
+        >
+          <div class="text-lg-start">
+            <a
+              href="index.html"
+              class="site-logo d-flex align-items-center gap-2 justify-content-lg-start text-decoration-none mb-2"
+            >
+              <img
+                src="assets/icons/footer-logo-mark.svg"
+                alt=""
+                width="40"
+                height="40"
+              />
+              <span class="site-logo-text">تيكت فلو</span>
+            </a>
+            <p class="text-muted small mb-0">
+              منصة اكتشاف وتسويق المحتوى الترفيهي
+            </p>
+          </div>
+
+          <div class="d-flex gap-3 footer-social">
+            <a href="#" aria-label="Telegram"
+              ><img
+                src="assets/icons/social-telegram.svg"
+                alt=""
+                width="16"
+                height="16"
+            /></a>
+            <a href="#" aria-label="X (Twitter)"
+              ><img
+                src="assets/icons/social-x.svg"
+                alt=""
+                width="16"
+                height="16"
+            /></a>
+            <a href="#" aria-label="Facebook"
+              ><img
+                src="assets/icons/social-facebook.svg"
+                alt=""
+                width="16"
+                height="16"
+            /></a>
+            <a href="#" aria-label="Instagram"
+              ><img
+                src="assets/icons/social-instagram.svg"
+                alt=""
+                width="16"
+                height="16"
+            /></a>
+          </div>
+        </div>
+
+        <div class="row g-4 pt-5">
+          <div class="col-6 col-lg-3">
+            <h5 class="footer-heading">الفئات</h5>
+            <ul class="footer-list">
+              <li><a href="#">أبرز الفعاليات</a></li>
+              <li><a href="#">المعالم السياحية المميزة</a></li>
+              <li><a href="#">دليل الفعاليات العربية</a></li>
+              <li><a href="#">الحفلات الموسيقية</a></li>
+              <li><a href="#">الحفلات العربية</a></li>
+              <li><a href="#">أنشطة في الهواء الطلق</a></li>
+              <li><a href="#">اظهار الكل</a></li>
+            </ul>
+          </div>
+          <div class="col-6 col-lg-3">
+            <h5 class="footer-heading">من نحن</h5>
+            <ul class="footer-list">
+              <li><a href="#">انضم لفريقنا</a></li>
+              <li><a href="#">الشعار</a></li>
+              <li><a href="#">مدونة تيكت فلو</a></li>
+              <li><a href="#">آخر الأخبار</a></li>
+              <li><a href="#">الشروط والأحكام</a></li>
+              <li><a href="#">مركز المساعدة</a></li>
+              <li><a href="#">خريطة الموقع</a></li>
+            </ul>
+          </div>
+          <div class="col-6 col-lg-3">
+            <h5 class="footer-heading">للمنظمين</h5>
+            <ul class="footer-list">
+              <li><a href="#">نظرة عامة</a></li>
+              <li><a href="#">بيع التذاكر في المملكة العربية السعودية</a></li>
+              <li><a href="#">الفعاليات الترفيهية</a></li>
+              <li><a href="#">المغامرات والتجارب الاستثنائية</a></li>
+              <li><a href="#">فعاليات قطاع الأعمال</a></li>
+              <li><a href="#">الأنشطة والأحداث الرياضية</a></li>
+              <li><a href="#">حلول تذاكر أماكن الفعاليات</a></li>
+              <li><a href="#">مميزات التذاكر</a></li>
+              <li><a href="#">دليل المنظمين</a></li>
+            </ul>
+          </div>
+          <div class="col-6 col-lg-3">
+            <h5 class="footer-heading">الخدمات</h5>
+            <ul class="footer-list">
+              <li><a href="#">خدمات إدارة الفعاليات</a></li>
+              <li><a href="#">خدمات التسويق</a></li>
+              <li><a href="#">فريق إدارة التذاكر للفعالية</a></li>
+              <li><a href="#">طباعة التذاكر</a></li>
+              <li><a href="#">خدمة إصدار الترخيص بشكل سريع</a></li>
+            </ul>
+            <a
+              href="#"
+              class="btn btn-outline-dark btn-sm rounded-3 mt-2 fw-bold"
+              >إضافة فعالية</a
+            >
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Bootstrap 5 JS bundle (includes Popper) -->
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/main.js"></script>
+  </body>
+</html>

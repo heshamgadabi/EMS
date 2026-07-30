@@ -1,0 +1,2502 @@
+/* ==========================================================================
+   Ticket Flow — Homepage
+   Design tokens pulled from Figma (Ticket Flow, node 1:2 "Homepage").
+   Bootstrap 5 handles grid/layout/components; this file only carries the
+   values Bootstrap doesn't know about (brand colors, card visuals, fonts).
+   ========================================================================== */
+
+/* Design's brand typeface, full weight range. One family name, each weight
+   pointing at its own file — `font-weight: 600` etc. resolves to the real
+   Semibold/Bold/etc. face instead of a synthetic (faux) bold. */
+@font-face {
+  font-family: "Graphik Arabic";
+  src: url("../assets/fonts/graphik-arabic-thin.otf") format("opentype");
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Graphik Arabic";
+  src: url("../assets/fonts/graphik-arabic-extralight.otf") format("opentype");
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Graphik Arabic";
+  src: url("../assets/fonts/graphik-arabic-light.otf") format("opentype");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Graphik Arabic";
+  src: url("../assets/fonts/graphik-arabic-regular.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Graphik Arabic";
+  src: url("../assets/fonts/graphik-arabic-medium.otf") format("opentype");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Graphik Arabic";
+  src: url("../assets/fonts/graphik-arabic-semibold.otf") format("opentype");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Graphik Arabic";
+  src: url("../assets/fonts/graphik-arabic-bold.otf") format("opentype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Graphik Arabic";
+  src: url("../assets/fonts/graphik-arabic-black.otf") format("opentype");
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Graphik Arabic";
+  src: url("../assets/fonts/graphik-arabic-super.otf") format("opentype");
+  font-weight: 950;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  /* Brand colors */
+  --tf-text: #0f0f15; /* primary text */
+  --tf-text-muted: #6e6e81; /* secondary text */
+  --tf-text-muted-2: #62626a; /* secondary text (ticket-selection page) */
+  --tf-text-logo: #14262c; /* logo wordmark */
+  --tf-green: #30bb47; /* price / availability label text */
+  --tf-green-badge: #47d28f; /* "new" / "exclusive" badge background */
+  --tf-blue: #1ac6ff; /* promo strip city highlight */
+  --tf-border: rgba(153, 153, 172, 0.16);
+  --tf-card-border: #eaebed; /* ticket card / sticky bar borders */
+  --tf-counter-bg: #f0f2f5; /* quantity stepper pill background */
+  --tf-media-bg: #e9e9e9; /* image placeholder background */
+  --tf-input-bg: #f5f5f8;
+
+  --tf-font: "Graphik Arabic", "Tajawal", "Segoe UI", Tahoma, sans-serif;
+  --tf-radius-lg: 24px;
+  --tf-radius-md: 12px;
+}
+
+body {
+  font-family: var(--tf-font);
+  color: var(--tf-text);
+  background-color: #fff;
+}
+
+a {
+  color: inherit;
+}
+
+.dropdown-item.active,
+.dropdown-item:active {
+  background-color: var(--tf-green-badge);
+}
+
+.text-brand-green {
+  color: var(--tf-green) !important;
+}
+
+.section-heading {
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.section-heading a,
+.section-link {
+  transition: color 0.15s ease;
+}
+
+.section-heading a:hover,
+.section-link:hover {
+  color: var(--tf-green) !important;
+}
+
+.site-logo {
+  transition: opacity 0.15s ease;
+}
+
+.site-logo:hover {
+  opacity: 0.8;
+}
+
+.section-heading--s {
+  font-size: 1.4rem;
+}
+
+@media (max-width: 575.98px) {
+  .section-heading {
+    font-size: 1.25rem;
+  }
+}
+
+/* ==========================================================================
+   Header
+   ========================================================================== */
+
+.site-logo-text {
+  font-size: 1.375rem;
+  font-weight: 600;
+  color: var(--tf-text-logo);
+  white-space: nowrap;
+}
+
+/* Avatar SVG is just a white silhouette — it's meant to sit on a solid circle.
+   Bootstrap's .btn-link:hover/:focus/:active/.show rules are more specific
+   than a single class here and reset background-color to transparent, which
+   erases the circle and leaves the white icon invisible on the white header —
+   so every interactive state needs the same background pinned explicitly.
+   (.show is the class Bootstrap adds to the toggle button while its dropdown
+   is open, which is when :active would otherwise have applied.) */
+.btn-account,
+.btn-account:hover,
+.btn-account:focus,
+.btn-account:active,
+.btn-account.show {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #c4c4c4 !important;
+  border: none !important;
+  box-shadow:
+    0px 2px 4px rgba(0, 0, 0, 0.04),
+    0px 0px 4px rgba(0, 0, 0, 0.06);
+  transition: background-color 0.15s ease;
+}
+
+.btn-account:hover,
+.btn-account:focus,
+.btn-account:active,
+.btn-account.show {
+  background-color: #b0b0b0 !important;
+}
+
+/* Desktop-only (lg+) fixed pill width right next to the logo. */
+.header-search-wrap {
+  width: 420px;
+}
+
+/* Row 1 only ever holds logo + toggler below lg, so gap barely matters
+   there; from lg up it also holds .header-actions. */
+.header-row-1 {
+  column-gap: 1rem;
+}
+
+@media (min-width: 992px) {
+  .header-row-1 {
+    column-gap: 2rem;
+  }
+}
+
+/* Desktop action cluster (search/city/currency/account): grows to fill the
+   row so the currency block's ms-auto can push it — plus account — to the
+   far edge, away from logo/search/city. */
+.header-actions {
+  flex-grow: 1;
+  column-gap: 2rem;
+}
+
+/* Mobile menu toggler — plain icon, no button chrome */
+.header-menu-toggle {
+  background: none;
+  border: none;
+  padding: 0.25rem;
+  font-size: 1.5rem;
+  line-height: 1;
+  color: var(--tf-text);
+  transition: color 0.15s ease;
+}
+
+.header-menu-toggle:hover,
+.header-menu-toggle:focus {
+  color: var(--tf-green);
+}
+
+/* Currency/language toggle */
+.header-actions .btn-link {
+  transition: color 0.15s ease;
+}
+
+.header-actions .btn-link:hover,
+.header-actions .btn-link:focus,
+.header-actions .btn-link.show {
+  color: var(--tf-green) !important;
+}
+
+/* Dropdown menus (currency, account, nav submenus) */
+.dropdown-item:hover,
+.dropdown-item:focus {
+  color: var(--tf-green);
+  background-color: var(--tf-input-bg);
+}
+
+/* ==========================================================================
+   Mobile off-canvas menu
+   ========================================================================== */
+
+/* Set the variable Bootstrap's own .offcanvas.offcanvas-end rule reads,
+   rather than a plain `width` — that rule carries two classes' worth of
+   specificity (.offcanvas.offcanvas-end) and beats a single-class override. */
+.mobile-menu {
+  --bs-offcanvas-width: 90vw;
+}
+
+.offcanvas-backdrop.show {
+  opacity: 0.4;
+}
+
+.mobile-menu .nav-link {
+  padding: 0.75rem 0;
+  color: var(--tf-text);
+}
+
+.mobile-menu .bi-chevron-down {
+  transition: transform 0.2s ease;
+}
+
+.mobile-menu [aria-expanded="true"] .bi-chevron-down {
+  transform: rotate(180deg);
+}
+
+.header-search .input-group {
+  border-radius: 9999px;
+  overflow: hidden;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  transition: border-color 0.15s ease;
+}
+
+.header-search .input-group:hover,
+.header-search .input-group:focus-within {
+  border-color: var(--tf-green);
+}
+
+.header-search .input-group-text,
+.header-search .form-control {
+  background-color: transparent;
+  border: none;
+  padding-top: 0.7rem;
+  padding-bottom: 0.7rem;
+}
+
+.header-search .input-group-text {
+  padding-inline-start: 0.4rem;
+  padding-inline-end: 1.1rem;
+}
+
+.header-search .form-control {
+  padding-inline-start: 1.1rem;
+  padding-inline-end: 0;
+}
+
+.header-search .form-control:focus {
+  box-shadow: none;
+}
+
+.site-header .navbar-nav .nav-link {
+  color: var(--tf-text);
+  padding: 0.5rem 0 1rem 0;
+}
+
+/* Primary nav links — desktop row 2 and the off-canvas menu list. Placed
+   after the rules above: both are 3-class-equivalent specificity, so a
+   :hover block declared earlier would lose the tie to the always-on base
+   color rule and never visibly apply. */
+.site-header .navbar-nav .nav-link,
+.mobile-menu .nav-link {
+  transition: color 0.15s ease;
+}
+
+.site-header .navbar-nav .nav-link:hover,
+.site-header .navbar-nav .nav-link:focus,
+.site-header .navbar-nav .nav-link.show,
+.mobile-menu .nav-link:hover,
+.mobile-menu .nav-link:focus,
+.mobile-menu .nav-link.show {
+  color: var(--tf-green) !important;
+}
+
+.badge-plus {
+  font-size: 0.75rem;
+  font-weight: 700;
+  border: 1px solid var(--tf-text);
+  border-radius: 6px;
+  padding: 1px 7px;
+  line-height: 1.4;
+}
+
+.promo-strip {
+  font-size: 2rem;
+}
+
+@media (max-width: 575.98px) {
+  .promo-strip {
+    font-size: 1.125rem;
+  }
+}
+
+.promo-strip-city {
+  color: var(--tf-blue);
+  background: none;
+  border: 0;
+  padding: 0;
+  font: inherit;
+  font-weight: inherit;
+  transition: opacity 0.15s ease;
+}
+
+.promo-strip-city:hover {
+  opacity: 0.75;
+}
+
+.promo-strip-calendar-btn {
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+  border: 1px solid var(--tf-border);
+  background-color: #fff;
+  color: var(--tf-text);
+  font-size: 1.125rem;
+}
+
+.promo-strip-calendar-btn:hover {
+  background-color: var(--tf-input-bg);
+}
+
+/* ==========================================================================
+   Hero carousel
+   ========================================================================== */
+
+.hero-slide {
+  position: relative;
+  display: block;
+  height: 450px;
+  border-radius: 30px;
+  overflow: hidden;
+  background-color: var(--tf-media-bg);
+}
+
+@media (max-width: 575.98px) {
+  .hero-slide {
+    height: 280px;
+  }
+}
+
+.hero-slide-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero-carousel .carousel-indicators {
+  display: none;
+}
+
+.hero-carousel .carousel-control-prev,
+.hero-carousel .carousel-control-next {
+  top: auto;
+  bottom: 24px;
+  height: auto;
+  width: auto;
+  opacity: 1;
+}
+
+.hero-arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+  color: var(--tf-text);
+  font-size: 1.1rem;
+  transition: background-color 0.15s ease;
+}
+
+.hero-carousel .carousel-control-prev:hover .hero-arrow,
+.hero-carousel .carousel-control-next:hover .hero-arrow {
+  background-color: var(--tf-input-bg);
+}
+
+.hero-carousel .carousel-control-prev {
+  right: calc(50% - 65px);
+  left: auto;
+}
+
+.hero-carousel .carousel-control-next {
+  left: calc(50% - 65px);
+  right: auto;
+}
+
+/* ==========================================================================
+   Event cards
+   ========================================================================== */
+
+.event-card {
+  display: block;
+}
+
+.event-card-media {
+  position: relative;
+  display: block;
+  border-radius: var(--tf-radius-md);
+  overflow: hidden;
+  background-color: var(--tf-media-bg);
+  aspect-ratio: 269 / 149;
+}
+
+.event-card-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.favorite-btn {
+  position: absolute;
+  top: 8px;
+  inset-inline-end: 8px;
+  width: 24px;
+  height: 22px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.favorite-btn img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition: transform 0.15s ease;
+}
+
+.favorite-btn:hover img {
+  transform: scale(1.1);
+}
+
+.badge-new {
+  position: absolute;
+  top: 8px;
+  inset-inline-start: 8px;
+  background: var(--tf-green-badge);
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 5px 12px;
+  border-radius: 28px;
+  line-height: 1;
+}
+
+.event-card-body {
+  padding-top: 16px;
+}
+
+.event-card-title {
+  display: block;
+  font-weight: 700;
+  font-size: 1.125rem;
+  color: var(--tf-text);
+  margin-bottom: 8px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  transition: all 0.3s ease-in-out;
+}
+
+.event-card-title:hover {
+  color: var(--tf-green);
+}
+
+.event-card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-size: 0.875rem;
+  margin-bottom: 4px;
+}
+
+.event-card-price {
+  color: var(--tf-text);
+}
+
+.event-card-date {
+  font-size: 0.875rem;
+  color: var(--tf-text-muted);
+}
+
+/* ==========================================================================
+   Exclusive banner
+   ========================================================================== */
+
+.exclusive-banner {
+  display: flex;
+  flex-wrap: wrap;
+  border: 1px solid #ecedf2;
+  border-radius: var(--tf-radius-lg);
+  overflow: hidden;
+  text-decoration: none;
+}
+
+.exclusive-banner-media {
+  position: relative;
+  flex: 1 1 320px;
+  background-color: var(--tf-media-bg);
+  min-height: 220px;
+}
+
+.exclusive-banner-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.badge-new-exclusive {
+  top: 16px;
+}
+
+.exclusive-banner-body {
+  flex: 1 1 320px;
+  padding: 32px 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 12px;
+}
+
+.exclusive-banner-title {
+  font-weight: 700;
+  font-size: 1.75rem;
+  margin: 0 0 1rem 0;
+  transition: all 0.3s ease-in-out;
+}
+
+.exclusive-banner-title:hover {
+  color: var(--tf-green);
+}
+
+.exclusive-banner-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  font-size: 1rem;
+  color: var(--tf-text);
+}
+
+/* ==========================================================================
+   Categories
+   ========================================================================== */
+
+.category-row {
+  display: flex;
+  gap: 28px;
+}
+
+.category-item {
+  flex: 1 1 0;
+  min-width: 0;
+  max-width: 142px;
+  text-align: center;
+}
+
+.category-item img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  object-fit: cover;
+  background-color: var(--tf-media-bg);
+  margin-bottom: 16px;
+}
+
+@media (max-width: 575.98px) {
+  .category-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+    gap: 20px 16px;
+  }
+
+  .category-item {
+    max-width: none;
+  }
+}
+
+.category-item span {
+  display: block;
+  font-weight: 700;
+  color: var(--tf-text);
+  transition: color 0.15s ease;
+}
+
+.category-item:hover span {
+  color: var(--tf-green);
+}
+
+.btn-show-more {
+  min-width: 280px;
+  border-radius: 12px;
+  padding: 0.75rem 1.5rem;
+  font-weight: 600;
+}
+
+/* ==========================================================================
+   Features / trust + payment methods
+   ========================================================================== */
+
+.feature-item img {
+  margin-bottom: 12px;
+}
+
+.feature-item h4 {
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.feature-item p {
+  font-size: 0.875rem;
+  color: var(--tf-text-muted);
+  margin-bottom: 0;
+}
+
+.payment-heading {
+  font-size: 1.375rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+}
+
+.payment-methods img {
+  object-fit: contain;
+}
+
+/* ==========================================================================
+   Footer
+   ========================================================================== */
+
+.footer-heading {
+  font-size: 0.875rem;
+  font-weight: 700;
+  text-transform: lowercase;
+  margin-bottom: 12px;
+}
+
+.footer-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-list li {
+  margin-bottom: 8px;
+}
+
+.footer-list a {
+  font-size: 0.8125rem;
+  color: var(--tf-text-muted);
+  text-decoration: none;
+}
+
+.footer-list a:hover {
+  color: var(--tf-text);
+  text-decoration: underline;
+}
+
+.footer-social a {
+  display: inline-flex;
+  transition: transform 0.15s ease;
+}
+
+.footer-social a:hover {
+  transform: translateY(-3px);
+}
+
+.footer-social img {
+  opacity: 0.85;
+  object-fit: contain;
+  transition:
+    opacity 0.15s ease,
+    transform 0.15s ease;
+}
+
+.footer-social a:hover img {
+  opacity: 1;
+  transform: scale(1.15);
+}
+
+/* ==========================================================================
+   Event list page
+   Design tokens pulled from Figma (Ticket Flow, node 12:992 "event-list-page").
+   ========================================================================== */
+
+.breadcrumbs {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  row-gap: 4px;
+  gap: 8px;
+  font-size: 0.875rem;
+}
+
+.breadcrumb-current {
+  color: var(--tf-green-badge);
+  font-weight: 600;
+}
+
+.breadcrumb-sep,
+.breadcrumb-link {
+  color: var(--tf-text-muted);
+}
+
+.breadcrumb-link {
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.breadcrumb-link:hover {
+  color: var(--tf-text);
+}
+
+.page-title-block {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.page-title-bar {
+  width: 4px;
+  height: 32px;
+  border-radius: 2px;
+  background: var(--tf-green-badge);
+  flex-shrink: 0;
+}
+
+.page-title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+@media (max-width: 575.98px) {
+  .page-title {
+    font-size: 1.375rem;
+  }
+}
+
+.filter-panel {
+  background: var(--tf-input-bg);
+  border-radius: 20px;
+  padding: 24px;
+}
+
+.filter-panel-row {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.filter-search {
+  flex: 1 1 240px;
+  height: 48px;
+  background: #fff;
+  border: 1px solid var(--tf-border);
+  border-radius: 12px;
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.filter-search input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 0.875rem;
+  text-align: right;
+  color: var(--tf-text);
+}
+
+.filter-search input::placeholder {
+  color: var(--tf-text-muted);
+}
+
+.filter-search .bi-search {
+  color: var(--tf-text-muted);
+}
+
+.filter-sort {
+  flex-shrink: 0;
+  width: 200px;
+}
+
+.filter-sort > .btn {
+  height: 48px;
+  background: #fff;
+  border: 1px solid var(--tf-border);
+  border-radius: 12px;
+  padding: 0 16px;
+  font-size: 0.875rem;
+  color: var(--tf-text);
+}
+
+.filter-sort > .btn:hover,
+.filter-sort > .btn:focus {
+  border-color: var(--tf-green);
+}
+
+.filter-sort .dropdown-menu {
+  width: 100%;
+}
+
+@media (max-width: 575.98px) {
+  .filter-sort {
+    width: 100%;
+  }
+}
+
+.category-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  width: 100%;
+}
+
+.category-chip {
+  background: var(--tf-input-bg);
+  color: var(--tf-text-muted);
+  border: none;
+  border-radius: 30px;
+  padding: 10px 20px;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease;
+}
+
+.category-chip:hover {
+  background-color: #ebebef;
+}
+
+.category-chip.active {
+  background: var(--tf-green-badge);
+  color: var(--tf-text-logo);
+  font-weight: 600;
+}
+
+.results-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.results-count {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--tf-text-muted);
+}
+
+.results-count-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--tf-green-badge);
+  flex-shrink: 0;
+}
+
+.clear-filters-link {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--tf-blue);
+  text-decoration: none;
+}
+
+.clear-filters-link:hover {
+  text-decoration: underline;
+}
+
+.pagination-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  flex-wrap: wrap;
+  padding: 40px 0 20px;
+}
+
+.pagination-pages {
+  display: flex;
+  gap: 8px;
+}
+
+.pagination-page {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--tf-input-bg);
+  color: var(--tf-text);
+  font-size: 0.875rem;
+  text-decoration: none;
+  transition: background-color 0.15s ease;
+}
+
+.pagination-page:hover {
+  background-color: #ebebef;
+}
+
+.pagination-page.active {
+  background: var(--tf-green-badge);
+  color: var(--tf-text-logo);
+  font-weight: 700;
+}
+
+.pagination-arrow {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  border: 1px solid var(--tf-border);
+  border-radius: 8px;
+  padding: 10px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--tf-text);
+  text-decoration: none;
+  transition: background-color 0.15s ease;
+}
+
+.pagination-arrow:hover {
+  background-color: var(--tf-input-bg);
+}
+
+.pagination-arrow.disabled {
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+/* ==========================================================================
+   Event details page
+   Design tokens pulled from Figma (Ticket Flow, node 1:2737 "Body [body-fixed-header]").
+   ========================================================================== */
+
+.event-detail-actions {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.favorite-toggle-link,
+.event-share-link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.875rem;
+  color: var(--tf-text);
+  text-decoration: none;
+  background: none;
+  border: none;
+  padding: 0;
+  transition: color 0.15s ease;
+}
+
+.share-menu {
+  min-width: 200px;
+}
+
+.share-menu img {
+  object-fit: contain;
+}
+
+.favorite-toggle-link:hover,
+.event-share-link:hover {
+  color: var(--tf-green);
+}
+
+.favorite-toggle-link img {
+  transition: transform 0.15s ease;
+}
+
+.favorite-toggle-link:hover img {
+  transform: scale(1.1);
+}
+
+.event-venue-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 1rem;
+  color: var(--tf-blue);
+  text-decoration: none;
+}
+
+.event-venue-link:hover {
+  text-decoration: underline;
+}
+
+.event-section-heading {
+  font-size: 1.375rem;
+  font-weight: 700;
+  margin: 0 0 1rem 0;
+}
+
+.event-section-more-link {
+  font-size: 0.875rem;
+  color: var(--tf-blue);
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.event-section-more-link:hover {
+  text-decoration: underline;
+}
+
+.event-description p {
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: var(--tf-text);
+}
+
+.event-description-subheading {
+  font-size: 0.875rem;
+  font-weight: 700;
+  margin: 1rem 0 0.5rem;
+}
+
+.event-terms-list {
+  margin: 0;
+  padding-inline-start: 1.1rem;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: var(--tf-text);
+}
+
+.event-terms-list li {
+  margin-bottom: 0.5rem;
+}
+
+.gallery-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.gallery-thumb {
+  display: block;
+  width: 135px;
+  height: 135px;
+  border-radius: var(--tf-radius-md);
+  overflow: hidden;
+  background-color: var(--tf-media-bg);
+  flex-shrink: 0;
+}
+
+.gallery-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+@media (max-width: 575.98px) {
+  .gallery-row {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .gallery-thumb {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1 / 1;
+  }
+}
+
+.location-card {
+  position: relative;
+  background: var(--tf-input-bg);
+  border-radius: var(--tf-radius-md);
+  padding: 24px;
+  padding-inline-start: 152px;
+}
+
+.location-card-badge {
+  position: absolute;
+  top: 12px;
+  inset-inline-start: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  min-width: 96px;
+  background: #fff;
+  border-radius: var(--tf-radius-md);
+  padding: 10px 16px;
+  text-align: center;
+  box-shadow:
+    0px 0px 2px rgba(131, 23, 151, 0.16),
+    0px 2px 5px rgba(131, 23, 151, 0.04);
+}
+
+.location-card-badge-title {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--tf-text);
+}
+
+.location-card-badge-subtitle {
+  font-size: 0.75rem;
+  color: var(--tf-text-muted);
+}
+
+.location-card-title {
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0 0 4px;
+}
+
+.location-card-address {
+  font-size: 0.875rem;
+  margin: 0 0 12px;
+}
+
+.location-directions-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.875rem;
+  color: var(--tf-text);
+  text-decoration: none;
+}
+
+.location-directions-link:hover {
+  color: var(--tf-green);
+}
+
+.location-map {
+  display: block;
+  width: 100%;
+  height: 240px;
+  object-fit: cover;
+  border-radius: var(--tf-radius-md);
+  background-color: var(--tf-media-bg);
+}
+
+.event-card-price-label {
+  font-weight: 600;
+}
+
+/* Sidebar: sticky so the buy box stays visible while the main column scrolls */
+@media (min-width: 992px) {
+  .event-detail-sidebar {
+    position: sticky;
+    top: calc(119px + 24px);
+  }
+}
+
+.buy-box {
+  background: rgba(71, 210, 143, 0.13);
+  border-radius: var(--tf-radius-md);
+  padding: 24px;
+}
+
+.buy-box-tag {
+  display: block;
+  font-size: 0.875rem;
+  color: var(--tf-green);
+  margin-bottom: 12px;
+}
+
+.buy-box-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.buy-box-cta {
+  background: var(--tf-green-badge);
+  color: var(--tf-text-logo);
+  font-weight: 600;
+  font-size: 1.125rem;
+  border-radius: 8px;
+  padding: 13px 24px;
+}
+
+.buy-box-cta:hover {
+  background-color: #34c07f;
+  color: var(--tf-text-logo);
+}
+
+.buy-box-price-block {
+  display: flex;
+  flex-direction: column;
+}
+
+.buy-box-price-label {
+  font-size: 0.875rem;
+  color: var(--tf-text-muted);
+}
+
+.buy-box-price {
+  font-size: 1.625rem;
+  font-weight: 500;
+}
+
+.safe-tickets-card {
+  background: #fff;
+  border: 1px solid var(--tf-border);
+  border-radius: var(--tf-radius-md);
+  padding: 16px;
+}
+
+.safe-tickets-heading {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 600;
+  font-size: 0.875rem;
+  color: #ff661a;
+  margin-bottom: 8px;
+}
+
+.safe-tickets-text {
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  color: var(--tf-text-muted);
+  margin: 0;
+}
+
+/* Gallery thumbnails double as lightbox triggers (see gallery-lightbox below);
+   the pointer cursor signals that even though they're rendered as plain tiles. */
+.gallery-thumb {
+  cursor: pointer;
+}
+
+/* ==========================================================================
+   Gallery lightbox
+   ========================================================================== */
+
+.gallery-lightbox .modal-content {
+  background: rgba(15, 15, 21, 0.96);
+  border: none;
+  border-radius: 0;
+}
+
+.gallery-lightbox .modal-body {
+  position: relative;
+  padding: 24px;
+}
+
+.gallery-lightbox-img {
+  max-width: min(80vw, 1100px);
+  max-height: 80vh;
+  object-fit: contain;
+  border-radius: var(--tf-radius-md);
+  background-color: var(--tf-media-bg);
+}
+
+.gallery-lightbox-close {
+  position: absolute;
+  top: 24px;
+  inset-inline-end: 24px;
+  z-index: 1;
+  opacity: 1;
+}
+
+/* Absolutely positioned (like .hero-carousel's controls) so they anchor to
+   the modal edges instead of competing with the image for flex space —
+   on narrow viewports a flex-flow arrow would get squeezed off-screen. */
+.gallery-lightbox-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+  font-size: 1.25rem;
+  transition: background-color 0.15s ease;
+}
+
+.gallery-lightbox-prev {
+  inset-inline-start: 16px;
+}
+
+.gallery-lightbox-next {
+  inset-inline-end: 16px;
+}
+
+@media (max-width: 575.98px) {
+  .gallery-lightbox-arrow {
+    width: 40px;
+    height: 40px;
+    font-size: 1rem;
+  }
+}
+
+.gallery-lightbox-arrow:hover {
+  background: rgba(255, 255, 255, 0.24);
+}
+
+.gallery-lightbox-counter {
+  position: absolute;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.875rem;
+}
+
+/* ==========================================================================
+   Ticket selection page
+   Design tokens pulled from Figma (Ticket Flow, node 11:1668 "ticket-selection-page").
+   ========================================================================== */
+
+.ticket-page-section {
+  padding-top: 60px;
+  /* Clears the fixed .ticket-sticky-bar so it never covers the last card. */
+  padding-bottom: 130px;
+}
+
+.ticket-page-back-link {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  text-decoration: none;
+  color: inherit;
+  transition: opacity 0.15s ease;
+}
+
+.ticket-page-back-link:hover {
+  opacity: 0.8;
+}
+
+.ticket-page-title-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+}
+
+.ticket-page-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--tf-text);
+  margin: 0;
+}
+
+@media (max-width: 575.98px) {
+  .ticket-page-title {
+    font-size: 1.125rem;
+  }
+}
+
+.ticket-page-location {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--tf-text-muted-2);
+}
+
+.ticket-page-chevron {
+  flex-shrink: 0;
+}
+
+.ticket-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.ticket-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 24px;
+  background: #fff;
+  border: 1px solid var(--tf-card-border);
+  border-radius: var(--tf-radius-lg);
+  padding: 32px;
+}
+
+@media (max-width: 575.98px) {
+  .ticket-card {
+    padding: 20px;
+  }
+}
+
+.ticket-card-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  text-align: right;
+}
+
+.ticket-card-name {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--tf-text);
+  margin: 0;
+}
+
+.ticket-card-subtitle {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--tf-text-muted-2);
+  margin: 0;
+}
+
+.ticket-card-price {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--tf-text);
+  margin: 0;
+}
+
+.ticket-counter {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  flex-shrink: 0;
+  background: var(--tf-counter-bg);
+  border-radius: var(--tf-radius-md);
+  padding: 12px 20px;
+}
+
+.ticket-counter-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--tf-text);
+  transition: opacity 0.15s ease;
+}
+
+.ticket-counter-btn:hover {
+  opacity: 0.65;
+}
+
+.ticket-counter-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.ticket-counter-value {
+  min-width: 1ch;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--tf-text);
+  text-align: center;
+}
+
+/* ==========================================================================
+   Sticky bottom bar (payment CTA, countdown, order summary)
+   ========================================================================== */
+
+.ticket-sticky-bar {
+  position: fixed;
+  inset-inline: 0;
+  bottom: 0;
+  z-index: 1030;
+  background: #fff;
+  border-top: 1px solid var(--tf-card-border);
+  box-shadow: 0px -4px 8px rgba(0, 0, 0, 0.04);
+}
+
+.ticket-sticky-bar-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.ticket-order-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+  border: 1px solid var(--tf-card-border);
+  border-radius: var(--tf-radius-md);
+  padding: 12px 16px;
+}
+
+.ticket-order-badge-label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--tf-text);
+  white-space: nowrap;
+}
+
+.ticket-tag {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.ticket-tag-count {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: #ff661a;
+}
+
+.ticket-timer-group {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.9375rem;
+  white-space: nowrap;
+}
+
+.ticket-timer-value {
+  font-weight: 600;
+  color: var(--tf-text);
+}
+
+.ticket-timer-label {
+  font-weight: 500;
+  color: var(--tf-text-muted-2);
+}
+
+.ticket-pay-actions {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-shrink: 0;
+}
+
+.ticket-pay-total {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--tf-text);
+  white-space: nowrap;
+}
+
+.ticket-pay-btn {
+  background: var(--tf-green-badge);
+  color: var(--tf-text-logo);
+  font-weight: 700;
+  font-size: 1rem;
+  border: none;
+  border-radius: var(--tf-radius-md);
+  padding: 16px 40px;
+  transition: background-color 0.15s ease;
+}
+
+.ticket-pay-btn:hover:not(:disabled) {
+  background-color: #34c07f;
+  color: var(--tf-text-logo);
+}
+
+.ticket-pay-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+@media (max-width: 767.98px) {
+  .ticket-sticky-bar-inner {
+    justify-content: center;
+    text-align: center;
+  }
+
+  .ticket-pay-actions {
+    order: -1;
+    flex-basis: 100%;
+    justify-content: center;
+  }
+}
+
+.ticket-page-footer {
+  padding-bottom: 110px;
+}
+
+@media (max-width: 767.98px) {
+  /* Sticky bar wraps to two rows at this breakpoint (pay row + timer/badge
+     row), so it's taller — bump clearance to match. */
+  .ticket-page-footer {
+    padding-bottom: 180px;
+  }
+}
+
+/* ==========================================================================
+   Payment page
+   Design tokens pulled from Figma (Ticket Flow, node 10:1252 "payment-event").
+   Reuses .ticket-sticky-bar / .ticket-page-footer from the ticket selection
+   page above for the bottom bar and footer clearance.
+   ========================================================================== */
+
+.payment-page-section {
+  padding-top: 60px;
+  /* Clears the fixed .ticket-sticky-bar so it never covers the last card. */
+  padding-bottom: 130px;
+}
+
+.payment-page-title-link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  color: inherit;
+  transition: opacity 0.15s ease;
+}
+
+.payment-page-title-link:hover {
+  opacity: 0.8;
+}
+
+.payment-page-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--tf-text);
+  margin: 0;
+}
+
+.payment-columns {
+  display: flex;
+  align-items: flex-start;
+  gap: 48px;
+}
+
+.payment-column {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-width: 0;
+}
+
+.payment-column-main {
+  flex: 1 1 0;
+  gap: 32px;
+}
+
+.payment-column-side {
+  flex: 0 1 483px;
+}
+
+@media (max-width: 991.98px) {
+  .payment-columns {
+    flex-direction: column;
+  }
+
+  .payment-column-side {
+    flex-basis: auto;
+    width: 100%;
+  }
+}
+
+.payment-block {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.payment-block-heading {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--tf-text);
+  text-align: right;
+  margin: 0;
+}
+
+/* Payment method card */
+
+.payment-method-card {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  background: #fff;
+  border: 1px solid var(--tf-border);
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.04);
+}
+
+.payment-method-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.payment-method-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--tf-text);
+}
+
+.payment-method-logos {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.payment-method-logos img {
+  object-fit: contain;
+}
+
+.payment-form-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.payment-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.payment-field-label {
+  font-size: 0.75rem;
+  color: var(--tf-text-muted);
+  text-align: right;
+}
+
+.payment-field-row {
+  display: flex;
+  gap: 16px;
+}
+
+.payment-input {
+  width: 100%;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  padding: 12px 16px;
+  font-size: 1rem;
+  font-family: inherit;
+  color: var(--tf-text);
+  background: #fff;
+  transition: border-color 0.15s ease;
+}
+
+.payment-input::placeholder {
+  color: var(--tf-text-muted);
+}
+
+.payment-input:focus {
+  outline: none;
+  border-color: var(--tf-green);
+}
+
+.payment-input-ltr {
+  text-align: left;
+}
+
+/* Custom checkbox: native input hidden, box + exported check icon styled
+   to match the design's filled/checked look. */
+
+.payment-checkbox {
+  position: relative;
+  display: inline-flex;
+  flex-shrink: 0;
+}
+
+.payment-checkbox input {
+  position: absolute;
+  inset: 0;
+  width: 20px;
+  height: 20px;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.payment-checkbox-box {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1.5px solid var(--tf-text);
+  border-radius: 4px;
+  background: transparent;
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.payment-checkbox-box img {
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+
+.payment-checkbox input:checked + .payment-checkbox-box {
+  background: var(--tf-text);
+  border-color: var(--tf-text);
+}
+
+.payment-checkbox input:checked + .payment-checkbox-box img {
+  opacity: 1;
+}
+
+.payment-checkbox-row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 8px;
+  font-size: 0.875rem;
+  color: var(--tf-text);
+  cursor: pointer;
+}
+
+/* Additional services (insurance opt-in) */
+
+.payment-insurance-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #fff;
+  border: 1px solid var(--tf-border);
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.payment-insurance-details {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+}
+
+.payment-info-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: none;
+  background: none;
+  line-height: 0;
+  color: inherit;
+}
+
+.payment-insurance-label {
+  font-weight: 600;
+  font-size: 0.875rem;
+  color: var(--tf-text);
+}
+
+/* Order summary card */
+
+.payment-summary-card {
+  width: 100%;
+  background: #fff;
+  border: 1px solid var(--tf-border);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.04);
+}
+
+.payment-summary-media {
+  height: 280px;
+  background-color: var(--tf-media-bg);
+}
+
+.payment-summary-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.payment-summary-body {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 24px;
+}
+
+.payment-summary-title-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  text-align: right;
+}
+
+.payment-summary-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--tf-text);
+  margin: 0;
+}
+
+.payment-summary-subtitle {
+  font-size: 0.875rem;
+  color: var(--tf-text-muted);
+  margin: 0;
+}
+
+.payment-summary-divider {
+  margin: 0;
+  border: none;
+  border-top: 1px solid var(--tf-border);
+}
+
+.payment-summary-datetime {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.875rem;
+  color: var(--tf-text);
+}
+
+.payment-summary-date {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.payment-summary-ticket {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  background: var(--tf-input-bg);
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.payment-summary-ticket-info {
+  text-align: right;
+}
+
+.payment-summary-ticket-name {
+  font-weight: 600;
+  font-size: 0.875rem;
+  color: var(--tf-text);
+  margin: 0 0 4px;
+}
+
+.payment-summary-ticket-desc {
+  font-size: 0.75rem;
+  color: var(--tf-text-muted);
+  margin: 0;
+}
+
+/* ==========================================================================
+   Profile page
+   Design tokens pulled from Figma (Ticket Flow, node 6:67 "user-profile-page").
+   ========================================================================== */
+
+.profile-page-section {
+  padding-top: 48px;
+  padding-bottom: 80px;
+}
+
+.profile-page-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--tf-text);
+  margin: 0 0 32px;
+  text-align: right;
+}
+
+@media (max-width: 575.98px) {
+  .profile-page-title {
+    font-size: 1.375rem;
+  }
+}
+
+.profile-columns {
+  display: flex;
+  align-items: flex-start;
+  gap: 48px;
+}
+
+@media (max-width: 991.98px) {
+  .profile-columns {
+    flex-direction: column;
+  }
+}
+
+/* Sidebar: profile card, wallet summary, account menu */
+.profile-sidebar {
+  flex: 0 0 320px;
+  width: 320px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  background: #fff;
+  border: 1px solid var(--tf-border);
+  border-radius: 16px;
+  padding: 24px;
+}
+
+@media (max-width: 991.98px) {
+  .profile-sidebar {
+    width: 100%;
+    flex: 1 1 auto;
+  }
+}
+
+.profile-avatar {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  flex-shrink: 0;
+}
+
+.profile-avatar-circle {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: var(--tf-input-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* Placeholder silhouette: avatar-default.svg is a solid white-fill shape, so
+   it's applied as a mask instead of an <img> — that lets it be tinted with
+   background-color (#c4c4c4, the same placeholder gray as the header's
+   .btn-account) instead of rendering white-on-white. */
+.profile-avatar-icon {
+  display: inline-block;
+  width: 60px;
+  height: 72px;
+  background-color: #c4c4c4;
+  -webkit-mask: url("../assets/icons/avatar-default.svg") no-repeat center /
+    contain;
+  mask: url("../assets/icons/avatar-default.svg") no-repeat center / contain;
+}
+
+/* Edit button sits at the visual right of the avatar. That's the *start*
+   edge in this RTL layout, so it's pinned with inset-inline-start (not
+   -end) — using -end here would flip it to the wrong side under RTL. */
+.profile-avatar-edit-btn {
+  position: absolute;
+  bottom: 0;
+  inset-inline-start: 0;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #ff5f00;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 0.9375rem;
+  transition: background-color 0.15s ease;
+}
+
+.profile-avatar-edit-btn:hover {
+  background-color: #e65500;
+}
+
+.profile-name-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+}
+
+.profile-name {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--tf-text);
+  margin: 0;
+  text-align: center;
+}
+
+.profile-membership-badge {
+  display: inline-flex;
+  align-items: center;
+  background: var(--tf-text-logo);
+  color: var(--tf-green-badge);
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 12px;
+}
+
+.profile-divider {
+  width: 100%;
+  height: 1px;
+  background: var(--tf-border);
+  opacity: 1;
+  border: none;
+  margin: 0;
+}
+
+/* No align-items override: children are width:100% and right-align their own
+   text, so the default (stretch) is what we want. align-items: flex-end
+   here would align to the *left* — it's a cross-axis value, and under
+   dir="rtl" cross-end resolves to left, not right. */
+.profile-wallet {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+.profile-wallet-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.875rem;
+  min-width: 0;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.profile-wallet-row .bi {
+  color: var(--tf-green-badge);
+}
+
+.profile-wallet-value {
+  font-weight: 600;
+  color: var(--tf-text);
+}
+
+.profile-wallet-label {
+  color: var(--tf-text-muted);
+}
+
+.profile-wallet-caption {
+  font-size: 0.8125rem;
+  color: var(--tf-text-muted);
+  width: 100%;
+  text-align: right;
+}
+
+.profile-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+
+.profile-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 4px 0;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: var(--tf-text);
+  text-decoration: none;
+  transition: opacity 0.15s ease;
+  min-width: 0;
+}
+
+.profile-menu-item:hover {
+  opacity: 0.7;
+}
+
+.profile-menu-item.active {
+  color: #ff5f00;
+  font-weight: 700;
+}
+
+.profile-menu-item.profile-menu-item--danger {
+  color: #ff4d4f;
+}
+
+/* Main column: page title + tabbed form card */
+.profile-main {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+@media (max-width: 991.98px) {
+  .profile-main {
+    width: 100%;
+    flex: 1 1 auto;
+  }
+}
+
+.profile-card {
+  background: #fff;
+  border: 1px solid var(--tf-border);
+  border-radius: 16px;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+@media (max-width: 575.98px) {
+  .profile-card {
+    padding: 20px;
+  }
+}
+
+.profile-tabs {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+  border-bottom: 1px solid #e1e1ea;
+}
+
+.profile-tab {
+  padding-bottom: 12px;
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--tf-text-muted);
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  transition: color 0.15s ease;
+}
+
+.profile-tab:hover {
+  color: var(--tf-text);
+}
+
+.profile-tab.active {
+  color: #ff5f00;
+  font-weight: 700;
+  border-bottom-color: #ff5f00;
+}
+
+/* Doubles as a tab panel: hidden unless .active (js/main.js initProfileTabs
+   toggles this alongside the matching .profile-tab). */
+.profile-fields {
+  display: none;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.profile-fields.active {
+  display: flex;
+}
+
+.profile-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+.profile-field-label {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--tf-text-muted);
+}
+
+.profile-field-required {
+  color: #ff4d4f;
+  font-weight: 400;
+}
+
+.profile-field-control {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  background: #fff;
+  border: 1px solid #e1e1ea;
+  border-radius: 8px;
+  padding: 12px 16px;
+  text-align: right;
+}
+
+/* Country / timezone: plain native selects, styled to match .profile-field-control. */
+.profile-field-select {
+  width: 100%;
+  background-color: #fff;
+  border: 1px solid #e1e1ea;
+  border-radius: 8px;
+  padding: 12px 16px;
+  font-size: 1rem;
+  font-family: inherit;
+  color: var(--tf-text);
+  text-align: right;
+}
+
+.profile-field-select:focus {
+  border-color: var(--tf-green);
+  box-shadow: none;
+}
+
+/* Phone number: intl-tel-input renders its own flag/dial-code UI, so this
+   just themes the plain <input> it's attached to. Wrapped in dir="ltr" in
+   the markup — phone numbers read left-to-right even on this RTL page,
+   the same convention the payment page uses for card fields. */
+.profile-tel-wrap {
+  --iti-border-color: #e1e1ea;
+  width: 100%;
+}
+
+.profile-tel-wrap .iti {
+  width: 100%;
+}
+
+.profile-field-tel {
+  width: 100%;
+  border: 1px solid #e1e1ea;
+  border-radius: 8px;
+  padding: 12px 16px;
+  font-size: 1rem;
+  font-family: inherit;
+  color: var(--tf-text);
+  background: #fff;
+}
+
+.profile-field-tel:focus {
+  outline: none;
+  border-color: var(--tf-green);
+}
+
+/* الإشعارات tab: label + Bootstrap switch, one per row */
+.profile-switch-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  width: 100%;
+  padding: 12px 0;
+  border-bottom: 1px solid #f0f0f4;
+}
+
+.profile-switch-row:last-of-type {
+  border-bottom: none;
+}
+
+.profile-switch-label {
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: var(--tf-text);
+}
+
+/* Bigger switches than Bootstrap's default, tinted brand green instead of
+   the default blue when on. */
+.profile-switch-row .form-check-input {
+  width: 2.75em;
+  height: 1.375em;
+  cursor: pointer;
+}
+
+.profile-switch-row .form-check-input:checked {
+  background-color: var(--tf-green-badge);
+  border-color: var(--tf-green-badge);
+}
+
+.profile-switch-row .form-check-input:focus {
+  border-color: var(--tf-green-badge);
+  box-shadow: 0 0 0 0.25rem rgba(71, 210, 143, 0.25);
+}
+
+/* الخطط والفواتير tab: current plan + upgrade CTA */
+.profile-billing-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  width: 100%;
+  background: var(--tf-input-bg);
+  border-radius: 12px;
+  padding: 20px 24px;
+}
+
+.profile-billing-plan-label {
+  font-size: 0.8125rem;
+  color: var(--tf-text-muted);
+  margin: 0 0 4px;
+}
+
+.profile-billing-plan-name {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--tf-text);
+  margin: 0;
+}
+
+.profile-field-input {
+  border: none;
+  outline: none;
+  background: transparent;
+  width: 100%;
+  font-size: 1rem;
+  font-family: inherit;
+  color: var(--tf-text);
+  text-align: right;
+}
+
+.profile-field-input:disabled {
+  color: var(--tf-text);
+  opacity: 1;
+  -webkit-text-fill-color: var(--tf-text);
+  cursor: not-allowed;
+}
+
+.profile-field-hint {
+  font-size: 0.75rem;
+  color: var(--tf-text-muted);
+  margin: 0;
+  text-align: right;
+}
+
+.profile-save-btn {
+  align-self: flex-end;
+  background: var(--tf-green-badge);
+  color: var(--tf-text-logo);
+  font-weight: 700;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  padding: 14px 32px;
+  transition: background-color 0.15s ease;
+}
+
+.profile-save-btn:hover {
+  background-color: #34c07f;
+  color: var(--tf-text-logo);
+}

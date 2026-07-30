@@ -264,10 +264,19 @@
                 </li>
                 <!--end::Menu Body-->
                 <!--begin::Menu Footer-->
+                @if (auth()->check())
                 <li class="user-footer">
                   <a href="#" class="btn btn-outline-secondary">Profile</a>
-                  <a href="#" class="btn btn-outline-danger float-end">Sign out</a>
+                  
+                  <form method="POST" action="{{ route('logout') }}" class="d-inline">
+                    @csrf
+                    <button type="submit" class="btn btn-outline-danger float-end">Sign out</button>
+                  </form>
+                  
+
+                  
                 </li>
+                @endif
                 <!--end::Menu Footer-->
               </ul>
             </li>

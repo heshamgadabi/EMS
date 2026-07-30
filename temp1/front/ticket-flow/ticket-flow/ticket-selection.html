@@ -1,0 +1,651 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>تيكت فلو | اختيار التذاكر - باتل كارت يوم النساء</title>
+
+    <!-- Bootstrap 5 (RTL build) -->
+    <link rel="stylesheet" href="css/bootstrap.rtl.min.css" />
+    <!-- Bootstrap Icons: used for generic UI glyphs (chevrons, search, calendar, hamburger) that aren't brand assets -->
+    <link rel="stylesheet" href="css/bootstrap-icons.css" />
+    <!-- Tajawal: fallback only, in case the self-hosted font below fails to load.
+       Primary typeface is "Graphik Arabic" (assets/fonts/*.otf, full weight
+       range), loaded via @font-face in css/style.css. -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <!-- ============================================================
+       HEADER / NAV
+       ============================================================ -->
+    <header class="site-header border-bottom bg-white sticky-top">
+      <div class="container-xl">
+        <!-- Row 1 (mobile, <lg): logo + menu toggler only — everything else
+           (search, city, currency, account, nav links) lives in the
+           off-canvas menu below.
+           Row 1 (desktop, lg+): logo, search, city, currency/language,
+           account, in that reading order (right to left). No flex `order`
+           utilities: DOM order is the visual order, matching how dir="rtl"
+           naturally flows (first child = right edge). -->
+        <div class="d-flex align-items-center py-3 flex-wrap header-row-1">
+          <!-- Logo -->
+          <a
+            href="index.html"
+            class="site-logo d-flex align-items-center gap-2 text-decoration-none flex-shrink-0"
+          >
+            <img
+              src="assets/icons/logo-mark.svg"
+              alt="تيكت فلو"
+              width="36"
+              height="36"
+            />
+            <span class="site-logo-text">تيكت فلو</span>
+          </a>
+
+          <!-- Mobile menu toggler: opens the off-canvas menu -->
+          <button
+            type="button"
+            class="header-menu-toggle d-lg-none ms-auto"
+            data-bs-toggle="offcanvas"
+            data-bs-target="#mobileMenu"
+            aria-controls="mobileMenu"
+            aria-label="فتح القائمة"
+          >
+            <i class="bi bi-list"></i>
+          </button>
+
+          <!-- Desktop-only: search, city, currency/language, account -->
+          <div class="header-actions d-none d-lg-flex align-items-center">
+            <!-- Search: sits right next to the logo, fixed pill width -->
+            <div class="header-search-wrap flex-shrink-0">
+              <form class="header-search w-100" role="search">
+                <div class="input-group">
+                  <input
+                    type="search"
+                    class="form-control"
+                    placeholder="البحث عن الفعالية أو الفئة"
+                    aria-label="البحث عن الفعالية أو الفئة"
+                  />
+                  <span class="input-group-text">
+                    <i class="bi bi-calendar3 text-muted"></i>
+                  </span>
+                </div>
+              </form>
+            </div>
+
+            <!-- City indicator: icon first (rightmost), label after — plain text, no dropdown -->
+            <div
+              class="header-city flex-shrink-0 d-flex align-items-center gap-1"
+            >
+              <img
+                src="assets/icons/icon-geo-mark.svg"
+                alt=""
+                width="10"
+                height="14"
+              />
+              <span>جدة</span>
+            </div>
+
+            <!-- Currency / language -->
+            <div class="dropdown flex-shrink-0 ms-auto">
+              <button
+                class="btn btn-link text-body text-decoration-none px-2 d-flex align-items-center gap-1"
+                type="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                <img
+                  src="assets/icons/icon-globe.svg"
+                  alt=""
+                  width="16"
+                  height="16"
+                />
+                <span class="small text-muted">AR</span>
+                <img
+                  src="assets/icons/icon-divider.svg"
+                  alt=""
+                  width="4"
+                  height="11"
+                  class="mx-1"
+                />
+                <span class="small text-muted">USD</span>
+              </button>
+              <ul class="dropdown-menu">
+                <li>
+                  <a class="dropdown-item" href="#">USD - دولار أمريكي</a>
+                </li>
+                <li><a class="dropdown-item" href="#">SAR - ريال سعودي</a></li>
+              </ul>
+            </div>
+
+            <!-- Account menu -->
+            <div class="flex-shrink-0">
+              <button
+                type="button"
+                class="btn btn-account p-0 rounded-circle"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+                aria-label="حساب المستخدم"
+              >
+                <img
+                  src="assets/icons/avatar-default.svg"
+                  alt=""
+                  width="14"
+                  height="17"
+                />
+              </button>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">تسجيل الدخول</a></li>
+                <li><a class="dropdown-item" href="#">إنشاء حساب</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Row 2: primary navigation (desktop only, lg+) -->
+        <nav class="navbar navbar-expand-lg py-0 d-none d-lg-block">
+          <ul class="navbar-nav gap-lg-4">
+            <li class="nav-item">
+              <a
+                class="nav-link fw-semibold d-flex align-items-center gap-2"
+                href="#"
+              >
+                انضم لنا
+                <span class="badge-plus">Plus</span>
+              </a>
+            </li>
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link fw-semibold dropdown-toggle"
+                href="#"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+                >الفعاليات</a
+              >
+              <ul class="dropdown-menu">
+                <li>
+                  <a class="dropdown-item" href="events.html">جميع الفعاليات</a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="#">الفعاليات القادمة</a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link fw-semibold dropdown-toggle"
+                href="#"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+                >المغامرات والتجارب</a
+              >
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">رحلات السفاري</a></li>
+                <li>
+                  <a class="dropdown-item" href="#">أنشطة الهواء الطلق</a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link fw-semibold" href="#"
+                >كأس العالم للرياضات الإلكترونية</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link fw-semibold" href="#">موسم عسير</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link fw-semibold" href="#">العروض الكوميدية</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link fw-semibold" href="#">ما الجديد في جدة؟</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <!-- ============================================================
+       MOBILE MENU (off-canvas, <lg)
+       Slides in from the left over a dimmed overlay; holds everything
+       that's hidden from row 1 / row 2 on small screens.
+       ============================================================ -->
+    <div
+      class="offcanvas offcanvas-end mobile-menu"
+      tabindex="-1"
+      id="mobileMenu"
+      aria-labelledby="mobileMenuLabel"
+    >
+      <div class="offcanvas-header border-bottom">
+        <a
+          href="index.html"
+          class="site-logo d-flex align-items-center gap-2 text-decoration-none"
+          id="mobileMenuLabel"
+        >
+          <img
+            src="assets/icons/logo-mark.svg"
+            alt="تيكت فلو"
+            width="32"
+            height="32"
+          />
+          <span class="site-logo-text">تيكت فلو</span>
+        </a>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="offcanvas"
+          aria-label="إغلاق"
+        ></button>
+      </div>
+      <div class="offcanvas-body d-flex flex-column">
+        <form class="header-search w-100 mb-4" role="search">
+          <div class="input-group">
+            <input
+              type="search"
+              class="form-control"
+              placeholder="البحث عن الفعالية أو الفئة"
+              aria-label="البحث عن الفعالية أو الفئة"
+            />
+            <span class="input-group-text">
+              <i class="bi bi-calendar3 text-muted"></i>
+            </span>
+          </div>
+        </form>
+
+        <div class="d-flex align-items-center gap-2 mb-4 pb-4 border-bottom">
+          <div class="btn-account rounded-circle d-flex" aria-hidden="true">
+            <img
+              src="assets/icons/avatar-default.svg"
+              alt=""
+              width="14"
+              height="17"
+            />
+          </div>
+          <a href="#" class="fw-semibold text-decoration-none">تسجيل الدخول</a>
+          <span class="text-muted">/</span>
+          <a href="#" class="fw-semibold text-decoration-none">إنشاء حساب</a>
+        </div>
+
+        <div
+          class="d-flex align-items-center justify-content-between mb-4 pb-4 border-bottom"
+        >
+          <div class="header-city d-flex align-items-center gap-1">
+            <img
+              src="assets/icons/icon-geo-mark.svg"
+              alt=""
+              width="10"
+              height="14"
+            />
+            <span>جدة</span>
+          </div>
+          <div class="dropdown">
+            <button
+              class="btn btn-link text-body text-decoration-none px-2 d-flex align-items-center gap-1"
+              type="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              <img
+                src="assets/icons/icon-globe.svg"
+                alt=""
+                width="16"
+                height="16"
+              />
+              <span class="small text-muted">AR</span>
+              <img
+                src="assets/icons/icon-divider.svg"
+                alt=""
+                width="4"
+                height="11"
+                class="mx-1"
+              />
+              <span class="small text-muted">USD</span>
+            </button>
+            <ul class="dropdown-menu">
+              <li>
+                <a class="dropdown-item" href="#">USD - دولار أمريكي</a>
+              </li>
+              <li><a class="dropdown-item" href="#">SAR - ريال سعودي</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <ul class="navbar-nav gap-1">
+          <li class="nav-item">
+            <a
+              class="nav-link fw-semibold d-flex align-items-center gap-2"
+              href="#"
+            >
+              انضم لنا
+              <span class="badge-plus">Plus</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link fw-semibold d-flex align-items-center justify-content-between"
+              href="#"
+              data-bs-toggle="collapse"
+              data-bs-target="#mobileEventsSub"
+              aria-expanded="false"
+              aria-controls="mobileEventsSub"
+            >
+              الفعاليات
+              <i class="bi bi-chevron-down small"></i>
+            </a>
+            <ul class="collapse list-unstyled ps-3" id="mobileEventsSub">
+              <li><a class="nav-link" href="events.html">جميع الفعاليات</a></li>
+              <li><a class="nav-link" href="#">الفعاليات القادمة</a></li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link fw-semibold d-flex align-items-center justify-content-between"
+              href="#"
+              data-bs-toggle="collapse"
+              data-bs-target="#mobileAdventuresSub"
+              aria-expanded="false"
+              aria-controls="mobileAdventuresSub"
+            >
+              المغامرات والتجارب
+              <i class="bi bi-chevron-down small"></i>
+            </a>
+            <ul class="collapse list-unstyled ps-3" id="mobileAdventuresSub">
+              <li><a class="nav-link" href="#">رحلات السفاري</a></li>
+              <li><a class="nav-link" href="#">أنشطة الهواء الطلق</a></li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link fw-semibold" href="#"
+              >كأس العالم للرياضات الإلكترونية</a
+            >
+          </li>
+          <li class="nav-item">
+            <a class="nav-link fw-semibold" href="#">موسم عسير</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link fw-semibold" href="#">العروض الكوميدية</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link fw-semibold" href="#">ما الجديد في جدة؟</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <main class="ticket-page-main">
+      <!-- ============================================================
+         TICKET SELECTION PAGE
+         Figma: node 11:1668 "ticket-selection-page"
+         ============================================================ -->
+      <section class="container-xl ticket-page-section">
+        <!-- Header info: event title/location, links back to the event page -->
+        <div class="d-flex justify-content-start mb-4">
+          <a href="event-details.html" class="ticket-page-back-link">
+            <img
+              src="assets/icons/icon-chevron-right-bold.svg"
+              alt=""
+              width="24"
+              height="24"
+              class="ticket-page-chevron"
+            />
+            <div class="ticket-page-title-group">
+              <h1 class="ticket-page-title">باتل كارت يوم النساء - جدة</h1>
+              <div class="ticket-page-location">
+                <img
+                  src="assets/icons/icon-map-pin-bold.svg"
+                  alt=""
+                  width="14"
+                  height="14"
+                />
+                <span>Alandalus Mall</span>
+              </div>
+            </div>
+          </a>
+        </div>
+
+        <!-- Ticket type cards: each has a quantity stepper -->
+        <div class="ticket-cards" id="ticketCardsList">
+          <article class="ticket-card" data-price="79.00">
+            <div class="ticket-card-info">
+              <p class="ticket-card-name">15 دقيقة</p>
+              <p class="ticket-card-subtitle">15 دقيقة - يوم النساء</p>
+              <p class="ticket-card-price">SAR 79.00</p>
+            </div>
+            <div class="ticket-counter">
+              <button
+                type="button"
+                class="ticket-counter-btn ticket-counter-minus"
+                aria-label="إنقاص عدد التذاكر"
+              >
+                <img
+                  src="assets/icons/icon-counter-minus.svg"
+                  alt=""
+                  width="16"
+                  height="16"
+                />
+              </button>
+              <span class="ticket-counter-value">2</span>
+              <button
+                type="button"
+                class="ticket-counter-btn ticket-counter-plus"
+                aria-label="زيادة عدد التذاكر"
+              >
+                <img
+                  src="assets/icons/icon-counter-plus.svg"
+                  alt=""
+                  width="16"
+                  height="16"
+                />
+              </button>
+            </div>
+          </article>
+
+          <article class="ticket-card" data-price="79.00">
+            <div class="ticket-card-info">
+              <p class="ticket-card-name">15 دقيقة</p>
+              <p class="ticket-card-subtitle">15 دقيقة - يوم النساء</p>
+              <p class="ticket-card-price">SAR 79.00</p>
+            </div>
+            <div class="ticket-counter">
+              <button
+                type="button"
+                class="ticket-counter-btn ticket-counter-minus"
+                aria-label="إنقاص عدد التذاكر"
+              >
+                <img
+                  src="assets/icons/icon-counter-minus.svg"
+                  alt=""
+                  width="16"
+                  height="16"
+                />
+              </button>
+              <span class="ticket-counter-value">3</span>
+              <button
+                type="button"
+                class="ticket-counter-btn ticket-counter-plus"
+                aria-label="زيادة عدد التذاكر"
+              >
+                <img
+                  src="assets/icons/icon-counter-plus.svg"
+                  alt=""
+                  width="16"
+                  height="16"
+                />
+              </button>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- ============================================================
+         STICKY BOTTOM BAR — payment CTA, countdown, order summary.
+         Fixed to the viewport so it stays visible while the ticket
+         list scrolls; `.ticket-page-main` reserves matching bottom
+         space so it never overlaps the footer.
+         ============================================================ -->
+      <div class="ticket-sticky-bar">
+        <div class="container-xl ticket-sticky-bar-inner" id="ticketStickyBar">
+          <div class="ticket-order-badge">
+            <div class="ticket-tag">
+              <img
+                src="assets/icons/icon-ticket.svg"
+                alt=""
+                width="16"
+                height="16"
+              />
+              <span class="ticket-tag-count" id="ticketTotalCount">0x</span>
+            </div>
+            <span class="ticket-order-badge-label">تفاصيل الطلب</span>
+          </div>
+
+          <div class="ticket-timer-group">
+            <span class="ticket-timer-label">الوقت المتبقي</span>
+            <span class="ticket-timer-value" id="ticketCountdownTimer"
+              >14:52</span
+            >
+          </div>
+
+          <div class="ticket-pay-actions">
+            <span class="ticket-pay-total" id="ticketTotalPrice">SAR 0.00</span>
+            <button
+              type="button"
+              class="ticket-pay-btn"
+              id="ticketPayBtn"
+              disabled
+            >
+              الدفع
+            </button>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- ============================================================
+       FOOTER
+       Extra bottom padding clears the fixed .ticket-sticky-bar so its
+       last row is never hidden behind it, even scrolled all the way down.
+       ============================================================ -->
+    <footer class="site-footer border-top ticket-page-footer">
+      <div class="container-xl py-5">
+        <div
+          class="d-flex justify-content-between align-items-start flex-wrap gap-4 pb-5 border-bottom"
+        >
+          <div class="text-lg-start">
+            <a
+              href="index.html"
+              class="site-logo d-flex align-items-center gap-2 justify-content-lg-start text-decoration-none mb-2"
+            >
+              <img
+                src="assets/icons/footer-logo-mark.svg"
+                alt=""
+                width="40"
+                height="40"
+              />
+              <span class="site-logo-text">تيكت فلو</span>
+            </a>
+            <p class="text-muted small mb-0">
+              منصة اكتشاف وتسويق المحتوى الترفيهي
+            </p>
+          </div>
+
+          <div class="d-flex gap-3 footer-social">
+            <a href="#" aria-label="Telegram"
+              ><img
+                src="assets/icons/social-telegram.svg"
+                alt=""
+                width="16"
+                height="16"
+            /></a>
+            <a href="#" aria-label="X (Twitter)"
+              ><img
+                src="assets/icons/social-x.svg"
+                alt=""
+                width="16"
+                height="16"
+            /></a>
+            <a href="#" aria-label="Facebook"
+              ><img
+                src="assets/icons/social-facebook.svg"
+                alt=""
+                width="16"
+                height="16"
+            /></a>
+            <a href="#" aria-label="Instagram"
+              ><img
+                src="assets/icons/social-instagram.svg"
+                alt=""
+                width="16"
+                height="16"
+            /></a>
+          </div>
+        </div>
+
+        <div class="row g-4 pt-5">
+          <div class="col-6 col-lg-3">
+            <h5 class="footer-heading">الفئات</h5>
+            <ul class="footer-list">
+              <li><a href="#">أبرز الفعاليات</a></li>
+              <li><a href="#">المعالم السياحية المميزة</a></li>
+              <li><a href="#">دليل الفعاليات العربية</a></li>
+              <li><a href="#">الحفلات الموسيقية</a></li>
+              <li><a href="#">الحفلات العربية</a></li>
+              <li><a href="#">أنشطة في الهواء الطلق</a></li>
+              <li><a href="#">اظهار الكل</a></li>
+            </ul>
+          </div>
+          <div class="col-6 col-lg-3">
+            <h5 class="footer-heading">من نحن</h5>
+            <ul class="footer-list">
+              <li><a href="#">انضم لفريقنا</a></li>
+              <li><a href="#">الشعار</a></li>
+              <li><a href="#">مدونة تيكت فلو</a></li>
+              <li><a href="#">آخر الأخبار</a></li>
+              <li><a href="#">الشروط والأحكام</a></li>
+              <li><a href="#">مركز المساعدة</a></li>
+              <li><a href="#">خريطة الموقع</a></li>
+            </ul>
+          </div>
+          <div class="col-6 col-lg-3">
+            <h5 class="footer-heading">للمنظمين</h5>
+            <ul class="footer-list">
+              <li><a href="#">نظرة عامة</a></li>
+              <li><a href="#">بيع التذاكر في المملكة العربية السعودية</a></li>
+              <li><a href="#">الفعاليات الترفيهية</a></li>
+              <li><a href="#">المغامرات والتجارب الاستثنائية</a></li>
+              <li><a href="#">فعاليات قطاع الأعمال</a></li>
+              <li><a href="#">الأنشطة والأحداث الرياضية</a></li>
+              <li><a href="#">حلول تذاكر أماكن الفعاليات</a></li>
+              <li><a href="#">مميزات التذاكر</a></li>
+              <li><a href="#">دليل المنظمين</a></li>
+            </ul>
+          </div>
+          <div class="col-6 col-lg-3">
+            <h5 class="footer-heading">الخدمات</h5>
+            <ul class="footer-list">
+              <li><a href="#">خدمات إدارة الفعاليات</a></li>
+              <li><a href="#">خدمات التسويق</a></li>
+              <li><a href="#">فريق إدارة التذاكر للفعالية</a></li>
+              <li><a href="#">طباعة التذاكر</a></li>
+              <li><a href="#">خدمة إصدار الترخيص بشكل سريع</a></li>
+            </ul>
+            <a
+              href="#"
+              class="btn btn-outline-dark btn-sm rounded-3 mt-2 fw-bold"
+              >إضافة فعالية</a
+            >
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Bootstrap 5 JS bundle (includes Popper) -->
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/main.js"></script>
+  </body>
+</html>

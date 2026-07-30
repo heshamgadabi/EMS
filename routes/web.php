@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\FrontController;
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -53,5 +55,6 @@ Route::get('user/login', [UserController::class, 'login'])->name('user.login');
 Route::post('user/login', [UserController::class, 'authenticate'])->name('user.authenticate');
 
 
+Route::get('home', [FrontController::class, 'home'])->name('home');
 
 require __DIR__.'/auth.php';

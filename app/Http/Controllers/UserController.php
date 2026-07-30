@@ -91,6 +91,9 @@ class UserController extends Controller
     public function login()
     {
         // Logic to display the login form
+        if (auth()->check()) {
+            return redirect()->route('admin.dashboard'); // Redirect to the dashboard if already logged in
+        }
         return view('admin.users.login');
     }
 
