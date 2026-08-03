@@ -57,4 +57,6 @@ Route::post('user/login', [UserController::class, 'authenticate'])->name('user.a
 
 Route::get('home', [FrontController::class, 'home'])->name('home');
 
+Route::get('event/{id}', [FrontController::class, 'eventDetails'])->name('event.details');
+
 require __DIR__.'/auth.php';

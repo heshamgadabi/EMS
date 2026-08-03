@@ -10,4 +10,16 @@ class FrontController extends Controller
     {
         return view('front.home');
     }
+
+    public function eventDetails($id)
+    {
+        // You can retrieve the event details using the $id parameter
+        // For example, you can fetch the event from the database and pass it to the view
+        // $event = Event::findOrFail($id);
+        // return view('front.event-details', compact('event'));
+
+        // For now, let's just return a placeholder view
+        return view('front.event-details', ['eventId' => $id]);
+    }
+    
 }

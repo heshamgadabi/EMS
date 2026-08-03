@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>تيكت فلو | اكتشف أفضل الفعاليات</title>
+    <title>@yield('title','تيكت فلو | اكتشف أفضل الفعاليات ')</title>
 
     <!-- Bootstrap 5 (RTL build) -->
     <link rel="stylesheet" href="{{ asset('front/css/bootstrap.rtl.min.css') }}" />
