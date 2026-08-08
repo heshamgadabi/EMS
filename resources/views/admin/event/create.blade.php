@@ -100,6 +100,14 @@
                   <div class="invalid-feedback d-block" >{{ $message }}</div>
               @enderror
             </div>
+
+            <div class="mb-3">
+              <label for="terms" class="form-label">Terms and Conditions</label>
+              <textarea class="form-control" name="terms" id="terms" rows="3">{{ old('terms') }}</textarea>
+              @error('terms')
+                  <div class="invalid-feedback d-block" >{{ $message }}</div>
+              @enderror
+            </div>
           
           
             

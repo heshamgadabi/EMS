@@ -48,7 +48,7 @@ class EventController extends Controller
         $event->end_time = $request->end_time;
         $event->location = $request->location;
         $event->status = $request->status ?? 0; // Set to 0 if not provided
-        
+        $event->terms = $request->terms ?? null; // Set terms if provided
         $event->created_by = $user->id;//auth()->user()->id;
         
         $event->save();
@@ -98,6 +98,8 @@ class EventController extends Controller
         $event->end_time = $request->end_time;
         $event->location = $request->location;
         $event->status = $request->status ?? 0; // Set to 0 if not provided
+        $event->terms = $request->terms ?? null; // Set terms if provided
+
         $event->save();
 
         return redirect()->route('event.admin', ['id' => $event->id])->with('success', $event->title . ' updated successfully.');

@@ -103,6 +103,14 @@
             </div>
           
           
+            <div class="mb-3">
+              <label for="location" class="form-label">Terms and Conditions</label>
+              <textarea class="form-control" name="terms" id="terms" rows="3">{{ old('terms', $event->terms) }}</textarea>
+              @error('terms')
+                  <div class="invalid-feedback d-block" >{{ $message }}</div>
+              @enderror
+            </div>
+          
             
 
 
