@@ -61,6 +61,12 @@
             Financials
           </button>
         </li>
+        <li class="nav-item" role="presentation">
+          <a href="{{ route('event.pictures', $event->id) }}" class="nav-link">
+            Pictures
+          </a>  
+        </li>
+
       </ul>
     </div>
     <div class="card-body">

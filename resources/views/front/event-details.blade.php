@@ -1,7 +1,7 @@
 @extends('front.layout.app')
 
 @section('title')
-  تفاصيل الفعالية | تيكت فلو
+  {{ $event->title }} | تيكت فلو
 @endsection
 
 
@@ -28,7 +28,7 @@
             >
             <span class="breadcrumb-sep">/</span>
             <span class="breadcrumb-current" aria-current="page"
-              >باتل كارت يوم النساء - جدة</span
+              >{{ $event->title }}</span
             >
           </nav>
 

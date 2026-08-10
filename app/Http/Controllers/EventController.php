@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Event;
 use App\Models\Ticket;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+use App\Models\Photos;
 
 class EventController extends Controller
 {
@@ -222,5 +224,85 @@ class EventController extends Controller
 
         return redirect()->route('event.admin', ['id' => $event_id])->with('success', $ticket->title . ' deleted successfully.');
     }
+
+    public function eventPictures($id)
+    {
+        $event = Event::findOrFail($id);
+        $data = [
+            'event' => $event,
+            'title' => 'Event Pictures',
+            'active_page' => 'event_pictures',
+        ];
+
+        $photos = Photos::where('event_id', $event->id)->get();
+        $data['photos'] = $photos;
+
+      
+        
+        return view('admin.event.pictures', $data);
+    }
+
+    public function storePictures(Request $request, $id)
+    {
+        $event = Event::findOrFail($id);
+
+        $validate = $request->validate([
+            'type' => 'required|in:Banner,Thumbnail,Gallery',
+            'picture' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // Validate the picture
+        ]);
+
+        /*
+         $image = $request->file('picture');
+        if ($image) {
+            $imageName = time() . '_' . $image->getClientOriginalName();
+            $image->move(public_path('events_pictures'), $imageName);
+            
+        }
+*/
+
+       
+        if ($request->hasFile('picture')) {
+             
+          // $request->file('picture')->store('events_pictures', 'public');
+
+           $picture = $request->file('picture');
+          
+           $path = $picture->store('events_pictures', 'public');
+
+        
+        
+        $photo = new Photos();
+        $photo->event_id = $event->id;
+        $photo->path = $path;
+        $photo->type = $request->type;
+        $photo->save();
+
+        return redirect()->route('event.pictures', ['id' => $event->id])->with('success', 'Pictures uploaded successfully.');
+    
+    
+        } else {
+            return redirect()->route('event.pictures', ['id' => $event->id])->with('error', 'No picture uploaded.');
+        }
+
+
+
+    }
+
+
+    public function destroyPictures($id, $photo_id)
+    {
+        $photo = Photos::findOrFail($photo_id);
+        $event_id = $photo->event_id; // Store the event ID before deleting the photo
+
+        // Delete the photo file from storage
+        if (Storage::disk('public')->exists($photo->path)) {
+            Storage::disk('public')->delete($photo->path);
+        }
+
+        $photo->delete();
+
+        return redirect()->route('event.pictures', ['id' => $event_id])->with('success', 'Picture deleted successfully.');
+    }
+
 
 }

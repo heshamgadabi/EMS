@@ -59,4 +59,11 @@ Route::get('home', [FrontController::class, 'home'])->name('home');
 
 Route::get('event/{id}', [FrontController::class, 'eventDetails'])->name('event.details');
 
+Route::get('event/pictures/{id}', [EventController::class, 'eventPictures'])->middleware(['auth','Admin'])->name('event.pictures');
+
+Route::post('event/pictures/{id}', [EventController::class, 'storePictures'])->middleware(['auth','Admin'])->name('event.pictures.store');
+
+Route::delete('event/pictures/{id}/{photo_id}', [EventController::class, 'destroyPictures'])->middleware(['auth','Admin'])->name('event.pictures.destroy');
+
+
 require __DIR__.'/auth.php';
