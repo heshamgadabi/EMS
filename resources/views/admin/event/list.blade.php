@@ -46,7 +46,7 @@
             <tr class="align-middle">
               <td>{{ $event->id }}.</td>
               <td>
-                <a href="{{ route('event.admin', $event->id) }}"  class="text-decoration-none">{{ $event->title }}</a>  
+                <a href="{{ route('event.admin.overview', $event->id) }}"  class="text-decoration-none">{{ $event->title }}</a>  
               </td>
               <td>
                  
@@ -59,7 +59,7 @@
                   <button type="submit" class="btn btn-sm btn-danger me-2" onclick="return confirm('Are you sure?')"><i class="bi bi-trash"></i></button>
                 </form>
 
-                <a href="{{ route('event.admin', $event->id) }}"   class="text-decoration-none me-2"><i class="nav-icon bi bi-gear"></i></a>
+                <a href="{{ route('event.admin.overview', $event->id) }}"   class="text-decoration-none me-2"><i class="nav-icon bi bi-gear"></i></a>
 
               </td>
             </tr>

@@ -36,6 +36,7 @@ Route::put('event/update/{id}', [EventController::class, 'update'])->middleware(
 Route::delete('event/delete/{id}', [EventController::class, 'destroy'])->middleware(['auth','Admin'])->name('event.destroy');
 
 Route::get('event/admin/{id}', [EventController::class, 'admin'])->middleware(['auth','Admin'])->name('event.admin');
+Route::get('event/admin/overview/{id}', [EventController::class, 'overviewEvent'])->middleware(['auth','Admin'])->name('event.admin.overview');
 
 Route::get('event/ticket/create/{id}', [EventController::class, 'createTicket'])->middleware(['auth','Admin'])->name('event.ticket.create');
 Route::post('event/ticket/store/{id}', [EventController::class, 'storeTicket'])->middleware(['auth','Admin'])->name('event.ticket.store');
@@ -58,6 +59,8 @@ Route::post('user/login', [UserController::class, 'authenticate'])->name('user.a
 Route::get('home', [FrontController::class, 'home'])->name('home');
 
 Route::get('event/{id}', [FrontController::class, 'eventDetails'])->name('event.details');
+
+Route::get('event/ticket/{id}', [FrontController::class, 'eventTicket'])->name('event.ticket');
 
 Route::get('event/pictures/{id}', [EventController::class, 'eventPictures'])->middleware(['auth','Admin'])->name('event.pictures');
 

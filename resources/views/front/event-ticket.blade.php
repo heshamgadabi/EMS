@@ -7,14 +7,12 @@
 
 @section('content')
 
-
 <main>
-      <!-- ============================================================
-         EVENT DETAILS PAGE
-         Figma: node 1:2737 "Body [body-fixed-header]"
-         ============================================================ -->
-      <section class="container-xl py-4">
-        <!-- Breadcrumbs + favorite/share actions -->
+      
+
+<section class="container-xl py-4">
+       
+     <!-- Breadcrumbs + favorite/share actions -->
         <div class="d-flex align-items-center justify-content-between flex-wrap gap-3 mb-4">
           <nav class="breadcrumbs" aria-label="breadcrumb">
             <a href="index.html" class="breadcrumb-link">الصفحة الرئيسية</a>
@@ -119,24 +117,7 @@
           </div>
         </div>
 
-        <!-- Featured image -->
-        <a href="#" class="d-block hero-slide mb-5">
-         @if($banner)
-          <img
-            src="{{ asset('storage/'.$banner->path) }}"
-            class="hero-slide-img"
-            alt="{{ $event->title }}"
-          />
-          @else
-          <img
-            src="{{ asset('front/assets/images/placeholder.png') }}"
-            class="hero-slide-img"
-            alt="{{ $event->title }}"
-          />
-          @endif 
-        
-         
-        </a>
+
 
         <!-- Content + sidebar -->
         <div class="row g-4 g-lg-5">
@@ -173,33 +154,7 @@
               </div>
             </div>
 
-            <!-- Photo gallery -->
-            <div class="event-section border-bottom pb-4 mb-4">
-              <div
-                class="d-flex align-items-center justify-content-between mb-4"
-              >
-                <h2 class="event-section-heading mb-0">استديو الصور</h2>
-                <a href="#" class="event-section-more-link">أظهر المزيد</a>
-              </div>
-              <div class="gallery-row">
-                @if($gallery->isNotEmpty())
-                  @foreach($gallery as $index => $photo)
-                    <a
-                      href="#"
-                      class="gallery-thumb"
-                      data-bs-toggle="modal"
-                      data-bs-target="#galleryLightbox"
-                      data-gallery-index="{{ $index }}"
-                    >
-                      <img src="{{ asset('storage/'.$photo->path) }}" alt="" />
-                    </a>
-                  @endforeach
-                  @endif
-
-                
-              </div>
-            </div>
-
+            
             <!-- Location -->
             <div
               id="eventLocation"
@@ -311,37 +266,14 @@
             </div>
           </div>
 
-          <!-- Sidebar (left side in RTL): buy box + safe-tickets card -->
-          <div class="col-lg-4">
-            <div class="event-detail-sidebar">
-              <div class="buy-box mb-3">
-                <div class="buy-box-row" >
-                  <div class="buy-box-price-block">
-                    <span class="buy-box-price-label">الأسعار تبدأ من:</span>
-                    <span class="buy-box-price">{{ $event->start_price }} <img src="{{ asset('front/assets/images/Saudi_Riyal.png') }}" alt="USD" width="24"  /> </span>
-                  </div>
-                   
-                  <a href="{{ route('event.ticket', ['id' => $event->id]) }}"  class="btn buy-box-cta">اختيار التذاكر</a>
-                </div>
-                <span class="buy-box-tag">نضمن أفضل الأسعار</span>
-              </div>
-
-              <div class="safe-tickets-card">
-                <p class="safe-tickets-heading">
-                  <i class="bi bi-shield-check"></i>
-                  تذاكر آمنة - هاتفك هو تذكرتك الديناميكية
-                </p>
-                <p class="safe-tickets-text">
-                  يمكنك الوصول بسهولة إلى تذاكرك
-                  <strong>من خلال تطبيق تيكت فلو فقط</strong>. تتميز تذاكر هذه
-                  الفعالية بحماية إضافية بفضل رمز الاستجابة السريعة QR
-                  الديناميكي.
-                </p>
-              </div>
-            </div>
-          </div>
+         
+          
         </div>
-      </section>
+
+
+</section>
+
+
 
       <!-- ============================================================
          TRUST / FEATURES + PAYMENT METHODS
@@ -472,8 +404,9 @@
           </div>
         </div>
       </div>
-    </main>
-
+</main>
 
 
 @endsection
+
+

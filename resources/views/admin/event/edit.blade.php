@@ -71,6 +71,17 @@
             </div>
 
 
+            <div class="mb-3">
+                
+                <label for="start_price" class="form-label">Start Price Text</label>
+                <input type="text" name="start_price" class="form-control" value="{{ old('start_price', $event->start_price) }}" id="start_price" aria-describedby="start_priceHelp" />
+              
+              @error('start_price')
+                  <div class="invalid-feedback d-block" >{{ $message }}</div>
+              @enderror
+
+            
+            </div>
 
 
 

@@ -39,6 +39,7 @@ class EventController extends Controller
             'start_time' => 'required|date',
             'end_time' => 'required|date|after_or_equal:start_time',
             'status' => 'required|in:0,1',
+            'start_price' => 'required|max:255',
         ]);
 
         $user = Auth::user();
@@ -52,6 +53,7 @@ class EventController extends Controller
         $event->status = $request->status ?? 0; // Set to 0 if not provided
         $event->terms = $request->terms ?? null; // Set terms if provided
         $event->created_by = $user->id;//auth()->user()->id;
+        $event->start_price = $request->start_price;
         
         $event->save();
 
@@ -67,7 +69,7 @@ class EventController extends Controller
         */
 
 
-        return redirect()->route('event.admin', ['id' => $event->id])->with('success', 'Event created successfully.');
+        return redirect()->route('event.admin.overview', ['id' => $event->id])->with('success', 'Event created successfully.');
         
     }
 
@@ -91,6 +93,7 @@ class EventController extends Controller
             'start_time' => 'required|date',
             'end_time' => 'required|date|after_or_equal:start_time',
             'status' => 'required|in:0,1',
+            'start_price' => 'required|max:255',
         ]);
 
         $event = Event::findOrFail($id);
@@ -101,10 +104,11 @@ class EventController extends Controller
         $event->location = $request->location;
         $event->status = $request->status ?? 0; // Set to 0 if not provided
         $event->terms = $request->terms ?? null; // Set terms if provided
+        $event->start_price = $request->start_price;
 
         $event->save();
 
-        return redirect()->route('event.admin', ['id' => $event->id])->with('success', $event->title . ' updated successfully.');
+        return redirect()->route('event.admin.overview', ['id' => $event->id])->with('success', $event->title . ' updated successfully.');
     }   
 
     public function destroy($id)
@@ -304,5 +308,17 @@ class EventController extends Controller
         return redirect()->route('event.pictures', ['id' => $event_id])->with('success', 'Picture deleted successfully.');
     }
 
+    public function overviewEvent($id)
+    {
+        $event = Event::findOrFail($id);
+        $data = [
+            'event' => $event,
+            'title' => 'Event Overview',
+            'active_page' => 'event_overview',
+        ];
+
+        
+         return view('admin.event.overview', $data);
+    }
 
 }

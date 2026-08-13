@@ -22,6 +22,13 @@
   <div class="card">
     <div class="card-header p-0 border-bottom-0">
       <ul class="nav nav-tabs" id="profile-tabs" role="tablist">
+        <li class="nav-item" role="Overview">
+          <a href="{{ route('event.admin.overview', $event->id) }}" class="nav-link">
+            Overview
+          </a>
+        </li> 
+       
+      
         <li class="nav-item" role="presentation">
           <a href="{{ route('event.admin', $event->id) }}" class="nav-link">
             Tickets
@@ -98,13 +105,13 @@
             @foreach($photos as $photo)
                 <div class="col-md-3 mb-3">
                     <div class="card">
-                        <img src="{{ asset('storage/' . $photo->path) }}" class="card-img-top" alt="{{ $photo->type }}">
-                        <div class="card-body">
+                        <img src="{{ asset('storage/' . $photo->path) }}" style="height: 200px; object-fit: cover;" class="card-img-top" alt="{{ $photo->type }}">
+                        <div class="card-body col-md-12" >
                             <h5 class="card-title">{{ $photo->type }}</h5>
                             <form action="{{ route('event.pictures.destroy', [$event->id, $photo->id]) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this picture?');">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                <button type="submit" class="btn btn-danger btn-sm float-end">Delete</button>
                             </form>
                         </div>
                     </div>

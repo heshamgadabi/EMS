@@ -22,6 +22,12 @@
   <div class="card">
     <div class="card-header p-0 border-bottom-0">
       <ul class="nav nav-tabs" id="profile-tabs" role="tablist">
+       <li class="nav-item" role="Overview">
+          <a href="{{ route('event.admin.overview', $event->id) }}" class="nav-link">
+            Overview
+          </a>
+        </li> 
+       
         <li class="nav-item" role="presentation">
           <button
             class="nav-link active"
