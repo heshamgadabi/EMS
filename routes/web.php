@@ -26,31 +26,46 @@ Route::prefix('admin')->middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
 });
 
-Route::get('event/list', [EventController::class, 'index'])->middleware(['auth','Admin'])->name('event.list');
-Route::get('event/create', [EventController::class, 'create'])->middleware(['auth','Admin'])->name('event.create');
 
-Route::post('event/store', [EventController::class, 'store'])->middleware(['auth','Admin'])->name('event.store');
+Route::middleware(['auth','Admin'])->group(function () {
+    Route::get('event/list', [EventController::class, 'index'])->name('event.list');
+    Route::get('event/create', [EventController::class, 'create'])->name('event.create');
+    Route::post('event/store', [EventController::class, 'store'])->name('event.store');
+    Route::get('event/edit/{id}', [EventController::class, 'edit'])->name('event.edit');
+    Route::put('event/update/{id}', [EventController::class, 'update'])->name('event.update');
+    Route::delete('event/delete/{id}', [EventController::class, 'destroy'])->name('event.destroy');
 
-Route::get('event/edit/{id}', [EventController::class, 'edit'])->middleware(['auth','Admin'])->name('event.edit');
-Route::put('event/update/{id}', [EventController::class, 'update'])->middleware(['auth','Admin'])->name('event.update');
-Route::delete('event/delete/{id}', [EventController::class, 'destroy'])->middleware(['auth','Admin'])->name('event.destroy');
+    Route::get('users/list', [UserController::class, 'index'])->name('users.list');
+    Route::get('user/{id}/edit', [UserController::class, 'edit'])->name('admin.user.edit');
+    Route::put('user/{id}/update', [UserController::class, 'update'])->name('user.update');
+    Route::get('user/create', [UserController::class, 'create'])->name('user.create');
+    Route::post('user/store', [UserController::class, 'store'])->name('user.store');
 
-Route::get('event/admin/{id}', [EventController::class, 'admin'])->middleware(['auth','Admin'])->name('event.admin');
-Route::get('event/admin/overview/{id}', [EventController::class, 'overviewEvent'])->middleware(['auth','Admin'])->name('event.admin.overview');
+    Route::get('event/admin/{id}', [EventController::class, 'admin'])->name('event.admin');
+    Route::get('event/admin/overview/{id}', [EventController::class, 'overviewEvent'])->name('event.admin.overview');
 
-Route::get('event/ticket/create/{id}', [EventController::class, 'createTicket'])->middleware(['auth','Admin'])->name('event.ticket.create');
-Route::post('event/ticket/store/{id}', [EventController::class, 'storeTicket'])->middleware(['auth','Admin'])->name('event.ticket.store');
+    Route::get('event/ticket/create/{id}', [EventController::class, 'createTicket'])->name('event.ticket.create');
+    Route::post('event/ticket/store/{id}', [EventController::class, 'storeTicket'])->name('event.ticket.store');
 
-Route::get('event/ticket/edit/{ticket_id}', [EventController::class, 'editTicket'])->middleware(['auth','Admin'])->name('event.ticket.edit');
-Route::put('event/ticket/update/{ticket_id}', [EventController::class, 'updateTicket'])->middleware(['auth','Admin'])->name('event.ticket.update');
-Route::delete('event/ticket/delete/{ticket_id}', [EventController::class, 'deleteTicket'])->middleware(['auth','Admin'])->name('event.ticket.delete'); 
+    Route::get('event/ticket/edit/{ticket_id}', [EventController::class, 'editTicket'])->name('event.ticket.edit');
+    Route::put('event/ticket/update/{ticket_id}', [EventController::class, 'updateTicket'])->name('event.ticket.update');
+    Route::delete('event/ticket/delete/{ticket_id}', [EventController::class, 'deleteTicket'])->name('event.ticket.delete'); 
+    
+    Route::get('event/pictures/{id}', [EventController::class, 'eventPictures'])->name('event.pictures');
+
+    Route::post('event/pictures/{id}', [EventController::class, 'storePictures'])->name('event.pictures.store');
+
+    Route::delete('event/pictures/{id}/{photo_id}', [EventController::class, 'destroyPictures'])->name('event.pictures.destroy');
 
 
-Route::get('users/list', [UserController::class, 'index'])->middleware(['auth','Admin'])->name('users.list');
-Route::get('user/{id}/edit', [UserController::class, 'edit'])->middleware(['auth','Admin'])->name('admin.user.edit');
-Route::put('user/{id}/update', [UserController::class, 'update'])->middleware(['auth','Admin'])->name('user.update');
-Route::get('user/create', [UserController::class, 'create'])->middleware(['auth','Admin'])->name('user.create');
-Route::post('user/store', [UserController::class, 'store'])->middleware(['auth','Admin'])->name('user.store');
+});
+
+
+
+
+
+
+
 
 Route::get('user/login', [UserController::class, 'login'])->name('user.login');
 Route::post('user/login', [UserController::class, 'authenticate'])->name('user.authenticate');
@@ -60,13 +75,11 @@ Route::get('home', [FrontController::class, 'home'])->name('home');
 
 Route::get('event/{id}', [FrontController::class, 'eventDetails'])->name('event.details');
 
-Route::get('event/ticket/{id}', [FrontController::class, 'eventTicket'])->name('event.ticket');
+Route::get('event/ticket/{id}', [FrontController::class, 'eventTicket'])->middleware('auth')->name('event.ticket');
 
-Route::get('event/pictures/{id}', [EventController::class, 'eventPictures'])->middleware(['auth','Admin'])->name('event.pictures');
+Route::post('event/ticket/{id}/checkout', [FrontController::class, 'ticketCheckout'])->middleware('auth')->name('front.tickets.checkout');
 
-Route::post('event/pictures/{id}', [EventController::class, 'storePictures'])->middleware(['auth','Admin'])->name('event.pictures.store');
-
-Route::delete('event/pictures/{id}/{photo_id}', [EventController::class, 'destroyPictures'])->middleware(['auth','Admin'])->name('event.pictures.destroy');
+Route::get('event/ticket/{id}/checkout', [FrontController::class, 'ticketCheckoutSummary'])->middleware('auth')->name('front.tickets.checkout.summary');
 
 
 require __DIR__.'/auth.php';

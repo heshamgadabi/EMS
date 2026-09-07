@@ -117,5 +117,7 @@
     <!-- Bootstrap 5 JS bundle (includes Popper) -->
     <script src="{{ asset('front/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('front/js/main.js') }}"></script>
+    <script src="{{ asset('front/js/jquery-4.0.0.min.js') }}"></script>
+    <script src="{{ asset('front/js/hes_custom.js') }}"></script>
   </body>
 </html>
