@@ -1,0 +1,281 @@
+
+  :root{
+    --brand:#30bb47;
+    --brand-dark:#279938;
+    --brand-tint:#e8faec;
+    --ink:#171c1f;
+    --muted:#7c8790;
+    --line:#e7ebe8;
+    --bg:#eef1ee;
+  }
+
+  *{box-sizing:border-box;}
+
+  body{
+    font-family:'Tajawal', sans-serif;
+    background:
+      radial-gradient(circle at 15% 0%, #f5f8f4 0%, var(--bg) 55%, #e4e9e3 100%);
+    min-height:100vh;
+    margin:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:48px 16px;
+    color: var(--ink);
+  }
+
+  .stage{ width:100%; max-width:380px; }
+
+  .stage-label{
+    text-align:center;
+    color: var(--muted);
+    font-size:.8rem;
+    margin-bottom:18px;
+  }
+
+  /* ===== بطاقة التذكرة بأسلوب Wallet ===== */
+  .pass{
+    position:relative;
+    background:#fff;
+    border-radius:26px;
+    box-shadow:
+      0 1px 2px rgba(20,30,20,.04),
+      0 20px 40px -16px rgba(30,60,35,.28);
+    overflow:hidden;
+  }
+
+  /* الرأس الملون */
+  .pass-head{
+    position:relative;
+    padding:22px 22px 30px;
+    background: linear-gradient(150deg, var(--brand) 0%, var(--brand-dark) 100%);
+    color:#fff;
+  }
+  .pass-head::after{
+    /* نسيج خفيف زخرفي */
+    content:"";
+    position:absolute; inset:0;
+    background-image: radial-gradient(rgba(255,255,255,.14) 1px, transparent 1.4px);
+    background-size: 14px 14px;
+    opacity:.5;
+    mix-blend-mode: overlay;
+  }
+
+  .head-top{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    position:relative;
+    z-index:1;
+    margin-bottom:18px;
+  }
+  .head-brand{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    font-weight:700;
+    font-size:.85rem;
+  }
+  .head-brand .dot{
+    width:8px;height:8px;border-radius:50%;
+    background:#fff;
+    box-shadow:0 0 0 3px rgba(255,255,255,.25);
+  }
+  .head-status{
+    font-size:.68rem;
+    font-weight:700;
+    background: rgba(255,255,255,.22);
+    padding:5px 12px;
+    border-radius:999px;
+    backdrop-filter: blur(2px);
+  }
+
+  .head-event{
+    position:relative;
+    z-index:1;
+  }
+  .head-cat{
+    font-size:.72rem;
+    color: rgba(255,255,255,.85);
+    margin-bottom:6px;
+  }
+  .head-title{
+    font-size:1.28rem;
+    font-weight:800;
+    line-height:1.35;
+  }
+
+  /* الخط المسنن + الفتحات الجانبية بأسلوب Apple Wallet */
+  .pass-divider{
+    position:relative;
+    height:0;
+  }
+  .pass-divider .cut{
+    position:absolute;
+    top:-14px;
+    width:28px; height:28px;
+    border-radius:50%;
+    background: var(--bg);
+  }
+  .pass-divider .cut.left{ left:-14px; }
+  .pass-divider .cut.right{ right:-14px; }
+  .pass-divider .dash{
+    position:absolute;
+    top:-1px; right:22px; left:22px;
+    border-top:2px dashed #dfe5e0;
+  }
+
+  /* الجسم */
+  .pass-body{
+    padding:28px 22px 8px;
+  }
+
+  .info-grid{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap:18px 14px;
+    margin-bottom:22px;
+  }
+  .info-item .lbl{
+    font-size:.68rem;
+    color: var(--muted);
+    margin-bottom:4px;
+  }
+  .info-item .val{
+    font-size:.95rem;
+    font-weight:700;
+    color: var(--ink);
+  }
+  .info-item .val small{
+    display:block;
+    font-weight:500;
+    font-size:.72rem;
+    color: var(--muted);
+    margin-top:2px;
+  }
+  .info-item.span-2{ grid-column: span 2; }
+
+  .holder{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:14px 0;
+    border-top:1px solid var(--line);
+    margin-bottom:8px;
+  }
+  .holder-avatar{
+    width:38px;height:38px;
+    border-radius:50%;
+    background: var(--brand-tint);
+    color: var(--brand-dark);
+    display:flex;align-items:center;justify-content:center;
+    font-weight:800;
+    font-size:.82rem;
+    flex-shrink:0;
+  }
+  .holder-name{ font-weight:700; font-size:.9rem; }
+  .holder-role{ font-size:.72rem; color:var(--muted); }
+
+  /* فاصل مسنن ثاني قبل الباركود */
+  .pass-divider2{
+    position:relative;
+    height:0;
+  }
+  .pass-divider2 .cut{
+    position:absolute;
+    top:-14px;
+    width:28px; height:28px;
+    border-radius:50%;
+    background: var(--bg);
+  }
+  .pass-divider2 .cut.left{ left:-14px; }
+  .pass-divider2 .cut.right{ right:-14px; }
+  .pass-divider2 .dash{
+    position:absolute;
+    top:-1px; right:22px; left:22px;
+    border-top:2px dashed #dfe5e0;
+  }
+
+  /* منطقة الرمز */
+  .pass-scan{
+    padding:26px 22px 24px;
+    text-align:center;
+  }
+  .qr-box{
+    width:132px; height:132px;
+    margin:0 auto 14px;
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:10px;
+    display:grid;
+    grid-template-columns: repeat(7,1fr);
+    grid-template-rows: repeat(7,1fr);
+    gap:3px;
+  }
+  .qr-box span{ background: var(--ink); border-radius:1px; }
+  .qr-box span.off{ background: transparent; }
+
+  .serial{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:.78rem;
+    letter-spacing:1.5px;
+    color: var(--muted);
+  }
+  .scan-hint{
+    font-size:.72rem;
+    color: var(--muted);
+    margin-top:6px;
+  }
+
+  .hint{
+    text-align:center;
+    color: var(--muted);
+    font-size:.76rem;
+    margin-top:16px;
+    line-height:1.7;
+  }
+
+
+  /* ===== أزرار الإجراءات ===== */
+.actions{
+  display:flex;
+  gap:10px;
+  margin-top:22px;
+}
+.btn-action{
+  flex:1;
+  border:none;
+  border-radius:14px;
+  padding:13px 16px;
+  font-family:'Tajawal', sans-serif;
+  font-weight:700;
+  font-size:.88rem;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  cursor:pointer;
+  transition: transform .15s ease, box-shadow .15s ease, opacity .15s ease;
+}
+.btn-action:active{ transform: scale(.97); }
+.btn-action svg{ width:18px; height:18px; flex-shrink:0; }
+
+.btn-primary{
+  background: linear-gradient(150deg, var(--brand) 0%, var(--brand-dark) 100%);
+  color:#fff;
+  box-shadow: 0 10px 20px -8px rgba(48,187,71,.55);
+}
+.btn-primary[disabled]{ opacity:.7; cursor:progress; }
+
+.btn-secondary{
+  background:#fff;
+  color: var(--ink);
+  border:1px solid var(--line);
+}
+
+@media print{
+  body{ background:#fff; padding:0; }
+  .stage-label, .hint, .actions{ display:none; }
+  .pass{ box-shadow:none; }
+}

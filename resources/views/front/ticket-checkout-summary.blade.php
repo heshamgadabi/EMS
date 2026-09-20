@@ -8,7 +8,7 @@
 @section('content')
 
 
-<main class="ticket-page-main">
+  <main class="ticket-page-main">
       <!-- ============================================================
          PAYMENT PAGE
          Figma: node 10:1252 "payment-event"
@@ -87,31 +87,46 @@
                 <div class="payment-summary-body">
                   <h2 class="payment-block-heading">ملخص الطلب</h2>
               
-                  <div class="payment-summary-ticket">
-                    <div class="payment-summary-ticket-info">
-                      <p class="payment-summary-ticket-name">تذكرة لشخص واحد</p>
-                      <p class="payment-summary-ticket-desc">
-                        الجلوس بطاولة الحضور، الأوركسترا
-                      </p>
-                    </div>
-                    <span class="payment-summary-ticket-price">SAR 79.00</span>
-                  </div>
+
+                  @foreach ($invoice->tickets as $ticket)
 
                   <div class="payment-summary-ticket">
                     <div class="payment-summary-ticket-info">
-                      <p class="payment-summary-ticket-name">تذكرة لشخص واحد</p>
+                      <p class="payment-summary-ticket-name">{{ $ticket->pivot->ticket_title }}</p>
                       <p class="payment-summary-ticket-desc">
-                        الجلوس بطاولة الحضور، الأوركسترا
+                      {{ $ticket->description }} 
+                      
                       </p>
                     </div>
-                    <span class="payment-summary-ticket-price">SAR 79.00</span>
+                    <span class="payment-summary-ticket-price">SAR {{ number_format($ticket->price, 2) }}  &times;  {{ $ticket->pivot->quantity }}</span>
+
+                    <span class="payment-summary-ticket-price">SAR {{ number_format($ticket->pivot->total_price, 2) }}</span>
+                    
+                  </div>
+                  @endforeach
+
+
+                  <div class="payment-summary-ticket">
+                    <div class="payment-summary-ticket-info">
+                      <p class="payment-summary-ticket-name">الضريبة</p>
+                      <p class="payment-summary-ticket-desc">
+                      
+                      
+                      </p>
+                    </div>
+                    <span class="payment-summary-ticket-price"> {{ $invoice->tax }} % </span>
+
+                    <span class="payment-summary-ticket-price">SAR {{ number_format($invoice->tax_amount, 2) }}</span>
+                    
                   </div>
 
+
+                  
                   <hr class="payment-summary-divider" />
 
-                  <div class="payment-summary-total">
+                  <div class="payment-summary-total" >
                     <span>المجموع</span>
-                    <span>SAR 158.00</span>
+                    <span class="float-end">SAR {{ number_format($invoice->total_amount_with_tax, 2) }}  </span>
                   </div>
                 </div>
               </div>
@@ -217,12 +232,10 @@
           </div>
 
           <div class="ticket-pay-actions">
-            <span class="ticket-pay-total" id="ticketTotalPrice"
-              >SAR 158.00</span
-            >
-            <button type="button" class="ticket-pay-btn" id="ticketPayBtn">
+            <span class="ticket-pay-total" id="ticketTotalPrice">SAR {{ $invoice->total_amount_with_tax }} </span>
+            <a href="{{ route('front.tickets.checkout.success', $invoice->id) }}" class="ticket-pay-btn" id="ticketPayBtn">
               الدفع
-            </button>
+            </a>
           </div>
         </div>
       </div>

@@ -7,6 +7,9 @@ use App\Models\Event;
 use App\Models\Photos;
 use App\Models\Ticket;
 use App\Models\Invoice;
+use App\Services\QrCodeService;
+use App\Models\User;
+use Illuminate\Support\Facades\DB;
 
 class FrontController extends Controller
 {
@@ -78,6 +81,7 @@ class FrontController extends Controller
                         $ticket->quantity = $quantity;
                         $ticket->total_price = $quantity * $ticket->price;
                         $total_price_all += $ticket->total_price;
+                        $ticket->confirmation = 'MAC-' . strtoupper(uniqid()); // Generate a unique confirmation number
                         
                         $ticket_arr[$ticket_id] = $ticket;
                     }
@@ -89,6 +93,12 @@ class FrontController extends Controller
         $invoice->total_amount = $total_price_all;
         $invoice->status = 'pending'; // Set the initial status of the invoice
         $invoice->invoice_number = 'INV-' . strtoupper(uniqid()); // Generate a unique invoice number
+        $tax = 15; // Example tax percentage
+        $tax_amount = ($total_price_all * $tax) / 100;
+        $invoice->tax = $tax;
+        $invoice->tax_amount = $tax_amount;
+        $invoice->total_amount_with_tax = $total_price_all + $tax_amount;
+        $invoice->discount_amount = 0; // Set the discount amount if applicable
         $invoice->save();
 
         // Save the ticket details in the invoice_ticket table
@@ -98,6 +108,7 @@ class FrontController extends Controller
                 'unit_price' => $ticket->price,
                 'total_price' => $ticket->total_price,
                 'ticket_title' => $ticket->title, // Save the ticket title as a snapshot
+                'confirmation' => $ticket->confirmation, // Save the confirmation number
             ]);
             
         }
@@ -121,7 +132,7 @@ class FrontController extends Controller
 
         $thumbnail = Photos::where(['event_id' => $event->id,'type' => 'Thumbnail'])->latest()->first();
         
-
+        
         $data = [
             'invoice' => $invoice,
             'event' => $event,
@@ -133,6 +144,82 @@ class FrontController extends Controller
        
     }
 
+
+    public function ticketCheckoutSuccess($id)
+    {
+        $invoice = Invoice::with('tickets')->findOrFail($id);
+
+        //print_r($invoice);
+        // Check if the authenticated user is the owner of the invoice
+       
+        if ($invoice->user_id !== auth()->user()->id) {
+            abort(403, 'Unauthorized access');
+        }
+
+        $user_invoice = User::where('id', $invoice->user_id)->first();
+
+
+/*
+        $invoice->status = 'paid'; // Update the status to 'paid'
+        $invoice->save();
+*/
+
+
+        $event = Event::findOrFail($invoice->event_id);
+
+        $thumbnail = Photos::where(['event_id' => $event->id,'type' => 'Thumbnail'])->latest()->first();
+       
+        $qrCodeService = new QrCodeService();
+        $qrCodeImage = $qrCodeService->generateBase64($invoice->invoice_number);
+        
+        //BarcodeService::generateSvg($invoice->invoice_number, 50);
+        
+        $data = [
+            'invoice' => $invoice,
+            'user_invoice' => $user_invoice,
+            'event' => $event,
+            'thumbnail' => $thumbnail,
+            'qrCodeImage' => $qrCodeImage,
+        ];
+       
+        return view('front.ticket-checkout-invoice-success', $data);
+       // return view('front.ticket-checkout-success', $data);
+        
+       
+    }
+
+
+    public function ticketView($invoice_ticket_id)
+    {
+        
+        $invoice_ticket = DB::table('invoice_ticket')->where('id', $invoice_ticket_id)->first();
+
+        $invoice = Invoice::findOrFail($invoice_ticket->invoice_id);   
+        $ticket = Ticket::findOrFail($invoice_ticket->ticket_id);
+        $event = Event::findOrFail($invoice->event_id);
+        $user_invoice = User::where('id', $invoice->user_id)->first();
+
+        $thumbnail = Photos::where(['event_id' => $event->id,'type' => 'Thumbnail'])->latest()->first();
+       
+        $qrCodeService = new QrCodeService();
+        $qrCodeImage = $qrCodeService->generateBase64($invoice_ticket->confirmation);
+        
+
+
+
+
+        $data = [
+            'invoice_ticket' => $invoice_ticket,
+            'invoice' => $invoice,
+            'ticket' => $ticket,
+            'event' => $event,
+            'user_invoice' => $user_invoice,
+            'thumbnail' => $thumbnail,
+            'qrCodeImage' => $qrCodeImage,
+        ];
+
+        return view('front.ticket-view', $data);
+    }
 
     
 }

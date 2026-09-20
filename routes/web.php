@@ -81,5 +81,8 @@ Route::post('event/ticket/{id}/checkout', [FrontController::class, 'ticketChecko
 
 Route::get('event/ticket/{id}/checkout', [FrontController::class, 'ticketCheckoutSummary'])->middleware('auth')->name('front.tickets.checkout.summary');
 
+Route::get('event/ticket/{id}/checkout/success', [FrontController::class, 'ticketCheckoutSuccess'])->middleware('auth')->name('front.tickets.checkout.success');
+
+Route::get('event/ticket/{invoice_ticket_id}/view', [FrontController::class, 'ticketView'])->name('front.ticket.view');
 
 require __DIR__.'/auth.php';

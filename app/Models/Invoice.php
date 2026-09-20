@@ -18,7 +18,7 @@ class Invoice extends Model
     public function tickets()
     {
         return $this->belongsToMany(Ticket::class, 'invoice_ticket')
-                    ->withPivot(['ticket_title', 'quantity', 'unit_price', 'total_price'])
+                    ->withPivot(['ticket_title', 'quantity', 'unit_price', 'total_price','id'])
                     ->withTimestamps();
     }                       
 
