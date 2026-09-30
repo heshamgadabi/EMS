@@ -71,9 +71,9 @@
 
             <!-- Currency / language -->
             <div class="dropdown flex-shrink-0 ms-auto">
-              <button
-                class="btn btn-link text-body text-decoration-none px-2 d-flex align-items-center gap-1"
-                type="button"
+              <div
+                class="text-body text-decoration-none px-2 d-flex align-items-center gap-1"
+                
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
               >
@@ -83,7 +83,10 @@
                   width="16"
                   height="16"
                 />
-                <span class="small text-muted">AR</span>
+                <a href="#" class="small text-muted text-decoration-none">EN</a>
+
+                @if (Auth::check())
+
                 <img
                   src="{{ asset('front/assets/icons/icon-divider.svg') }}"
                   alt=""
@@ -91,14 +94,12 @@
                   height="11"
                   class="mx-1"
                 />
-                <span class="small text-muted">USD</span>
-              </button>
-              <ul class="dropdown-menu">
-                <li>
-                  <a class="dropdown-item" href="#">USD - دولار أمريكي</a>
-                </li>
-                <li><a class="dropdown-item" href="#">SAR - ريال سعودي</a></li>
-              </ul>
+                <span class="small text-muted">{{  Auth::user()->name  }}</span>
+                @endif
+              </div>
+              
+
+               
             </div>
 
             <!-- Account menu -->
@@ -116,11 +117,40 @@
                   width="14"
                   height="17"
                 />
+                
               </button>
+
+              @if (Auth::check())
               <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">تسجيل الدخول</a></li>
-                <li><a class="dropdown-item" href="#">إنشاء حساب</a></li>
+                <li class="main-header-border-bottom">
+                    <a class="dropdown-item" href="{{ route('user.profile') }}">{{ Auth::user()->name }} </a>
+                </li>
+                
+                <li><a class="dropdown-item" href="{{ route('user.profile') }}">الملف الشخصي</a></li>
+                    
+                
+                <li><a class="dropdown-item" href="">تذاكري</a></li>
+                
+
+                <li class="main-header-border-bottom">
+                    <a class="dropdown-item" href="#">سلة المشتريات</a>
+                </li>
+
+                <li>
+                  
+                 
+                  <a href="{{ route('user.signout') }}" class="dropdown-item">تسجيل الخروج</a>
+                  
+                </li>
+
               </ul>
+              @else
+      
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="{{ route('user.signin') }}">تسجيل الدخول</a></li>
+                <li><a class="dropdown-item" href="{{ route('user.signup') }}">إنشاء حساب</a></li>
+              </ul>
+              @endif
             </div>
           </div>
         </div>
@@ -246,10 +276,19 @@
               width="14"
               height="17"
             />
-          </div>
-          <a href="#" class="fw-semibold text-decoration-none">تسجيل الدخول</a>
+          </div>   
+
+          @if (Auth::check())
+          <span class="text-muted">{{  Auth::user()->name  }}</span>
+          <div class="clearfix"></div>
+          
+          <a href="{{ route('user.signout') }}" class="btn btn-outline-success">تسجيل الخروج</a>
+          
+          @else
+          <a href="{{ route('user.signin') }}" class="fw-semibold text-decoration-none">تسجيل الدخول</a>
           <span class="text-muted">/</span>
-          <a href="#" class="fw-semibold text-decoration-none">إنشاء حساب</a>
+          <a href="{{ route('user.signup') }}" class="fw-semibold text-decoration-none">إنشاء حساب</a>
+          @endif
         </div>
 
         <div
@@ -285,12 +324,12 @@
                 height="11"
                 class="mx-1"
               />
-              <span class="small text-muted">USD</span>
+              <span class="small text-muted">SAR</span>
             </button>
             <ul class="dropdown-menu">
-              <li>
+              <!--li>
                 <a class="dropdown-item" href="#">USD - دولار أمريكي</a>
-              </li>
+              </li-->
               <li><a class="dropdown-item" href="#">SAR - ريال سعودي</a></li>
             </ul>
           </div>

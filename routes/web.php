@@ -6,10 +6,14 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\FrontController;
-
+/*
 Route::get('/', function () {
     return view('welcome');
 });
+*/
+
+Route::get('/', [FrontController::class, 'home']);
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -84,5 +88,20 @@ Route::get('event/ticket/{id}/checkout', [FrontController::class, 'ticketCheckou
 Route::get('event/ticket/{id}/checkout/success', [FrontController::class, 'ticketCheckoutSuccess'])->middleware('auth')->name('front.tickets.checkout.success');
 
 Route::get('event/ticket/{invoice_ticket_id}/view', [FrontController::class, 'ticketView'])->name('front.ticket.view');
+
+Route::get('signup', [UserController::class, 'frontSignup'])->name('user.signup');
+
+Route::post('signup', [UserController::class, 'frontSignupStore'])->name('user.signup.store');
+
+Route::get('signin', [UserController::class, 'frontSignin'])->name('user.signin');
+
+Route::post('signin', [UserController::class, 'frontSigninStore'])->name('user.signin.store');
+
+Route::get('signout', [UserController::class, 'frontSignout'])->middleware('auth')->name('user.signout');
+
+Route::get('profile', [UserController::class, 'frontProfile'])->middleware('auth')->name('user.profile');
+
+Route::get('my/tickets',[FrontController::class, 'myTickets'])->middleware('auth')->name('my.tickets');
+
 
 require __DIR__.'/auth.php';

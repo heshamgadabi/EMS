@@ -107,6 +107,17 @@ a {
   background-color: var(--tf-green-badge);
 }
 
+
+.main-header-border-bottom
+{
+  border-bottom: 1px solid var(--tf-border);
+
+    
+  
+      
+    
+}
+
 .text-brand-green {
   color: var(--tf-green) !important;
 }
@@ -2067,6 +2078,20 @@ a {
   border-radius: 16px;
   padding: 24px;
 }
+
+.signup-sidebar {
+  flex: 0 0 320px;
+  width: 320px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  background: #fff;
+  border: none;
+  border-radius: 16px;
+  padding: 24px;
+}
+
 
 @media (max-width: 991.98px) {
   .profile-sidebar {

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>تذكرة الفعالية</title>
+<title>{{ $event->title }} - تذكرة</title>
 <link href="{{ asset('front/css/bootstrap.rtl.min.css') }}" rel="stylesheet">
 <link href="{{ asset('front/css/qr-ticket.css') }}" rel="stylesheet">
 

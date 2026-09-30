@@ -221,5 +221,18 @@ class FrontController extends Controller
         return view('front.ticket-view', $data);
     }
 
+
+    public function myTickets()
+    {
+        
+
+        $invoices = Invoice::where('user_id',auth()->user()->id)->with('tickets')->get();
+
+        $data = ['invoices' => $invoices,'user' => auth()->user()];
+        
+        return view('front.my_tickets',$data);
+
+    }
+
     
 }

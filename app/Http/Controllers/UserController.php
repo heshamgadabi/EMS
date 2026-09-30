@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Http\Requests\StorefrontUserRequest;
+
 
 class UserController extends Controller
 {
@@ -112,5 +114,100 @@ class UserController extends Controller
     } 
 
 
+    public function frontSignup()
+    {
+        // Logic to display the signup form
+        if (auth()->check()) {
+            return redirect()->route('home'); // Redirect to the Home if already logged in
+        }
+        return view('front.signup');
+    }
+
+    public function frontSignupStore(StorefrontUserRequest $request)
+    {
+        // Logic to store a new user from the front-end signup form
+        // Validate the request data
+        /*
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|string|min:8', // Assuming you want to set a password for the user
+        ]);
+        */
+
+
+
+
+        // Create a new user with validated data
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'role' => 'customer', // Default role for front-end signup users
+            'password' => bcrypt($request->password), // Hash the password before storing
+        ]);
+
+        // Log in the newly created user
+        auth()->login($user);
+
+
+        return redirect()->route('home')->with('success', 'Account created successfully.');
+    }
+
+
+    public function frontSignin()
+    {
+        
+        // Logic to display the signin form
+        
+        if (auth()->check()) {
+            return redirect()->route('home'); // Redirect to the Home if already logged in
+        }
+
+        if (!session()->has('url.intended') && !in_array(url()->previous(), [route('user.signin')])) {
+        session(['url.intended' => url()->previous()]);
+         }
+
+        return view('front.signin');
+        
+
+    }
+
+    public function frontSigninStore(Request $request)
+    {
+        // Logic to authenticate the user from the front-end signin form
+        $credentials = $request->only('email', 'password');
+
+        if (auth()->attempt($credentials)) {
+            // Authentication successful
+            return redirect()->intended('home'); // Redirect to the intended page after login
+        } else {
+            // Authentication failed
+            return redirect()->back()->withErrors(['email' => 'البريد الإلكتروني أو كلمة المرور غير صحيحة'])->withInput();
+        }
+    }
+        
+    public function frontSignout(Request $request)
+    {
+        // Logic to log out the user from the front-end
+        auth()->logout();
+
+        // Invalidate the session and regenerate the CSRF token
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect()->route('home')->with('success', 'تم تسجيل الخروج بنجاح.');
+    }
+
+
+    public function frontProfile()
+    {
+        // Logic to display the user's profile
+        $user = auth()->user(); // Get the currently authenticated user
+
+        
+        return view('front.profile', [
+            'user' => $user,
+        ]);
+    }
 
 }
