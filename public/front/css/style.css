@@ -2525,3 +2525,21 @@ a {
   background-color: #34c07f;
   color: var(--tf-text-logo);
 }
+
+.hes_hide p.text-muted {
+  display: none;
+}
+
+.hes_hide .active>.page-link, .page-link.active {
+    z-index: 3;
+    color: #FFF;
+    background-color: var(--tf-green-badge);
+    border-color: var(--tf-green-badge);
+}
+
+
+.hes_hide .page-link {
+    color: var(--tf-green-badge);
+    background-color: #fff;
+    border-color: var(--tf-green-badge);
+} 

@@ -57,7 +57,7 @@
             <nav class="profile-menu" aria-label="حساب المستخدم">
               
              <a
-                href="profile.html"
+                href="{{ route('user.profile') }}"
                 class="profile-menu-item "
                 aria-current="page"
               >
@@ -69,7 +69,7 @@
                 <i class="bi bi-heart"></i>
                 المفضلة
               </a>
-              <a href="{{ route('my.tickets') }}" class="profile-menu-item active">
+              <a href="{{ route('my.tickets','new') }}" class="profile-menu-item active">
                 <i class="bi bi-ticket-perforated"></i>
                 تذاكري
               </a>
@@ -90,138 +90,37 @@
           <div class="profile-main">
             <div class="profile-card">
               <div class="profile-tabs" role="tablist">
-                <a href="#" class="profile-tab active" data-tab="info" role="tab" aria-selected="true" >معلوماتي</a>
+                <a href="{{ route('my.tickets','new') }}" class="profile-tab {{ $type == 'new' ? 'active' : '' }}" data-tab="info" role="tab" aria-selected="true" >تذاكري الجديدة</a>
+
+                <a href="{{ route('my.tickets','old') }}" class="profile-tab {{ $type == 'old' ? 'active' : '' }}" data-tab="info" role="tab" aria-selected="true" >تذاكري القديمة</a>
                 
-                <a href="#" class="profile-tab"  data-tab="password" role="tab" aria-selected="false" >كلمة المرور </a>
-                <a href="#" class="profile-tab" data-tab="billing" role="tab" aria-selected="false" >الخطط والفواتير</a>
+                
               </div>
 
-              <!-- معلوماتي -->
-              <form class="profile-fields active" data-panel="info">
-                <!-- Full name -->
-                <div class="profile-field">
-                  <label class="profile-field-label" for="profileName">
-                    <span>الاسم بالكامل</span>
-                    <span class="profile-field-required">*</span>
-                  </label>
-                  <div class="profile-field-control">
-                    <input
-                      type="text"
-                      id="profileName"
-                      class="profile-field-input"
-                      value="{{ $user->name }}"
-                    />
-                  </div>
-                </div>
+              <div data-panel="info">
 
-                
-                <!-- Phone number: intl-tel-input (see js/main.js initProfilePhoneInput) -->
-                <!--div class="profile-field">
-                  <label class="profile-field-label" for="profilePhone">
-                    <span>رقم الهاتف</span>
-                    <span class="profile-field-required">*</span>
-                  </label>
-                  <div class="profile-tel-wrap" dir="ltr">
-                    <input
-                      type="tel"
-                      id="profilePhone"
-                      class="profile-field-tel"
-                      value="{{ $user->phone }}"
-                    />
+               @foreach($invoice_tickets as $invoice_ticket)
+                <div class="ticket-card mb-3">
+                  <div class="ticket-card-header">
+                    <h2 class="ticket-card-title">{{ $invoice_ticket->ticket_title }}</h2>
+                    <p class="ticket-card-subtitle">عدد الاشخاص في التذكرة: {{ $invoice_ticket->quantity }}</p>
+                    <span class="ticket-card-date">{{ $invoice_ticket->event_title }}</span>
                   </div>
-                </div-->
+                  <div class="ticket-card-body">
+                    <p class="ticket-card-info"> {{ $invoice_ticket->confirmation }}</p>
+                    <p class="ticket-card-info"> <a href="{{ route('front.ticket.view', [$invoice_ticket->id]) }}" target="_blank" class="btn btn-outline-success"> عرض </a> </span>
+                   </p>
+                  </div>
+                </div>
+                @endforeach
 
-                <!-- Current email (read-only) -->
-                <div class="profile-field">
-                  <label class="profile-field-label" for="profileEmail">
-                    <span>البريد الالكتروني </span>
-                    <span class="profile-field-required">*</span>
-                  </label>
-                  <div class="profile-field-control">
-                    <input
-                      type="email"
-                      id="profileEmail"
-                      class="profile-field-input"
-                      value="{{ $user->email }}"
-                      disabled
-                    />
-                  </div>
-                  <p class="profile-field-hint">
-                    لا يمكن إجراء تعديلات على البريد الإلكتروني. للمزيد من
-                    المعلومات، يرجى التواصل مع فريق الدعم
-                  </p>
-                </div>
-
-                
-                
-                <button type="submit" class="profile-save-btn">
-                  حفظ التغييرات
-                </button>
-              </form>
-
-              
-              
-              <!-- كلمة المرور -->
-              <form class="profile-fields" data-panel="password">
-                <div class="profile-field">
-                  <label class="profile-field-label" for="currentPassword">
-                    <span>كلمة المرور الحالية</span>
-                  </label>
-                  <div class="profile-field-control">
-                    <input
-                      type="password"
-                      id="currentPassword"
-                      class="profile-field-input"
-                      placeholder="••••••••"
-                    />
-                  </div>
-                </div>
-                <div class="profile-field">
-                  <label class="profile-field-label" for="newPassword">
-                    <span>كلمة المرور الجديدة</span>
-                  </label>
-                  <div class="profile-field-control">
-                    <input
-                      type="password"
-                      id="newPassword"
-                      class="profile-field-input"
-                      placeholder="••••••••"
-                    />
-                  </div>
-                </div>
-                <div class="profile-field">
-                  <label class="profile-field-label" for="confirmPassword">
-                    <span>تأكيد كلمة المرور الجديدة</span>
-                  </label>
-                  <div class="profile-field-control">
-                    <input
-                      type="password"
-                      id="confirmPassword"
-                      class="profile-field-input"
-                      placeholder="••••••••"
-                    />
-                  </div>
-                </div>
-                <button type="submit" class="profile-save-btn">
-                  تحديث كلمة المرور
-                </button>
-              </form>
-
-              <!-- الخطط والفواتير -->
-              <div class="profile-fields" data-panel="billing">
-                <div class="profile-billing-card">
-                  <div>
-                    <p class="profile-billing-plan-label">خطتك الحالية</p>
-                    <p class="profile-billing-plan-name">العضوية الأساسية</p>
-                  </div>
-                  <button type="button" class="profile-save-btn">
-                    ترقية الخطة
-                  </button>
-                </div>
-                <p class="profile-field-hint">
-                  لا توجد فواتير سابقة لعرضها حتى الآن
-                </p>
               </div>
+              
+              
+
+              
+               
+ 
             </div>
           </div>
         </div>

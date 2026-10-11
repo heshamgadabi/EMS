@@ -79,6 +79,8 @@ Route::get('home', [FrontController::class, 'home'])->name('home');
 
 Route::get('event/{id}', [FrontController::class, 'eventDetails'])->name('event.details');
 
+Route::get('events/explore/{category}', [FrontController::class, 'eventsExplore'])->name('events.explore');
+
 Route::get('event/ticket/{id}', [FrontController::class, 'eventTicket'])->middleware('auth')->name('event.ticket');
 
 Route::post('event/ticket/{id}/checkout', [FrontController::class, 'ticketCheckout'])->middleware('auth')->name('front.tickets.checkout');
@@ -101,7 +103,9 @@ Route::get('signout', [UserController::class, 'frontSignout'])->middleware('auth
 
 Route::get('profile', [UserController::class, 'frontProfile'])->middleware('auth')->name('user.profile');
 
-Route::get('my/tickets',[FrontController::class, 'myTickets'])->middleware('auth')->name('my.tickets');
+Route::post('profile', [UserController::class, 'frontProfileUpdate'])->middleware('auth')->name('user.profile.update');
+
+Route::get('my/tickets/{type}',[FrontController::class, 'myTickets'])->middleware('auth')->name('my.tickets');
 
 
 require __DIR__.'/auth.php';

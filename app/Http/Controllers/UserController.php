@@ -210,4 +210,29 @@ class UserController extends Controller
         ]);
     }
 
+    public function frontProfileUpdate(Request $request)
+    {
+        // Logic to update the user's profile
+        $user = auth()->user(); // Get the currently authenticated user
+
+        // Validate the request data
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+          //  'email' => 'required|email|unique:users,email,' . $user->id, // Allow the current user's email
+            //'password' => 'nullable|string|min:8', // Password is optional for profile update
+        ]);
+
+        // Update the user's profile with validated data
+        $user->name = $validatedData['name'];
+       // $user->email = $validatedData['email'];
+
+        if (!empty($validatedData['password'])) {
+            $user->password = bcrypt($validatedData['password']); // Hash the password before storing
+        }
+
+        $user->save();
+
+        return redirect()->route('user.profile')->with('success', 'تم تحديث الملف الشخصي بنجاح.');
+    }
+
 }

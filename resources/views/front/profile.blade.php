@@ -57,7 +57,7 @@
             <nav class="profile-menu" aria-label="حساب المستخدم">
               
              <a
-                href="profile.html"
+                href="{{ route('user.profile') }}"
                 class="profile-menu-item active"
                 aria-current="page"
               >
@@ -69,7 +69,7 @@
                 <i class="bi bi-heart"></i>
                 المفضلة
               </a>
-              <a href="{{ route('my.tickets') }}" class="profile-menu-item">
+              <a href="{{ route('my.tickets', ['type' => 'new']) }}" class="profile-menu-item">
                 <i class="bi bi-ticket-perforated"></i>
                 تذاكري
               </a>
@@ -88,6 +88,11 @@
 
           <!-- Main: tabbed form card -->
           <div class="profile-main">
+            @if (session('success'))
+              <div class="alert alert-success">
+                {{ session('success') }}
+              </div>
+            @endif
             <div class="profile-card">
               <div class="profile-tabs" role="tablist">
                 <a href="#" class="profile-tab active" data-tab="info" role="tab" aria-selected="true" >معلوماتي</a>
@@ -97,7 +102,8 @@
               </div>
 
               <!-- معلوماتي -->
-              <form class="profile-fields active" data-panel="info">
+              <form action="{{ route('user.profile.update') }}" class="profile-fields active" data-panel="info" method="POST">
+                @csrf
                 <!-- Full name -->
                 <div class="profile-field">
                   <label class="profile-field-label" for="profileName">
@@ -107,11 +113,16 @@
                   <div class="profile-field-control">
                     <input
                       type="text"
+                      name="name"
                       id="profileName"
                       class="profile-field-input"
                       value="{{ $user->name }}"
                     />
                   </div>
+                  @error('name')
+                     <p class="profile-field-required" >{{ $message }}</p>
+                   @enderror
+
                 </div>
 
                 
@@ -143,6 +154,7 @@
                       id="profileEmail"
                       class="profile-field-input"
                       value="{{ $user->email }}"
+                      name="email"
                       disabled
                     />
                   </div>

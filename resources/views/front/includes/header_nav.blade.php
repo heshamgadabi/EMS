@@ -13,7 +13,7 @@
         <div class="d-flex align-items-center py-3 flex-wrap header-row-1">
           <!-- Logo -->
           <a
-            href="index.html"
+            href="{{ route('home') }}"
             class="site-logo d-flex align-items-center gap-2 text-decoration-none flex-shrink-0"
           >
             <img
@@ -161,7 +161,7 @@
             <li class="nav-item">
               <a
                 class="nav-link fw-semibold d-flex align-items-center gap-2"
-                href="#"
+                href="{{ route('user.signup') }}"
               >
                 انضم لنا
                 <span class="badge-plus">Plus</span>
@@ -177,41 +177,41 @@
               >
               <ul class="dropdown-menu">
                 <li>
-                  <a class="dropdown-item" href="events.html">جميع الفعاليات</a>
+                  <a class="dropdown-item" href="{{ route('events.explore','all') }}">جميع الفعاليات</a>
                 </li>
                 <li>
-                  <a class="dropdown-item" href="#">الفعاليات القادمة</a>
+                  <a class="dropdown-item" href="{{ route('events.explore','upcoming') }}">الفعاليات القادمة</a>
                 </li>
               </ul>
             </li>
             <li class="nav-item dropdown">
               <a
                 class="nav-link fw-semibold dropdown-toggle"
-                href="#"
+                href="{{ route('events.explore','adventure') }}"
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
                 >المغامرات والتجارب</a
               >
               <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">رحلات السفاري</a></li>
+                <li><a class="dropdown-item" href="{{ route('events.explore','adventure') }}">رحلات السفاري</a></li>
                 <li>
-                  <a class="dropdown-item" href="#">أنشطة الهواء الطلق</a>
+                  <a class="dropdown-item" href="{{ route('events.explore','outdoor') }}">أنشطة الهواء الطلق</a>
                 </li>
               </ul>
             </li>
             <li class="nav-item">
-              <a class="nav-link fw-semibold" href="#"
+              <a class="nav-link fw-semibold" href="{{ route('events.explore','esports') }}"
                 >كأس العالم للرياضات الإلكترونية</a
               >
             </li>
             <li class="nav-item">
-              <a class="nav-link fw-semibold" href="#">موسم عسير</a>
+              <a class="nav-link fw-semibold" href="{{ route('events.explore','seasong') }}">موسم عسير</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link fw-semibold" href="#">العروض الكوميدية</a>
+              <a class="nav-link fw-semibold" href="{{ route('events.explore','comedy') }}">العروض الكوميدية</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link fw-semibold" href="#">ما الجديد في جدة؟</a>
+              <a class="nav-link fw-semibold" href="{{ route('events.explore','news') }}">ما الجديد في جدة؟</a>
             </li>
           </ul>
         </nav>
@@ -234,7 +234,7 @@
     >
       <div class="offcanvas-header border-bottom">
         <a
-          href="index.html"
+          href="{{ route('home') }}"
           class="site-logo d-flex align-items-center gap-2 text-decoration-none"
           id="mobileMenuLabel"
         >
@@ -339,7 +339,7 @@
           <li class="nav-item">
             <a
               class="nav-link fw-semibold d-flex align-items-center gap-2"
-              href="#"
+              href="{{ route('user.signup') }}"
             >
               انضم لنا
               <span class="badge-plus">Plus</span>
@@ -358,14 +358,14 @@
               <i class="bi bi-chevron-down small"></i>
             </a>
             <ul class="collapse list-unstyled ps-3" id="mobileEventsSub">
-              <li><a class="nav-link" href="events.html">جميع الفعاليات</a></li>
-              <li><a class="nav-link" href="#">الفعاليات القادمة</a></li>
+              <li><a class="nav-link" href="{{ route('events.explore', 'all') }}">جميع الفعاليات</a></li>
+              <li><a class="nav-link" href="{{ route('events.explore', 'upcoming') }}">الفعاليات القادمة</a></li>
             </ul>
           </li>
           <li class="nav-item">
             <a
               class="nav-link fw-semibold d-flex align-items-center justify-content-between"
-              href="#"
+              href="{{ route('events.explore', 'adventure') }}"
               data-bs-toggle="collapse"
               data-bs-target="#mobileAdventuresSub"
               aria-expanded="false"
@@ -375,23 +375,23 @@
               <i class="bi bi-chevron-down small"></i>
             </a>
             <ul class="collapse list-unstyled ps-3" id="mobileAdventuresSub">
-              <li><a class="nav-link" href="#">رحلات السفاري</a></li>
-              <li><a class="nav-link" href="#">أنشطة الهواء الطلق</a></li>
+              <li><a class="nav-link" href="{{ route('events.explore', 'safari') }}">رحلات السفاري</a></li>
+              <li><a class="nav-link" href="{{ route('events.explore', 'outdoor') }}">أنشطة الهواء الطلق</a></li>
             </ul>
           </li>
           <li class="nav-item">
-            <a class="nav-link fw-semibold" href="#"
+            <a class="nav-link fw-semibold" href="{{ route('events.explore', 'esports') }}"
               >كأس العالم للرياضات الإلكترونية</a
             >
           </li>
           <li class="nav-item">
-            <a class="nav-link fw-semibold" href="#">موسم عسير</a>
+            <a class="nav-link fw-semibold" href="{{ route('events.explore', 'seasong') }}">موسم عسير</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link fw-semibold" href="#">العروض الكوميدية</a>
+            <a class="nav-link fw-semibold" href="{{ route('events.explore', 'comedy') }}">العروض الكوميدية</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link fw-semibold" href="#">ما الجديد في جدة؟</a>
+            <a class="nav-link fw-semibold" href="{{ route('events.explore', 'news') }}">ما الجديد في جدة؟</a>
           </li>
         </ul>
       </div>

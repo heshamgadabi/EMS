@@ -61,9 +61,9 @@
 
                 <div class="payment-summary-ticket">
                   <div class="payment-summary-ticket-info">
-                    <p class="payment-summary-ticket-name">تذكرة لشخص واحد</p>
+                    <p class="payment-summary-ticket-name">عدد التذاكر </p>
                     <p class="payment-summary-ticket-desc">
-                      الجلوس بطاولة الحضور، الأوركسترا
+                      3
                     </p>
                   </div>
                   <img
@@ -176,7 +176,7 @@
                     <input type="checkbox" checked />
                     <span class="payment-checkbox-box">
                       <img
-                        src="assets/icons/icon-checkbox-check.svg"
+                        src="{{ asset('front/assets/icons/icon-checkbox-check.svg') }}"
                         alt=""
                         width="12"
                         height="12"
@@ -195,7 +195,7 @@
                   title="استرجع كامل قيمة تذاكرك حتى لو تعذر حضورك للفعالية"
                   aria-label="معلومات عن ضمان استرجاع المبلغ"
                 >
-                  <img src="assets/icons/icon-info.svg" alt="" width="16" height="16" />
+                  <img src="{{ asset('front/assets/icons/icon-info.svg') }}" alt="" width="16" height="16" />
                 </button>
               </div>
             </div>

@@ -159,10 +159,10 @@ class FrontController extends Controller
         $user_invoice = User::where('id', $invoice->user_id)->first();
 
 
-/*
+
         $invoice->status = 'paid'; // Update the status to 'paid'
         $invoice->save();
-*/
+
 
 
         $event = Event::findOrFail($invoice->event_id);
@@ -201,6 +201,11 @@ class FrontController extends Controller
 
         $thumbnail = Photos::where(['event_id' => $event->id,'type' => 'Thumbnail'])->latest()->first();
        
+        if($invoice_ticket->confirmation == null) {
+            $invoice_ticket->confirmation = 'MAC-' . strtoupper(uniqid()); // Generate a unique confirmation number
+            DB::table('invoice_ticket')->where('id', $invoice_ticket_id)->update(['confirmation' => $invoice_ticket->confirmation]);
+        }
+
         $qrCodeService = new QrCodeService();
         $qrCodeImage = $qrCodeService->generateBase64($invoice_ticket->confirmation);
         
@@ -222,16 +227,70 @@ class FrontController extends Controller
     }
 
 
-    public function myTickets()
+    public function myTickets($type = 'new')
     {
         
+        if($type == 'new') {
+        
+               
+           $invoice_tickets = DB::select('SELECT it.*,e.title AS event_title FROM invoice_ticket it
+                                       INNER JOIN invoice i ON it.invoice_id = i.id
+                                       INNER JOIN event e ON i.event_id = e.id
+                                       WHERE i.user_id = ? AND i.status = ? ORDER BY i.created_at DESC', [auth()->user()->id, 'paid']);
 
-        $invoices = Invoice::where('user_id',auth()->user()->id)->with('tickets')->get();
+         /*
+         $invoice_tickets = DB::select('SELECT it.*,e.title AS event_title FROM invoice_ticket it
+                                       INNER JOIN invoice i ON it.invoice_id = i.id
+                                       INNER JOIN event e ON i.event_id = e.id
+                                       WHERE i.user_id = ? ORDER BY i.created_at DESC', [auth()->user()->id]);
+        */
+        
+        } else {
+            
+            $invoice_tickets = DB::select('SELECT it.*,e.title AS event_title FROM invoice_ticket it
+                                       INNER JOIN invoice i ON it.invoice_id = i.id
+                                       INNER JOIN event e ON i.event_id = e.id
+                                       WHERE i.user_id = ? AND i.status != ? ORDER BY i.created_at DESC', [auth()->user()->id, 'paid']);
+                                       
+                                      
+        }
 
-        $data = ['invoices' => $invoices,'user' => auth()->user()];
+        
+
+
+        
+        $data = ['invoice_tickets' => $invoice_tickets, 'user' => auth()->user(),'type' => $type];
+        
+
+       // $invoices = Invoice::where('user_id',auth()->user()->id)->with('tickets')->get();
+
+        //$data = ['invoices' => $invoices,'user' => auth()->user()];
         
         return view('front.my_tickets',$data);
 
+    }
+
+
+    public function eventsExplore($category)
+    {
+        // You can retrieve the event details using the $id parameter
+        // For example, you can fetch the event from the database and pass it to the view
+         $events = Event::where('status', 1)->paginate(8); // Event::where('category', $category)->get();
+
+         foreach ($events as $event) {
+                 $event->thumbnail = Photos::where(['event_id' => $event->id,'type' => 'Thumbnail'])->latest()->first();
+            }
+
+         $data = [
+            'events' => $events,
+            'category' => $category,
+        ];
+
+        //print_r($data);
+
+        return view('front.events-explore', $data);
+
+  
     }
 
     
