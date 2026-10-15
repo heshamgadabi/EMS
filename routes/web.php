@@ -107,5 +107,6 @@ Route::post('profile', [UserController::class, 'frontProfileUpdate'])->middlewar
 
 Route::get('my/tickets/{type}',[FrontController::class, 'myTickets'])->middleware('auth')->name('my.tickets');
 
+Route::get('my/invoices/{type}',[FrontController::class, 'myInvoices'])->middleware('auth')->name('my.invoices');
 
 require __DIR__.'/auth.php';

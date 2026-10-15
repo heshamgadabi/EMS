@@ -129,11 +129,11 @@
                 <li><a class="dropdown-item" href="{{ route('user.profile') }}">الملف الشخصي</a></li>
                     
                 
-                <li><a class="dropdown-item" href="">تذاكري</a></li>
+                <li><a class="dropdown-item" href="{{ route('my.tickets','new') }}">تذاكري</a></li>
                 
 
                 <li class="main-header-border-bottom">
-                    <a class="dropdown-item" href="#">سلة المشتريات</a>
+                    <a class="dropdown-item" href="{{ route('my.invoices','new') }}">الفواتير</a>
                 </li>
 
                 <li>

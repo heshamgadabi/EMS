@@ -15,7 +15,16 @@ class FrontController extends Controller
 {
     public function home()
     {
-        return view('front.home');
+        $events = Event::where('status', 1)->latest()->take(8)->get();
+
+        foreach ($events as $event) {
+                 $event->thumbnail = Photos::where(['event_id' => $event->id,'type' => 'Thumbnail'])->latest()->first();
+            }
+        
+        $data = [
+            'events' => $events,
+        ];    
+        return view('front.home',$data);
     }
 
     public function eventDetails($id)
@@ -52,7 +61,25 @@ class FrontController extends Controller
 
          $tickets = Ticket::where('event_id', $id)->get();
          $data['tickets'] = $tickets;
+
+         $old_invoice = Invoice::where(['event_id' => $id,'user_id' => auth()->user()->id,'status' => 'pending'])->with('tickets')->latest()->first();
+         if($old_invoice) {
+            $data['old_invoice'] = $old_invoice;
+
+            
+            }
          
+         foreach ($tickets as $ticket) {
+                 $ticket->quantity = 0; // Initialize quantity to 0
+                 if($old_invoice) {
+                    $old_ticket = $old_invoice->tickets->where('id', $ticket->id)->first();
+                    if($old_ticket) {
+                        $ticket->quantity = $old_ticket->pivot->quantity; // Set the quantity from the old invoice
+                    }
+                 }
+            }
+                
+
          return view('front.event-ticket', $data);
 
   
@@ -69,6 +96,19 @@ class FrontController extends Controller
         // Redirect or return a response after successful checkout
       //  return redirect()->route('home')->with('success', 'Ticket checkout successful!');
       
+        $old_invoice = Invoice::where(['event_id' => $id,'user_id' => auth()->user()->id,'status' => 'pending'])->latest()->first();
+
+        if($old_invoice) {
+            // Delete the old invoice and its associated tickets
+            $old_invoice->tickets()->detach(); // Detach the associated tickets
+           // $old_invoice->delete(); // Delete the old invoice
+        }
+
+
+
+
+        //exit;
+
         $ticket_arr = [];
 
         $tickets = Ticket::where('event_id', $id)->get();
@@ -86,13 +126,25 @@ class FrontController extends Controller
                         $ticket_arr[$ticket_id] = $ticket;
                     }
             }
+        if($old_invoice)
+            {
+                $invoice = $old_invoice;
 
-        $invoice = new Invoice();
+            }else {
+
+
+            $invoice = new Invoice();
+            $invoice->invoice_number = 'INV-' . strtoupper(uniqid()); // Generate a unique invoice number
+
+
+                 } 
+
+
+        
         $invoice->user_id = auth()->user()->id; // Assuming you have user authentication
         $invoice->event_id = $id;
         $invoice->total_amount = $total_price_all;
         $invoice->status = 'pending'; // Set the initial status of the invoice
-        $invoice->invoice_number = 'INV-' . strtoupper(uniqid()); // Generate a unique invoice number
         $tax = 15; // Example tax percentage
         $tax_amount = ($total_price_all * $tax) / 100;
         $invoice->tax = $tax;
@@ -161,6 +213,7 @@ class FrontController extends Controller
 
 
         $invoice->status = 'paid'; // Update the status to 'paid'
+        $invoice->paid_at = now(); // Set the payment date to the current timestamp
         $invoice->save();
 
 
@@ -233,7 +286,7 @@ class FrontController extends Controller
         if($type == 'new') {
         
                
-           $invoice_tickets = DB::select('SELECT it.*,e.title AS event_title FROM invoice_ticket it
+           $invoice_tickets = DB::select('SELECT it.*,e.title AS event_title,i.paid_at paid_at FROM invoice_ticket it
                                        INNER JOIN invoice i ON it.invoice_id = i.id
                                        INNER JOIN event e ON i.event_id = e.id
                                        WHERE i.user_id = ? AND i.status = ? ORDER BY i.created_at DESC', [auth()->user()->id, 'paid']);
@@ -247,7 +300,7 @@ class FrontController extends Controller
         
         } else {
             
-            $invoice_tickets = DB::select('SELECT it.*,e.title AS event_title FROM invoice_ticket it
+            $invoice_tickets = DB::select('SELECT it.*,e.title AS event_title,i.paid_at paid_at FROM invoice_ticket it
                                        INNER JOIN invoice i ON it.invoice_id = i.id
                                        INNER JOIN event e ON i.event_id = e.id
                                        WHERE i.user_id = ? AND i.status != ? ORDER BY i.created_at DESC', [auth()->user()->id, 'paid']);
@@ -293,5 +346,27 @@ class FrontController extends Controller
   
     }
 
+
+    public function myInvoices($type = 'new')
+    {
+        
+        if($type == 'new') {
+        
+               
+           $invoices = Invoice::where(['user_id' => auth()->user()->id, 'status' => 'paid'])->with('tickets')->latest()->get();
+
+         } else {
+            
+            $invoices = Invoice::where(['user_id' => auth()->user()->id])->where('status', '!=', 'paid')->with('tickets')->latest()->get();
+                                       
+                                      
+        }
+
+        $data = ['invoices' => $invoices, 'user' => auth()->user(),'type' => $type];
+        
+        return view('front.my_invoices',$data);
+    }        
+
+    
     
 }

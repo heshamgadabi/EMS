@@ -20,7 +20,7 @@
 
 
         <div class="d-flex justify-content-start mb-4">
-          <a href="event-details.html" class="ticket-page-back-link">
+          <a href="{{ route('event.details', ['id' => $event->id]) }}" class="ticket-page-back-link">
             <img
               src="{{ asset('front/assets/icons/icon-chevron-right-bold.svg') }}"
               alt=""
@@ -29,7 +29,7 @@
               class="ticket-page-chevron"
             />
             <div class="ticket-page-title-group">
-              <h1 class="ticket-page-title">باتل كارت يوم النساء - جدة</h1>
+              <h1 class="ticket-page-title">{{ $event->title }}</h1>
               <div class="ticket-page-location">
                 <img
                   src="{{ asset('front/assets/icons/icon-map-pin-bold.svg') }}"
@@ -37,7 +37,7 @@
                   width="14"
                   height="14"
                 />
-                <span>Alandalus Mall</span>
+                <span>{{ $event->location }}</span>
               </div>
             </div>
           </a>
@@ -78,7 +78,7 @@
                   height="16"
                 />
               </button>
-              <span class="ticket-counter-value" ticket_id="{{ $ticket->id }}">0</span>
+              <span class="ticket-counter-value" ticket_id="{{ $ticket->id }}">{{ $ticket->quantity }}</span>
               <button
                 type="button"
                 class="ticket-counter-btn ticket-counter-plus"

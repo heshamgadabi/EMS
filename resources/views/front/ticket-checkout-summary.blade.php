@@ -15,7 +15,7 @@
          ============================================================ -->
       <section class="container-xl payment-page-section">
         <div class="d-flex justify-content-start mb-4">
-          <a href="ticket-selection.html" class="payment-page-title-link">
+          <a href="{{ route('event.ticket', ['id' => $event->id]) }}" class="payment-page-title-link">
             <img
               src="{{ asset('front/assets/icons/icon-chevron-right-bold.svg') }}"
               alt=""

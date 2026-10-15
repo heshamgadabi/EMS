@@ -74,7 +74,7 @@
                 تذاكري
               </a>
               
-              <a href="#" class="profile-menu-item">
+              <a href="{{ route('my.invoices','new') }}" class="profile-menu-item">
                 <i class="bi bi-ticket-perforated"></i>
                 فواتيري
               </a>
@@ -107,7 +107,7 @@
                     <span class="ticket-card-date">{{ $invoice_ticket->event_title }}</span>
                   </div>
                   <div class="ticket-card-body">
-                    <p class="ticket-card-info"> {{ $invoice_ticket->confirmation }}</p>
+                    <p class="ticket-card-info"> {{ $invoice_ticket->paid_at }}</p>
                     <p class="ticket-card-info"> <a href="{{ route('front.ticket.view', [$invoice_ticket->id]) }}" target="_blank" class="btn btn-outline-success"> عرض </a> </span>
                    </p>
                   </div>

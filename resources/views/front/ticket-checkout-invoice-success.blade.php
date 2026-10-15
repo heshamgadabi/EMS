@@ -12,9 +12,11 @@
          PAYMENT PAGE
          Figma: node 10:1252 "payment-event"
          ============================================================ -->
+
+         
       <section class="container-xl payment-page-section">
         <div class="d-flex justify-content-start mb-4">
-          <a href="ticket-selection.html" class="payment-page-title-link">
+          <a href="{{ route('event.details', ['id' => $event->id]) }}" class="payment-page-title-link">
             <img
               src="{{ asset('front/assets/icons/icon-chevron-right-bold.svg') }}"
               alt=""
@@ -23,7 +25,12 @@
             />
             <h1 class="payment-page-title">العودة للفعالية</h1>
           </a>
+          <div class="alert alert-success mx-5" role="alert">
+            شكرا لك على الدفع، تم إصدار التذكرة بنجاح 
+          </div>
         </div>
+
+        
 
         <div class="payment-columns">
           <!-- Right column: order summary -->

@@ -140,47 +140,22 @@
 
         <div class="row g-4" id="featuredEventsGrid">
           <!-- TEMPLATE START: repeat .event-card per event -->
+          
+          
+          @foreach ($events as $event)
+
+          @php
+          $date = \Carbon\Carbon::parse($event->start_time)->locale('ar');
+          @endphp
+
+
+
           <div class="col-6 col-lg-3">
             <article class="event-card" data-event-id="1">
               <a href="#" class="event-card-media">
                 <img
-                  src="{{ asset('front/assets/images/placeholder.png') }}"
-                  alt="باتل كارت يوم النساء - جدة"
-                />
-                <button
-                  type="button"
-                  class="favorite-btn"
-                  aria-label="أضف إلى المفضلة"
-                  data-favorited="false"
-                >
-                  <img
-                    src="{{ asset('front/assets/icons/icon-heart.svg') }}"
-                    alt=""
-                    width="20"
-                    height="18"
-                  />
-                </button>
-              </a>
-              <div class="event-card-body">
-                <a href="#" class="event-card-title text-decoration-none"
-                  >باتل كارت يوم النساء - جدة</a
-                >
-                <div class="event-card-meta">
-                  <span class="event-card-price">32.96 USD</span>
-                  <span class="event-card-price-label text-success"
-                    >نضمن أفضل الأسعار</span
-                  >
-                </div>
-              </div>
-            </article>
-          </div>
-
-          <div class="col-6 col-lg-3">
-            <article class="event-card" data-event-id="2">
-              <a href="#" class="event-card-media">
-                <img
-                  src="{{ asset('front/assets/images/placeholder.png') }}"
-                  alt="مراسي النيل في النادي الأدبي الثقافي بجدة"
+                  src="{{ $event->thumbnail ? asset('storage/'.$event->thumbnail->path) : asset('front/assets/images/placeholder.png') }}"
+                  alt="{{ $event->title }}"
                 />
                 <button
                   type="button"
@@ -198,265 +173,34 @@
                 <span class="badge-new">جديد</span>
               </a>
               <div class="event-card-body">
-                <a href="#" class="event-card-title text-decoration-none"
-                  >مراسي النيل في النادي الأدبي الثقافي بجدة</a
-                >
+                <a href="{{ route('event.details', $event->id) }}" class="event-card-title text-decoration-none">{{ $event->title }}</a>
                 <div class="event-card-meta">
-                  <span class="event-card-price">27.19 USD</span>
-                  <span class="event-card-price-label text-brand-green"
-                    >أفضل المقاعد متاحة</span
-                  >
+                  <span class="event-card-price">{{ $event->start_price }} SAR</span>
+                  <span class="event-card-price-label text-brand-green"></span>
+                  
                 </div>
-                <div class="event-card-date">الجمعة 07 أغسطس</div>
+                <div class="event-card-date"> {{ $date->format('d') }} {{ $date->translatedFormat('F') }} <small> {{ $date->translatedFormat('l') }} {{ $date->format('Y') }}</small> </div>
+
+
               </div>
             </article>
           </div>
 
-          <div class="col-6 col-lg-3">
-            <article class="event-card" data-event-id="3">
-              <a href="#" class="event-card-media">
-                <img
-                  src="{{ asset('front/assets/images/placeholder.png') }}"
-                  alt="لاين اب تقدم تجارب أداء كوميدي لاب في جدة"
-                />
-                <button
-                  type="button"
-                  class="favorite-btn"
-                  aria-label="أضف إلى المفضلة"
-                  data-favorited="false"
-                >
-                  <img
-                    src="{{ asset('front/assets/icons/icon-heart.svg') }}"
-                    alt=""
-                    width="20"
-                    height="18"
-                  />
-                </button>
-              </a>
-              <div class="event-card-body">
-                <a href="#" class="event-card-title text-decoration-none"
-                  >لاين اب تقدم تجارب أداء كوميدي لاب في جدة</a
-                >
-                <div class="event-card-meta">
-                  <span class="event-card-price-label text-success"
-                    >الدخول مجاني</span
-                  >
-                </div>
-              </div>
-            </article>
-          </div>
 
-          <div class="col-6 col-lg-3">
-            <article class="event-card" data-event-id="4">
-              <a href="#" class="event-card-media">
-                <img
-                  src="{{ asset('front/assets/images/placeholder.png') }}"
-                  alt="بي دي هاوس في جدة | 23 يوليو"
-                />
-                <button
-                  type="button"
-                  class="favorite-btn"
-                  aria-label="أضف إلى المفضلة"
-                  data-favorited="false"
-                >
-                  <img
-                    src="{{ asset('front/assets/icons/icon-heart.svg') }}"
-                    alt=""
-                    width="20"
-                    height="18"
-                  />
-                </button>
-                <span class="badge-new">جديد</span>
-              </a>
-              <div class="event-card-body">
-                <a href="#" class="event-card-title text-decoration-none"
-                  >بي دي هاوس في جدة | 23 يوليو</a
-                >
-                <div class="event-card-meta">
-                  <span class="event-card-price">31.59 USD</span>
-                  <span class="event-card-price-label text-brand-green"
-                    >تذاكر الحجز المسبق</span
-                  >
-                </div>
-                <div class="event-card-date">الخميس 23 يوليو</div>
-              </div>
-            </article>
-          </div>
-          <!-- TEMPLATE END -->
 
-          <!-- Second row: design repeats the same 4 events again (row 2 of the "featured" list) -->
-          <div class="col-6 col-lg-3">
-            <article class="event-card" data-event-id="5">
-              <a href="#" class="event-card-media">
-                <img
-                  src="{{ asset('front/assets/images/placeholder.png') }}"
-                  alt="باتل كارت يوم النساء - جدة"
-                />
-                <button
-                  type="button"
-                  class="favorite-btn"
-                  aria-label="أضف إلى المفضلة"
-                  data-favorited="false"
-                >
-                  <img
-                    src="{{ asset('front/assets/icons/icon-heart.svg') }}"
-                    alt=""
-                    width="20"
-                    height="18"
-                  />
-                </button>
-              </a>
-              <div class="event-card-body">
-                <a href="#" class="event-card-title text-decoration-none"
-                  >باتل كارت يوم النساء - جدة</a
-                >
-                <div class="event-card-meta">
-                  <span class="event-card-price">32.96 USD</span>
-                  <span class="event-card-price-label text-success"
-                    >نضمن أفضل الأسعار</span
-                  >
-                </div>
-              </div>
-            </article>
-          </div>
 
-          <div class="col-6 col-lg-3">
-            <article class="event-card" data-event-id="6">
-              <a href="#" class="event-card-media">
-                <img
-                  src="{{ asset('front/assets/images/placeholder.png') }}"
-                  alt="مراسي النيل في النادي الأدبي الثقافي بجدة"
-                />
-                <button
-                  type="button"
-                  class="favorite-btn"
-                  aria-label="أضف إلى المفضلة"
-                  data-favorited="false"
-                >
-                  <img
-                    src="{{ asset('front/assets/icons/icon-heart.svg') }}"
-                    alt=""
-                    width="20"
-                    height="18"
-                  />
-                </button>
-                <span class="badge-new">جديد</span>
-              </a>
-              <div class="event-card-body">
-                <a href="#" class="event-card-title text-decoration-none"
-                  >مراسي النيل في النادي الأدبي الثقافي بجدة</a
-                >
-                <div class="event-card-meta">
-                  <span class="event-card-price">27.19 USD</span>
-                  <span class="event-card-price-label text-brand-green"
-                    >أفضل المقاعد متاحة</span
-                  >
-                </div>
-                <div class="event-card-date">الجمعة 07 أغسطس</div>
-              </div>
-            </article>
-          </div>
 
-          <div class="col-6 col-lg-3">
-            <article class="event-card" data-event-id="7">
-              <a href="#" class="event-card-media">
-                <img
-                  src="{{ asset('front/assets/images/placeholder.png') }}"
-                  alt="لاين اب تقدم تجارب أداء كوميدي لاب في جدة"
-                />
-                <button
-                  type="button"
-                  class="favorite-btn"
-                  aria-label="أضف إلى المفضلة"
-                  data-favorited="false"
-                >
-                  <img
-                    src="{{ asset('front/assets/icons/icon-heart.svg') }}"
-                    alt=""
-                    width="20"
-                    height="18"
-                  />
-                </button>
-              </a>
-              <div class="event-card-body">
-                <a href="#" class="event-card-title text-decoration-none"
-                  >لاين اب تقدم تجارب أداء كوميدي لاب في جدة</a
-                >
-                <div class="event-card-meta">
-                  <span class="event-card-price-label text-success"
-                    >الدخول مجاني</span
-                  >
-                </div>
-              </div>
-            </article>
-          </div>
+          @endforeach
 
-          <div class="col-6 col-lg-3">
-            <article class="event-card" data-event-id="8">
-              <a href="#" class="event-card-media">
-                <img
-                  src="{{ asset('front/assets/images/placeholder.png') }}"
-                  alt="بي دي هاوس في جدة | 23 يوليو"
-                />
-                <button
-                  type="button"
-                  class="favorite-btn"
-                  aria-label="أضف إلى المفضلة"
-                  data-favorited="false"
-                >
-                  <img
-                    src="{{ asset('front/assets/icons/icon-heart.svg') }}"
-                    alt=""
-                    width="20"
-                    height="18"
-                  />
-                </button>
-                <span class="badge-new">جديد</span>
-              </a>
-              <div class="event-card-body">
-                <a href="#" class="event-card-title text-decoration-none"
-                  >بي دي هاوس في جدة | 23 يوليو</a
-                >
-                <div class="event-card-meta">
-                  <span class="event-card-price">31.59 USD</span>
-                  <span class="event-card-price-label text-brand-green"
-                    >تذاكر الحجز المسبق</span
-                  >
-                </div>
-                <div class="event-card-date">الخميس 23 يوليو</div>
-              </div>
-            </article>
-          </div>
+          
+          
+
+
+
         </div>
       </section>
 
-      <!-- ============================================================
-         EXCLUSIVE / PROMOTED EVENT BANNER
-         ============================================================ -->
-      <section class="container-xl pb-5">
-        <a href="#" class="exclusive-banner text-decoration-none">
-          <div class="exclusive-banner-media">
-            <img
-              src="{{ asset('front/assets/images/placeholder.png') }}"
-              alt="نادي كارتل الاجتماعي في جدة"
-            />
-            <span class="badge-new badge-new-exclusive">حصري</span>
-          </div>
-          <div class="exclusive-banner-body">
-            <h3 class="exclusive-banner-title">نادي كارتل الاجتماعي في جدة</h3>
-            <div class="exclusive-banner-meta">
-              <span class="d-flex align-items-center gap-2">
-                <i class="bi bi-calendar3"></i>
-                الخميس 23 يوليو - الاثنين 31 أغسطس
-              </span>
-              <span class="d-flex align-items-center gap-2">
-                <i class="bi bi-ticket-perforated"></i>
-                41.20 USD
-              </span>
-            </div>
-          </div>
-        </a>
-      </section>
+      
 
       <!-- ============================================================
          CATEGORIES
