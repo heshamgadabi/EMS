@@ -33,7 +33,7 @@
               data-accordion="false"
               id="navigation"
             >
-              <li class="nav-item @if(isset($active_page) && ($active_page == 'event_list' || $active_page == 'create_event')) menu-open @endif">
+              <li class="nav-item @if(isset($active_page) && ($active_page == 'event_list' || $active_page == 'create_event' || $active_page == 'category_list')) menu-open @endif">
                 <a href="#" class="nav-link active">
                   <i class="nav-icon bi bi-speedometer"></i>
                   <p>
@@ -52,6 +52,13 @@
                     <a href="{{ route('event.create') }}" class="nav-link @if(isset($active_page) && $active_page == 'create_event') active @endif">
                       <i class="nav-icon bi bi-circle"></i>
                       <p>Add Event</p>
+                    </a>
+                  </li>
+
+                  <li class="nav-item">
+                    <a href="{{ route('category.index') }}" class="nav-link @if(isset($active_page) && $active_page == 'category_list') active @endif">
+                      <i class="nav-icon bi bi-circle"></i>
+                      <p>Category List</p>
                     </a>
                   </li>
                   
