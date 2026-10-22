@@ -84,6 +84,23 @@
             </div>
 
 
+            <div class="mb-3">
+              <label for="category" class="form-label">Category</label>
+              <select class="form-select" name="category" id="category" aria-label="ٍُEvent Category">
+                <option value="" selected>Select Category</option>
+                @foreach($categories as $category)
+                    <option value="{{ $category->id }}" {{ old('category', $event->category) == $category->id ? 'selected' : '' }}>{{ $category->name }}</option>
+                @endforeach
+              </select>
+              
+              @error('category')
+                  <div class="invalid-feedback d-block" >{{ $message }}</div>
+              @enderror
+
+            </div>
+
+
+
 
 
             

@@ -70,11 +70,11 @@ class FrontController extends Controller
             }
          
          foreach ($tickets as $ticket) {
-                 $ticket->quantity = 0; // Initialize quantity to 0
+                 $ticket->quantity_hlp = 0; // Initialize quantity to 0
                  if($old_invoice) {
                     $old_ticket = $old_invoice->tickets->where('id', $ticket->id)->first();
                     if($old_ticket) {
-                        $ticket->quantity = $old_ticket->pivot->quantity; // Set the quantity from the old invoice
+                        $ticket->quantity_hlp = $old_ticket->pivot->quantity; // Set the quantity from the old invoice
                     }
                  }
             }
@@ -118,7 +118,7 @@ class FrontController extends Controller
                 $ticket_id = $ticket->id;
                 $quantity = $request->input('ticket_' . $ticket_id, 0);
                 if ($quantity > 0) {
-                        $ticket->quantity = $quantity;
+                        $ticket->quantity_hlp = $quantity;
                         $ticket->total_price = $quantity * $ticket->price;
                         $total_price_all += $ticket->total_price;
                         $ticket->confirmation = 'MAC-' . strtoupper(uniqid()); // Generate a unique confirmation number
@@ -156,7 +156,7 @@ class FrontController extends Controller
         // Save the ticket details in the invoice_ticket table
         foreach ($ticket_arr as $ticket_id => $ticket) {
             $invoice->tickets()->attach($ticket_id, [
-                'quantity' => $ticket->quantity,
+                'quantity' => $ticket->quantity_hlp,
                 'unit_price' => $ticket->price,
                 'total_price' => $ticket->total_price,
                 'ticket_title' => $ticket->title, // Save the ticket title as a snapshot
@@ -328,8 +328,14 @@ class FrontController extends Controller
     {
         // You can retrieve the event details using the $id parameter
         // For example, you can fetch the event from the database and pass it to the view
-         $events = Event::where('status', 1)->paginate(8); // Event::where('category', $category)->get();
 
+         if($category == 'all') {
+            $events = Event::where('status', 1)->paginate(8);
+         } else {
+            $events = Event::where(['status' => 1, 'category' => $category])->paginate(8);
+         }
+
+        
          foreach ($events as $event) {
                  $event->thumbnail = Photos::where(['event_id' => $event->id,'type' => 'Thumbnail'])->latest()->first();
             }

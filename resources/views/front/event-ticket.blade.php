@@ -69,8 +69,7 @@
               <button
                 type="button"
                 class="ticket-counter-btn ticket-counter-minus"
-                aria-label="إنقاص عدد التذاكر"
-              >
+                aria-label="إنقاص عدد التذاكر" ticket_id="{{ $ticket->id }}" max_reg="{{ $ticket->max_reg }}" >
                 <img
                   src="{{ asset('front/assets/icons/icon-counter-minus.svg') }}"
                   alt=""
@@ -78,12 +77,11 @@
                   height="16"
                 />
               </button>
-              <span class="ticket-counter-value" ticket_id="{{ $ticket->id }}">{{ $ticket->quantity }}</span>
+              <span class="ticket-counter-value" ticket_id="{{ $ticket->id }}">{{ $ticket->quantity_hlp }}</span>
               <button
                 type="button"
                 class="ticket-counter-btn ticket-counter-plus"
-                aria-label="زيادة عدد التذاكر"
-              >
+                aria-label="زيادة عدد التذاكر" ticket_id="{{ $ticket->id }}" max_reg="{{ $ticket->max_reg }}" >
                 <img
                   src="{{ asset('front/assets/icons/icon-counter-plus.svg') }}"
                   alt=""

@@ -17,11 +17,11 @@
         <!-- Breadcrumbs + favorite/share actions -->
         <div class="d-flex align-items-center justify-content-between flex-wrap gap-3 mb-4">
           <nav class="breadcrumbs" aria-label="breadcrumb">
-            <a href="index.html" class="breadcrumb-link">الصفحة الرئيسية</a>
+            <a href="{{ route('home') }}" class="breadcrumb-link">الصفحة الرئيسية</a>
             <span class="breadcrumb-sep">/</span>
-            <a href="events.html" class="breadcrumb-link">الفعاليات</a>
+            <a href="{{ route('events.explore', ['category' => $event->category]) }}" class="breadcrumb-link">الفعاليات</a>
             <span class="breadcrumb-sep">/</span>
-            <a href="events.html" class="breadcrumb-link"
+            <a href="{{ route('events.explore', ['category' => $event->category]) }}" class="breadcrumb-link"
               >الألعاب والرياضات الإلكترونية</a
             >
             <span class="breadcrumb-sep">/</span>

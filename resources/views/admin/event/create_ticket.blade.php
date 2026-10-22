@@ -63,6 +63,29 @@
 
 
 
+            <div class="mb-3">
+              <label for="quantity" class="form-label">Maximum Tickets per User</label>
+              <input type="text" name="max_reg" class="form-control" value="{{ old('max_reg') }}" id="quantity" aria-describedby="quantityHelp" />
+               
+
+              @error('max_reg')
+                  <div class="invalid-feedback d-block" >{{ $message }}</div>
+              @enderror
+
+            </div> 
+
+
+           <div class="mb-3">
+              <label for="quantity" class="form-label">Quantity</label>
+              <input type="text" name="quantity" class="form-control" value="{{ old('quantity') }}" id="quantity" aria-describedby="quantityHelp" />
+               
+
+              @error('quantity')
+                  <div class="invalid-feedback d-block" >{{ $message }}</div>
+              @enderror
+
+            </div>
+
 
 
 

@@ -124,7 +124,7 @@ EMS Admin Dashboard | @if(isset($category)) {{ $category->name }} @else Create C
             <!--begin::Row-->
             <div class="row">
               <div class="col-sm-6">
-                <h3 class="mb-0">Create Category</h3>
+                <h3 class="mb-0">@if(isset($category)) {{ $category->name }} @else Create Category @endif</h3>
               </div>
               <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-end">

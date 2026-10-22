@@ -65,14 +65,37 @@
             </tr>
             @endforeach
            
+            <tr>
+              <td colspan="4" class="text-center">
+
+                  @if ($events->hasPages())
+                  <div class="col-12 d-flex justify-content-center mb-2">
+                    <div class="pagination-wrapper mt-4">
+                      {{ $events->links() }}
+                    </div>
+                  </div>
+                  @endif
+
+              
+        
+
+              </td>
+            </tr>
             
             
           </tbody>
         </table>
+
+
       </div>
      
+      
+      
+        
 
     </div>
+
+    
 
 
 

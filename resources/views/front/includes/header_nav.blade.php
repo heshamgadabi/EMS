@@ -66,7 +66,7 @@
                 width="10"
                 height="14"
               />
-              <span>جدة</span>
+              <span>السعودية</span>
             </div>
 
             <!-- Currency / language -->
@@ -180,35 +180,35 @@
                   <a class="dropdown-item" href="{{ route('events.explore','all') }}">جميع الفعاليات</a>
                 </li>
                 <li>
-                  <a class="dropdown-item" href="{{ route('events.explore','upcoming') }}">الفعاليات القادمة</a>
+                  <a class="dropdown-item" href="{{ route('events.explore','10') }}">الفعاليات الرياضية</a>
                 </li>
               </ul>
             </li>
             <li class="nav-item dropdown">
               <a
                 class="nav-link fw-semibold dropdown-toggle"
-                href="{{ route('events.explore','adventure') }}"
+                href="#"
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
                 >المغامرات والتجارب</a
               >
               <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="{{ route('events.explore','adventure') }}">رحلات السفاري</a></li>
+                <li><a class="dropdown-item" href="{{ route('events.explore','3') }}">رحلات السفاري</a></li>
                 <li>
-                  <a class="dropdown-item" href="{{ route('events.explore','outdoor') }}">أنشطة الهواء الطلق</a>
+                  <a class="dropdown-item" href="{{ route('events.explore','4') }}">أنشطة الهواء الطلق</a>
                 </li>
               </ul>
             </li>
             <li class="nav-item">
-              <a class="nav-link fw-semibold" href="{{ route('events.explore','esports') }}"
+              <a class="nav-link fw-semibold" href="{{ route('events.explore','6') }}"
                 >كأس العالم للرياضات الإلكترونية</a
               >
             </li>
             <li class="nav-item">
-              <a class="nav-link fw-semibold" href="{{ route('events.explore','seasong') }}">موسم عسير</a>
+              <a class="nav-link fw-semibold" href="{{ route('events.explore','7') }}">موسم عسير</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link fw-semibold" href="{{ route('events.explore','comedy') }}">العروض الكوميدية</a>
+              <a class="nav-link fw-semibold" href="{{ route('events.explore','8') }}">العروض الكوميدية</a>
             </li>
             <li class="nav-item">
               <a class="nav-link fw-semibold" href="{{ route('events.explore','news') }}">ما الجديد في جدة؟</a>

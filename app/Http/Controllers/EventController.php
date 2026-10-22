@@ -8,13 +8,15 @@ use App\Models\Ticket;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Photos;
+use App\Models\Category;
 
 class EventController extends Controller
 {
     //
     public function index()
     {
-        $events = Event::all();
+        $events = Event::latest()->simplePaginate(10); // Event::paginate(10); // Event::all();
+        
         $data = [
             'events' => $events,
             'active_page' => 'event_list',
@@ -23,10 +25,13 @@ class EventController extends Controller
     }
     public function create()
     {
+        $categories = Category::where('status', 1)->orderByDesc('name')->get();
         $data = [
             'title' => 'Create Event',
             'active_page' => 'create_event',
+            'categories' => $categories,
         ];
+      
         return view('admin.event.create', $data);
     }
 
@@ -40,6 +45,7 @@ class EventController extends Controller
             'end_time' => 'required|date|after_or_equal:start_time',
             'status' => 'required|in:0,1',
             'start_price' => 'required|max:255',
+            'category' => 'required', // Validate category_id
         ]);
 
         $user = Auth::user();
@@ -54,6 +60,7 @@ class EventController extends Controller
         $event->terms = $request->terms ?? null; // Set terms if provided
         $event->created_by = $user->id;//auth()->user()->id;
         $event->start_price = $request->start_price;
+        $event->category = $request->category; // Assign category_id from the request
         
         $event->save();
 
@@ -76,10 +83,12 @@ class EventController extends Controller
     public function edit($id)
     {
         $event = Event::findOrFail($id);
+        $categories = Category::where('status', 1)->orderByDesc('name')->get();
         $data = [
             'event' => $event,
             'title' => 'Edit Event',
             'active_page' => 'edit_event',
+            'categories' => $categories,
         ];
         return view('admin.event.edit', $data);
     }
@@ -94,6 +103,7 @@ class EventController extends Controller
             'end_time' => 'required|date|after_or_equal:start_time',
             'status' => 'required|in:0,1',
             'start_price' => 'required|max:255',
+            'category' => 'required', // Validate category_id
         ]);
 
         $event = Event::findOrFail($id);
@@ -105,7 +115,7 @@ class EventController extends Controller
         $event->status = $request->status ?? 0; // Set to 0 if not provided
         $event->terms = $request->terms ?? null; // Set terms if provided
         $event->start_price = $request->start_price;
-
+        $event->category = $request->category; // Assign category_id from the request
         $event->save();
 
         return redirect()->route('event.admin.overview', ['id' => $event->id])->with('success', $event->title . ' updated successfully.');
@@ -171,7 +181,8 @@ class EventController extends Controller
         $ticket->status = $request->status ?? 0; // Set to 0 if not provided
         $ticket->event_id = $event->id; // Associate the ticket with the event
         $ticket->created_by = $user->id;//auth()->user()->id;
-        
+        $ticket->max_reg = $request->max_reg ?? 0; // Set to 0 if not provided
+        $ticket->quantity = $request->quantity ?? 0; // Set to 0 if not provided
         
         
         $ticket->save();
@@ -215,6 +226,9 @@ class EventController extends Controller
         $ticket->location = $request->location;
         $ticket->price = $request->price;
         $ticket->status = $request->status ?? 0; // Set to 0 if not provided
+        $ticket->max_reg = $request->max_reg ?? 0; // Set to 0 if not provided
+        $ticket->quantity = $request->quantity ?? 0; // Set to 0 if not provided
+
         $ticket->save();
 
         return redirect()->route('event.admin', ['id' => $ticket->event_id])->with('success', $ticket->title . ' updated successfully.');

@@ -16,7 +16,7 @@
         <!-- Header & Breadcrumbs -->
         <div class="d-flex flex-column align-items-start gap-3 mb-5">
           <nav class="breadcrumbs" aria-label="breadcrumb">
-            <a href="index.html" class="breadcrumb-link">الرئيسية</a>
+            <a href="{{ route('home') }}" class="breadcrumb-link">الرئيسية</a>
             <span class="breadcrumb-sep">/</span>
             <span class="breadcrumb-current" aria-current="page"
               >جميع الفعاليات</span

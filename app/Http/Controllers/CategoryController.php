@@ -30,7 +30,8 @@ class CategoryController extends Controller
     public function create()
     {
         $data = [
-            'type' => 'create'
+            'type' => 'create',
+            'active_page' => 'category_list'
         ];
         return view('admin.category.create', $data);
 
@@ -75,7 +76,8 @@ class CategoryController extends Controller
 
         $data = [
             'category' => $category,
-            'type' => 'edit'
+            'type' => 'edit',
+            'active_page' => 'category_list'
         ];
 
         return view('admin.category.create', $data);
